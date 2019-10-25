@@ -1,0 +1,14 @@
+<ng-template #templateRef>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Error</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true">X</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <alert type="warning">
+      <h4>Error! Exception occurred while attempting a REST call </h4>
+      <pre>{{errorMessage}}</pre>
+    </alert>
+  </div>
+</ng-template>

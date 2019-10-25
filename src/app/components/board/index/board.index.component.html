@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10" *ngIf="!questions || !questions.length">
+      No Questions ...
+    </div>
+
+    <div class="col-sm-10" *ngIf="questions && questions.length">
+      <div *ngFor="let question of questions">
+        <div class="row">
+          <div class="col-sm-1" *ngIf="isAuthenticated()">
+            <div class="btn-group-vertical vcenter">
+              <button type="button" class="btn btn-success" (click)="upVote(question.id)">
+                <i class="fas fa-arrow-up fa-lg"></i>
+              </button>
+              <div class="btn btn-default">
+                {{ question.vote }}
+              </div>
+              <button type="button" class="btn btn-info" (click)="downVote(question.id)">
+                <i class="fas fa-arrow-down fa-lg"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-sm-11">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <a [routerLink]="['/question', question.id]">
+                    {{ question.title }}
+                  </a>
+                </h3>
+              </div>
+              <div class="panel-body">
+                {{ question.text ? question.text.substring(0, 50) : '' }} ...
+              </div>
+              <div class="panel-footer" *ngIf="question && question.tags">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                  <span class="label label-default readonly-tag" *ngFor="let tag of question.tags">
+                    {{ tag.text }}
+                  </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="keyword">Keyword:</label>
+            <input type="text" class="form-control" id="keyword" [(ngModel)]="keyword">
+          </div>
+          <div class="form-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary" (click)="search()">Search</button>
+              <button type="button" class="btn btn-default" (click)="clear()">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-margin">
+        <hr />
+      </div>
+
+      <div class="col-sm-12">
+        <div class="btn-group" dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn btn-default dropdown-toggle"
+                  aria-controls="dropdown-basic">
+            Sort Questions by {{getSortKeyName()}} <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="dropdown-item" (click)="setSortBy(SortKeyEnum.None)">No Sort</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="setSortBy(SortKeyEnum.Vote)">Votes</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="setSortBy(SortKeyEnum.Time)">Time</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="setSortBy(SortKeyEnum.Answers)">Answers</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

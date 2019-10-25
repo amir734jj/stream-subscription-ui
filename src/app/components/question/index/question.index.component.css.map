@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,aAAa;EACX,MAAM,EAAE,MAAM;EACd,OAAO,EAAE,YAAY",
+"sources": ["question.index.component.sass"],
+"names": [],
+"file": "question.index.component.css"
+}
