@@ -12,7 +12,7 @@ import {RequestInterceptor} from '../../../utilities/custom.error.handler.utilit
 export class HttpInterceptComponent implements OnInit {
 
   errorMessage = '';
-  @ViewChild('templateRef') public templateRef: TemplateRef<any>;
+  @ViewChild('templateRef', { static: true, read: true }) public templateRef: TemplateRef<any>;
   private modalRef: BsModalRef;
 
   constructor(private modalService: BsModalService, private requestInterceptor: RequestInterceptor,

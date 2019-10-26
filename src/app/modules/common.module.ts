@@ -4,7 +4,6 @@ import {AlertModule, BsModalService, ModalModule} from 'ngx-bootstrap';
 import {RequestInterceptor} from '../utilities/custom.error.handler.utility';
 import {HttpInterceptComponent} from '../components/common/http-intercept/http-intercept.component';
 import {CommonComponent} from '../components/common/wrapper/common.component';
-import {InfoComponent} from '../components/common/info/info.component';
 import {CommonModule} from '@angular/common';
 
 @NgModule({
@@ -20,7 +19,7 @@ import {CommonModule} from '@angular/common';
   }],
   exports: [CommonComponent],
   declarations: [
-    CommonComponent, HttpInterceptComponent, InfoComponent,
+    CommonComponent, HttpInterceptComponent,
   ]
 })
 export class CommonComponentModule {

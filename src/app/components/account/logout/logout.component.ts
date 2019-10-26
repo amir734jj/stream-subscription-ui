@@ -1,6 +1,6 @@
 import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import {AccountService} from '../../../services/account.service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-logout',
@@ -9,16 +9,16 @@ import {Router} from '@angular/router';
 })
 export class LogoutComponent implements AfterViewChecked {
 
-  constructor(private identityService: AccountService, private router: Router) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
   ngAfterViewChecked() {
     this.logOut();
   }
 
   logOut() {
-    this.identityService.logOut()
+    this.authenticationService.logout()
       .subscribe(x => {
-        this.router.navigate(['./home']);
+        this.router.navigate(['./home']).then();
       });
   }
 }

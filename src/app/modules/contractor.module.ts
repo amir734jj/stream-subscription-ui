@@ -1,29 +1,24 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {QuestionService} from '../services/board.service';
-import {QuestionIndexComponent} from '../components/question/index/question.index.component';
-import {QuestionSaveComponent} from '../components/question/save/question.save.component';
-import {QuestionUpdateComponent} from '../components/question/update/question.update.component';
+import {ContractorIndexComponent} from '../components/contractor/index/contractor.index.component';
+import {ContractorSaveComponent} from '../components/contractor/save/contractor.save.component';
+import {ContractorUpdateComponent} from '../components/contractor/update/contractor.update.component';
 import {AppRoutingModule} from '../app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MarkdownModule} from 'ngx-markdown';
-import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {AnswerService} from '../services/answer.service'; // this is needed!
+import {ContractorService} from '../services/contractor.service'; // this is needed!
 
 @NgModule({
   imports: [
-    TagInputModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    AppRoutingModule,
-    MarkdownModule.forRoot()
+    AppRoutingModule
   ],
-  providers: [QuestionService, AnswerService],
-  declarations: [QuestionIndexComponent, QuestionSaveComponent, QuestionUpdateComponent],
-  exports: [QuestionIndexComponent, QuestionSaveComponent, QuestionUpdateComponent]
+  providers: [ContractorService],
+  declarations: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent],
+  exports: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent]
 })
 export class ContractorModule {
 

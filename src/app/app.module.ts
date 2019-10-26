@@ -5,13 +5,12 @@ import {AppComponent} from './app.component';
 import {appRoutes} from './RouterConfig';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import {BoardModule} from './modules/board.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ContractorModule} from './modules/contractor.module';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
 import {AccountModule} from './modules/account.module';
 import {CommonComponentModule} from './modules/common.module';
-import {ChatModule} from './modules/chat.module';
-import {CustomReuseStrategy} from './utilities/custom.reuse.strategy.utility';
+import {JwtInterceptor} from './intercepters/jwt.intercepter';
 
 @NgModule({
   declarations: [
@@ -27,11 +26,13 @@ import {CustomReuseStrategy} from './utilities/custom.reuse.strategy.utility';
     AccountModule,
     BoardModule,
     ContractorModule,
-    ChatModule
+    BoardModule
   ],
-  providers: [
-    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}
-  ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

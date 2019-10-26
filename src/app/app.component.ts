@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {AuthenticationUtility} from './utilities/authentication.utility';
 import {setTheme} from 'ngx-bootstrap';
 
 @Component({
@@ -8,14 +7,16 @@ import {setTheme} from 'ngx-bootstrap';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'dotnet-intermediate-workshop';
+  title = 'Contractor-Finder-UI';
   public navBarCollapsed = true;
 
-  constructor(private authenticationUtility: AuthenticationUtility) {
+  constructor() {
     setTheme('bs3');
   }
 
   isAuthenticated() {
-    return !!this.authenticationUtility.getAccount();
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    const token = currentUser && currentUser.token;
+    return !!token;
   }
 }

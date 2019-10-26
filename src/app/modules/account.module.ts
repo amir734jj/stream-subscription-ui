@@ -2,11 +2,10 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppRoutingModule} from '../app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AccountService} from '../services/account.service';
-import {AuthenticationUtility} from '../utilities/authentication.utility';
 import {LoginComponent} from '../components/account/login/login.component';
 import {RegisterComponent} from '../components/account/register/register.component';
 import {LogoutComponent} from '../components/account/logout/logout.component';
+import {AuthenticationService} from '../services/authentication.service';
 
 @NgModule({
   imports: [
@@ -15,7 +14,7 @@ import {LogoutComponent} from '../components/account/logout/logout.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AccountService, AuthenticationUtility],
+  providers: [AuthenticationService],
   declarations: [LoginComponent, RegisterComponent, LogoutComponent],
   exports: [LoginComponent, RegisterComponent, LogoutComponent]
 })

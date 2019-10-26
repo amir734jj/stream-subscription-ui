@@ -1,24 +1,22 @@
 // routerConfig.ts
 
 import {Routes} from '@angular/router';
-import {BoardIndexComponent} from './components/board/index/board.index.component';
-import {QuestionIndexComponent} from './components/question/index/question.index.component';
-import {QuestionSaveComponent} from './components/question/save/question.save.component';
-import {QuestionUpdateComponent} from './components/question/update/question.update.component';
+import {ContractorIndexComponent} from './components/contractor/index/contractor.index.component';
+import {ContractorSaveComponent} from './components/contractor/save/contractor.save.component';
+import {ContractorUpdateComponent} from './components/contractor/update/contractor.update.component';
 import {LogoutComponent} from './components/account/logout/logout.component';
 import {RegisterComponent} from './components/account/register/register.component';
 import {LoginComponent} from './components/account/login/login.component';
-import {ChatComponent} from './components/chat/chat.component';
+import {BoardComponent} from './board/board.component';
 
 export const appRoutes: Routes = [
-  {path: '', component: BoardIndexComponent},
-  {path: 'home', component: BoardIndexComponent},
+  {path: '', component: BoardComponent},
+  {path: 'home', component: BoardComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'logout', component: LogoutComponent},
-  {path: 'board', component: BoardIndexComponent},
-  {path: 'chat', component: ChatComponent, data: {shouldReuse: true}},
-  {path: 'question/new', component: QuestionSaveComponent},
-  {path: 'question/:id/edit', component: QuestionUpdateComponent},
-  {path: 'question/:id', component: QuestionIndexComponent}
+  {path: 'board', component: BoardComponent},
+  {path: 'contractor/new', component: ContractorSaveComponent},
+  {path: 'contractor/:id/edit', component: ContractorUpdateComponent},
+  {path: 'contractor/:id', component: ContractorIndexComponent}
 ];

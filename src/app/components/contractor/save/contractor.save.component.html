@@ -1,0 +1,21 @@
+<ng-container>
+  <form (submit)="handleSaveContractor()">
+    <div class="form-group">
+      <label for="email">Firstname:</label>
+      <input type="email" class="form-control" id="firstname" [(ngModel)]="contractor.firstname">
+    </div>
+    <div class="form-group">
+      <label for="email">Lastname:</label>
+      <input type="email" class="form-control" id="lastname" [(ngModel)]="contractor.lastname">
+    </div>
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="contractor.email">
+    </div>
+    <div class="form-group">
+      <label for="email">Phone Number:</label>
+      <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="contractor.phoneNumber">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</ng-container>

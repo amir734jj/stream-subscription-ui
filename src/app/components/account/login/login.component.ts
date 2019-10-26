@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../../../services/account.service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private router: Router, private identityService: AccountService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
 
@@ -21,7 +21,10 @@ export class LoginComponent implements OnInit {
   handleLogIn(event) {
     event.stopPropagation();
 
-    this.identityService.logIn(this.username, this.password)
+    this.authenticationService.login({
+      username: this.username,
+      password: this.password
+    })
       .subscribe(x => {
         this.router.navigate(['./']).then(() => { });
       });
