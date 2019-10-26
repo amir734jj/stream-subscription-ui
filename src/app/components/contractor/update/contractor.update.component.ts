@@ -26,7 +26,9 @@ export class ContractorUpdateComponent implements OnInit {
     });
   }
 
-  handleUpdateContractor() {
+  handleUpdateContractor(event: Event) {
+    event.preventDefault();
+
     this.contractorService.update(this.contractor.id, this.contractor)
       .subscribe(res => {
         this.router.navigate(['./']).then();

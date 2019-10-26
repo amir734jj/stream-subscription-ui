@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  handleLogIn(event) {
-    event.stopPropagation();
+  handleLogIn(event: Event) {
+    event.preventDefault();
 
     this.authenticationService.login({
       username: this.username,

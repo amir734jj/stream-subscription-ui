@@ -1,5 +1,5 @@
 <ng-container>
-  <form (submit)="handleUpdateContractor()">
+  <form (submit)="handleUpdateContractor($event)">
     <div class="form-group">
       <label for="email">Firstname:</label>
       <input type="email" class="form-control" id="firstname" [(ngModel)]="contractor.firstname">

@@ -18,7 +18,9 @@ export class ContractorSaveComponent implements OnInit {
 
   ngOnInit() { }
 
-  handleSaveContractor() {
+  handleSaveContractor(event: Event) {
+    event.preventDefault();
+
     this.contractorService.save(this.contractor)
       .subscribe(res => {
         this.router.navigate(['./']).then();

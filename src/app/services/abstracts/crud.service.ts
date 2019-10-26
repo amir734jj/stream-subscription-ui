@@ -1,35 +1,34 @@
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import route from '../../utilities/route.utility';
 
 export default abstract class CrudService<T> {
-
-  private readonly apiUrl = environment.apiUrl;
 
   abstract resolveRoute(): string;
   abstract resolveHttpClient(): HttpClient;
 
   save(item: T) {
     return this.resolveHttpClient()
-      .post<T>(this.resolveRoute(), item);
+      .post<T>(route(), item);
   }
 
   update(id: string, item: T) {
     return this.resolveHttpClient()
-      .put<T>(`${this.resolveRoute()}/${id}`, item);
+      .put<T>(route(id), item);
   }
 
   get(id: string) {
     return this.resolveHttpClient()
-      .get<T>(`${this.resolveRoute()}/${id}`);
+      .get<T>(route(id));
   }
 
   getAll() {
     return this.resolveHttpClient()
-      .get<T[]>(this.resolveRoute());
+      .get<T[]>(route());
   }
 
   delete(id: string) {
     return this.resolveHttpClient()
-      .delete<boolean>(`${this.resolveRoute()}/${id}`);
+      .delete<boolean>(route(id));
   }
 }

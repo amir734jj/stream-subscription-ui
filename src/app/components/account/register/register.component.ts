@@ -20,8 +20,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleRegister(event) {
-    event.stopPropagation();
+  handleRegister(event: Event) {
+    event.preventDefault();
 
     this.authenticationService.register({
       firstname: this.firstname,
