@@ -1,6 +1,9 @@
-# ContractorFinderUi
+# contractor-finder-ui
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
+
+### URL
+https://contractor-finder-ui.herokuapp.com/
 
 ## Development server
 
