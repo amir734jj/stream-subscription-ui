@@ -9,26 +9,26 @@ export default abstract class CrudService<T> {
 
   save(item: T) {
     return this.resolveHttpClient()
-      .post<T>(route(), item);
+      .post<T>(route(this.resolveRoute()), item);
   }
 
   update(id: string, item: T) {
     return this.resolveHttpClient()
-      .put<T>(route(id), item);
+      .put<T>(route(this.resolveRoute(), id), item);
   }
 
   get(id: string) {
     return this.resolveHttpClient()
-      .get<T>(route(id));
+      .get<T>(route(this.resolveRoute(), id));
   }
 
   getAll() {
     return this.resolveHttpClient()
-      .get<T[]>(route());
+      .get<T[]>(route(this.resolveRoute()));
   }
 
   delete(id: string) {
     return this.resolveHttpClient()
-      .delete<boolean>(route(id));
+      .delete<boolean>(route(this.resolveRoute(), id));
   }
 }

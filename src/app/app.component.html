@@ -14,13 +14,8 @@
           <a routerLink="/" routerLinkActive="active">Home</a>
         </li>
         <li *ngIf="isAuthenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/question/new">
-            Submit Question
-          </a>
-        </li>
-        <li *ngIf="isAuthenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/chat">
-            Chat
+          <a routerLink="/contractor/new">
+            Register Contractor
           </a>
         </li>
       </ul>

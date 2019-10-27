@@ -41,7 +41,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    return this.http.get(route('account', 'logout'))
+    return this.http.get(route('account', 'logout'), { responseType: 'text' })
       .pipe(tap(_ => {
         // clear token remove user from local storage to log user out
         this.token = null;
