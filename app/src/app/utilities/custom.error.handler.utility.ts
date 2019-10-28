@@ -20,7 +20,7 @@ export class RequestInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         tap(() => { }, err => {
-          if (err instanceof HttpErrorResponse && err.status !== 0) {
+          if (err instanceof HttpErrorResponse) {
             // do error handling here
             RequestInterceptor.ON_ERROR_HANDLERS.forEach(x => x(err));
           }

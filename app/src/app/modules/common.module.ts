@@ -10,7 +10,7 @@ import {CommonModule} from '@angular/common';
   imports: [
     CommonModule,
     AlertModule.forRoot(),
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [BsModalService, RequestInterceptor, {
     provide: HTTP_INTERCEPTORS,
