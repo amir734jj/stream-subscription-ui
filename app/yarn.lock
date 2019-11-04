@@ -5095,6 +5095,13 @@ ngx-bootstrap@^5.2.0:
   resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-5.2.0.tgz#3b8fc064a2830af014292070066ac6e64749ba14"
   integrity sha512-fh+OmaEdxCZnVLQFLqexdw4Xv0Lp2Ueq7un52gF26lTENhTAypGWgf2c92HXzbp4W/B0tnwIZ9mzQPwdDMH91w==
 
+ngx-file-drop@^8.0.8:
+  version "8.0.8"
+  resolved "https://registry.yarnpkg.com/ngx-file-drop/-/ngx-file-drop-8.0.8.tgz#eb7cc031e17627db67e7b77983daea15f4ed9411"
+  integrity sha512-0YndB66U8Quxpi4XUpirgz0snOwKjJNI4yew6scA2Z6RbavsNa02+TfxH5iU6Uu3CqlX5asYjPUtnIOf3dnsxw==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

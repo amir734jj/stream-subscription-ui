@@ -9,7 +9,7 @@ import Contractor from '../models/Contractor';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
-  public contractors: Contractor[];
+  public contractors: Contractor[] = [];
 
   constructor(private router: Router, private contractorService: ContractorService) { }
 

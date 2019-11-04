@@ -1,1 +1,13 @@
-<p>board works!</p>
+
+<ng-container *ngFor="let contractor of contractors">
+  <div class="row">
+    <div class="col-sm-3">
+      <label>{{ contractor.firstname }} {{ contractor.lastname }}</label>
+      <label> {{ contractor.phoneNumber }}</label>
+      <label> {{ contractor.email }}</label>
+    </div>
+    <div>
+      right ...
+    </div>
+  </div>
+</ng-container>
