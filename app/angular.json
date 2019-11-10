@@ -129,7 +129,7 @@
   "defaultProject": "contractor-finder-ui",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "styleext": "sass"
     }
   }
 }

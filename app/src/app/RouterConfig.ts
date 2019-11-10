@@ -7,7 +7,7 @@ import {ContractorUpdateComponent} from './components/contractor/update/contract
 import {LogoutComponent} from './components/account/logout/logout.component';
 import {RegisterComponent} from './components/account/register/register.component';
 import {LoginComponent} from './components/account/login/login.component';
-import {BoardComponent} from './board/board.component';
+import {BoardComponent} from './components/board/board.component';
 
 export const appRoutes: Routes = [
   {path: '', component: BoardComponent},

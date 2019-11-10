@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {ContractorService} from '../services/contractor.service';
-import Contractor from '../models/Contractor';
+import {ContractorService} from '../../services/contractor.service';
+import Contractor from '../../models/Contractor';
 
 @Component({
   selector: 'app-board',
