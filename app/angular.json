@@ -124,6 +124,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "contractor-finder-ui"
+    }
+  },
+  "defaultProject": "contractor-finder-ui",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
