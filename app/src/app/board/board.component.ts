@@ -6,7 +6,7 @@ import Contractor from '../models/Contractor';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.sass']
 })
 export class BoardComponent implements OnInit {
   public contractors: Contractor[] = [];

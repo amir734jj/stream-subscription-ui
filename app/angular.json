@@ -1,11 +1,15 @@
 {
-  "$schema": "../node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "contractor-finder-ui": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "sass"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -24,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.sass"
             ],
             "scripts": []
           },
@@ -89,7 +93,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.sass"
             ],
             "scripts": []
           }
