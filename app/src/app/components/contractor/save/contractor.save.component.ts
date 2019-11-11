@@ -1,8 +1,10 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import Contractor from '../../../models/Contractor';
+import Contractor from '../../../models/entities/Contractor';
 import {ContractorService} from '../../../services/contractor.service';
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
+import {Guid} from 'guid-typescript';
+import {ContractorProfilePhoto} from '../../../models/entities/ContractorProfilePhoto';
 
 @Component({
   selector: 'app-question-save',
@@ -14,11 +16,13 @@ export class ContractorSaveComponent implements OnInit {
   constructor(private router: Router, private contractorService: ContractorService) {
     this.contractor = new Contractor();
   }
+
   public contractor: Contractor;
 
-  public files: NgxFileDropEntry[] = [];
+  public file: NgxFileDropEntry = null;
 
   ngOnInit() {
+    this.contractor = new Contractor();
   }
 
   handleSaveContractor(event: Event) {
@@ -31,7 +35,6 @@ export class ContractorSaveComponent implements OnInit {
   }
 
   public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
     for (const droppedFile of files) {
 
       // Is it a file?
@@ -41,6 +44,20 @@ export class ContractorSaveComponent implements OnInit {
 
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
+
+          const reader = new FileReader();
+
+          reader.onloadend = () => {
+            // Since it contains the Data URI, we should remove the prefix and keep only Base64 string
+            const b64 = (reader.result as string);
+            this.contractor.profilePhoto.mimeType = file.type;
+            this.contractor.profilePhoto.name = file.name;
+            this.contractor.profilePhoto.base64 = b64;
+
+            this.contractor.reset();
+          };
+
+          reader.readAsDataURL(file);
         });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
@@ -50,11 +67,11 @@ export class ContractorSaveComponent implements OnInit {
     }
   }
 
-  public fileOver(event){
+  public fileOver(event) {
     console.log(event);
   }
 
-  public fileLeave(event){
-    console.log(event);
+  public fileLeave(event) {
+    this.contractor.profilePhoto = null;
   }
 }
