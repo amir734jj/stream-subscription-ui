@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ContractorService} from '../../../services/contractor.service';
-import Contractor from '../../../models/Contractor';
+import Contractor from '../../../models/entities/Contractor';
 
 @Component({
   selector: 'app-question-update',

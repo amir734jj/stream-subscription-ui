@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import CrudService from './abstracts/crud.service';
-import Contractor from '../models/Contractor';
+import Contractor from '../models/entities/Contractor';
 
 @Injectable()
 export class ContractorService extends CrudService<Contractor> {

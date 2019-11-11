@@ -6,7 +6,8 @@ import {ContractorUpdateComponent} from '../components/contractor/update/contrac
 import {AppRoutingModule} from '../app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ContractorService} from '../services/contractor.service'; // this is needed!
+import {ContractorService} from '../services/contractor.service';
+import {NgxFileDropModule} from 'ngx-file-drop';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {ContractorService} from '../services/contractor.service'; // this is nee
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxFileDropModule
   ],
   providers: [ContractorService],
   declarations: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent],
