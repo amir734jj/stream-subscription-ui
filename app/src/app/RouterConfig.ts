@@ -8,10 +8,12 @@ import {LogoutComponent} from './components/account/logout/logout.component';
 import {RegisterComponent} from './components/account/register/register.component';
 import {LoginComponent} from './components/account/login/login.component';
 import {BoardComponent} from './components/board/board.component';
+import {AboutComponent} from './components/about/about.component';
 
 export const appRoutes: Routes = [
   {path: '', component: BoardComponent},
   {path: 'home', component: BoardComponent},
+  {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'logout', component: LogoutComponent},

@@ -9,4 +9,8 @@ export class ContractorProfilePhoto extends AbstractEntity {
   constructor() {
     super();
   }
+
+  isNull() {
+    return !!this.base64;
+  }
 }

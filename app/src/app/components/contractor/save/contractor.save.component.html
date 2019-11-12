@@ -16,6 +16,10 @@
     <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="contractor.phoneNumber" name="phoneNumber">
   </div>
   <div class="form-group">
+    <label for="description">Short Description:</label>
+    <textarea type="description" class="form-control" id="description" [(ngModel)]="contractor.description" name="description"></textarea>
+  </div>
+  <div class="form-group">
     <label for="photo">Photo:</label>
     <div class="center" id="photo">
       <ngx-file-drop
@@ -39,7 +43,22 @@
                alt="profile-image"
                class="img-thumbnail profile-image-thumbnail"/>
 
-          <button type="button" (click)="openFileSelector()">Browse Files</button>
+          <button class="btn btn-primary" *ngIf="contractor.profilePhoto.isNull()" type="button" (click)="openFileSelector()">Browse Files</button>
+          <button class="btn btn-danger" *ngIf="contractor.profilePhoto" type="button" (click)="deleteImage()">Delete</button>
+
+          <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
+            <div>
+              Welcome back, friend.
+            </div>
+          </ng-template>
+
+          <ng-template #loggedOut>
+            <div>
+              Please friend, login.
+            </div>
+          </ng-template>
+
+
         </ng-template>
       </ngx-file-drop>
     </div>

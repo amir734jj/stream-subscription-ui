@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ContractorService} from '../../../services/contractor.service';
 import Contractor from '../../../models/entities/Contractor';
+import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
+import {fileDropHandlerUtility, ActionContext} from '../../../utilities/filedrop.utility';
 
 @Component({
   selector: 'app-question-update',
@@ -33,5 +35,17 @@ export class ContractorUpdateComponent implements OnInit {
       .subscribe(res => {
         this.router.navigate(['./']).then();
       });
+  }
+
+  public dropped(files: NgxFileDropEntry[]) {
+    fileDropHandlerUtility(this)(files)(ActionContext.UPDATE);
+  }
+
+  public fileOver(event) {
+    console.log(event);
+  }
+
+  public fileLeave(event) {
+    this.contractor.profilePhoto = null;
   }
 }

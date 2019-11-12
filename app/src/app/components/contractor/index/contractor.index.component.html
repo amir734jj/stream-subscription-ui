@@ -11,7 +11,7 @@
             <p>{{ contractor.phoneNumber }}</p>
           </div>
           <div class="col-sm-4">
-            <img class="img-rounded" [src]="contractor.profilePhoto.base64" alt="profile-photo" *ngIf="!!contractor?.profilePhoto?.base64">
+            <img class="img-rounded contractor-profile-image" [src]="contractor.profilePhoto.base64" alt="profile-photo" *ngIf="!!contractor?.profilePhoto?.base64">
           </div>
         </div>
       </div>

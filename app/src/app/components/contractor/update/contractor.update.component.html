@@ -16,6 +16,40 @@
       <label for="email">Phone Number:</label>
       <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="contractor.phoneNumber">
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <div class="form-group">
+      <label for="description">Short Description:</label>
+      <textarea type="description" class="form-control" id="description" name="description"
+                [(ngModel)]="contractor.description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="photo">Photo:</label>
+      <div class="center" id="photo">
+        <ngx-file-drop
+          dropZoneLabel="Drop files here"
+          (onFileDrop)="dropped($event)"
+          (onFileOver)="fileOver($event)"
+          (onFileLeave)="fileLeave($event)"
+          multiple="false"
+          accept="image/*"
+          dropZoneClassName="custom-dropzone-style"
+          contentClassName="custom-dropzone-content"
+        >
+          <ng-template ngx-file-drop-content-tmp
+                       let-openFileSelector="openFileSelector">
+            <label style="margin: 1rem">
+              profile image
+            </label>
+
+            <img [src]="contractor.profilePhoto.base64"
+                 *ngIf="!!contractor?.profilePhoto?.base64"
+                 alt="profile-image"
+                 class="img-thumbnail profile-image-thumbnail"/>
+
+            <button type="button" (click)="openFileSelector()">Browse Files</button>
+          </ng-template>
+        </ngx-file-drop>
+      </div>
+    </div>
+      <button type="submit" class="btn btn-default">Submit</button>
   </form>
 </ng-container>

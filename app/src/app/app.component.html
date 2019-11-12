@@ -13,13 +13,17 @@
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/" routerLinkActive="active">Home</a>
         </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/about" routerLinkActive="active">About</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <li *ngIf="isAuthenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/contractor/new">
             Register Contractor
           </a>
         </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
+
         <li *ngIf="!isAuthenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
         </li>

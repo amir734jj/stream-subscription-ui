@@ -11,10 +11,12 @@ import {ButtonsModule} from 'ngx-bootstrap/buttons';
 import {AccountModule} from './modules/account.module';
 import {CommonComponentModule} from './modules/common.module';
 import {JwtInterceptor} from './intercepters/jwt.intercepter';
+import {AboutComponent} from './components/about/about.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -25,8 +27,7 @@ import {JwtInterceptor} from './intercepters/jwt.intercepter';
     CommonComponentModule,
     AccountModule,
     BoardModule,
-    ContractorModule,
-    BoardModule
+    ContractorModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
