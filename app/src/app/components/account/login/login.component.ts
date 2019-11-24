@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
 
   username: string;
   password: string;
-  role: Role;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
   }
@@ -24,7 +23,7 @@ export class LoginComponent implements OnInit {
   handleLogIn(event: Event) {
     event.preventDefault();
 
-    this.authenticationService.login(this.role, {
+    this.authenticationService.login({
       username: this.username,
       password: this.password
     }).subscribe(x => {

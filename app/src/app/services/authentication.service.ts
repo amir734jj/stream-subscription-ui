@@ -14,8 +14,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  login(role: Role, loginRequest: LoginRequest) {
-    return this.http.post<LoginResponse>(route('account', 'login', role.toString()), loginRequest)
+  login(loginRequest: LoginRequest) {
+    return this.http.post<LoginResponse>(route('account', 'login'), loginRequest)
       .pipe(
         map((response: LoginResponse) => {
           // login successful if there's a jwt token in the response

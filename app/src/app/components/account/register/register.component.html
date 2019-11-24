@@ -24,7 +24,7 @@
       <label for="role">Context</label>
       <div id="role">
         <label class="radio-inline" *ngFor="let role of roles">
-          <input type="radio" name="role" value="{{ role.value }}}" [(ngModel)]="roleRef" />
+          <input type="radio" name="role" value="{{ role.value }}" [(ngModel)]="roleRef" />
           {{ role.name }}
         </label>
       </div>

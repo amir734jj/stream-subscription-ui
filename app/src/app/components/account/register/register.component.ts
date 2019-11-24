@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Router} from '@angular/router';
 import {Role, roles} from '../../../models/RoleEnum';
-import {EnumValueType} from 'enum-values/src/enumValues';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +16,7 @@ export class RegisterComponent implements OnInit {
   username: string;
   password: string;
   roleRef: Role;
-  roles: { name: string; value: EnumValueType }[];
+  roles: { name: string; value: string | number }[];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     this.roles = roles;
