@@ -46,19 +46,6 @@
           <button class="btn btn-primary" *ngIf="contractor.profilePhoto.isNull()" type="button" (click)="openFileSelector()">Browse Files</button>
           <button class="btn btn-danger" *ngIf="contractor.profilePhoto" type="button" (click)="deleteImage()">Delete</button>
 
-          <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
-            <div>
-              Welcome back, friend.
-            </div>
-          </ng-template>
-
-          <ng-template #loggedOut>
-            <div>
-              Please friend, login.
-            </div>
-          </ng-template>
-
-
         </ng-template>
       </ngx-file-drop>
     </div>
