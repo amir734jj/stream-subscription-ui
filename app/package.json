@@ -24,6 +24,7 @@
     "@angular/platform-browser": "~8.2.9",
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
+    "enum-values": "^1.2.1",
     "express": "^4.17.1",
     "guid-typescript": "latest",
     "ngx-bootstrap": "^5.2.0",
