@@ -25,7 +25,7 @@ export class AuthenticationService {
   }
 
   register(role: Role, registerRequest: RegisterRequest) {
-    return this.http.post(route('account', 'register', role.toString()), registerRequest)
+    return this.http.post(route('account', 'register', role.toString()), registerRequest, { responseType: 'text' })
       .pipe(
         map((response: RegisterResponse) => {
           return response;
