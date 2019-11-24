@@ -6,8 +6,7 @@ import {RegisterRequest} from '../models/authentication.service/register/Registe
 import {RegisterResponse} from '../models/authentication.service/register/RegisterResponse';
 import route from '../utilities/route.utility';
 import {Role} from '../models/RoleEnum';
-// @ts-ignore
-import jwtDecode from 'jwt-decode';
+import * as jwtDecode from 'jwt-decode';
 
 @Injectable()
 export class AuthenticationService {
