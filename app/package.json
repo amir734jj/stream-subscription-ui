@@ -27,6 +27,7 @@
     "enum-values": "^1.2.1",
     "express": "^4.17.1",
     "guid-typescript": "latest",
+    "jwt-decode": "^2.2.0",
     "ngx-bootstrap": "^5.2.0",
     "ngx-file-drop": "^8.0.8",
     "rxjs": "~6.4.0",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
