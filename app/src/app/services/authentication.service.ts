@@ -11,7 +11,6 @@ import route from '../utilities/route.utility';
 @Injectable()
 export class AuthenticationService {
   public token: string;
-  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
