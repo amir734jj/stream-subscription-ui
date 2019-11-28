@@ -1,12 +1,13 @@
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 import Contractor from '../models/entities/Contractor';
 import {ContractorProfilePhoto} from '../models/entities/ContractorProfilePhoto';
+import * as _ from 'lodash';
 
 export enum ActionContext {
   UPDATE, SAVE
 }
 
-export const fileDropHandlerUtility = (ref: { contractor: Contractor }) => (files: NgxFileDropEntry[]) => (ctx: ActionContext) => {
+export const fileDropHandlerUtility = (ref: { contractor: Contractor }, files: NgxFileDropEntry[], ctx: ActionContext) => {
   for (const droppedFile of files) {
 
     // Is it a file?
@@ -30,11 +31,10 @@ export const fileDropHandlerUtility = (ref: { contractor: Contractor }) => (file
 
           switch (ctx) {
             case ActionContext.UPDATE:
-              ref.contractor.profilePhoto = Object.assign({}, ref.contractor.profilePhoto, payload);
+              ref.contractor.profilePhoto = _.merge(ref.contractor.profilePhoto, payload);
               break;
             case ActionContext.SAVE:
-              ref.contractor.profilePhoto = Object.assign({}, new ContractorProfilePhoto(), payload);
-              ref.contractor.reset();
+              ref.contractor.profilePhoto = _.merge(new ContractorProfilePhoto(), payload);
               break;
             default:
             // nothing ...

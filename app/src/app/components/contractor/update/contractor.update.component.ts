@@ -38,7 +38,7 @@ export class ContractorUpdateComponent implements OnInit {
   }
 
   public dropped(files: NgxFileDropEntry[]) {
-    fileDropHandlerUtility(this)(files)(ActionContext.UPDATE);
+    fileDropHandlerUtility(this, files, ActionContext.UPDATE);
   }
 
   public fileOver(event) {

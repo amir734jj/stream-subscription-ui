@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public dropped(files: NgxFileDropEntry[]) {
-    fileDropHandlerUtility(this)(files)(ActionContext.SAVE);
+    fileDropHandlerUtility(this, files, ActionContext.SAVE);
   }
 
   public fileOver(event) {

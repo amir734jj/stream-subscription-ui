@@ -10,8 +10,6 @@ abstract class AbstractEntity {
   reset() {
     delete this.id;
   }
-
-  abstract isNull();
 }
 
 export default AbstractEntity;

@@ -13,6 +13,13 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
+  isAuthenticated() {
+    return this.http.get<{}>(route('account'))
+      .pipe(map(response => {
+        return !!Object.keys(response).length;
+      }));
+  }
+
   login(loginRequest: LoginRequest) {
     return this.http.post<{ token: string }>(route('account', 'login'), loginRequest)
       .pipe(map(response => {

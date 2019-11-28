@@ -19,8 +19,4 @@ export default class Contractor extends AbstractEntity {
     super.reset();
     this.profilePhoto.reset();
   }
-
-  isNull() {
-    return !!this.firstname;
-  }
 }

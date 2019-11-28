@@ -11,6 +11,6 @@ export class ContractorProfilePhoto extends AbstractEntity {
   }
 
   isNull() {
-    return !!this.base64;
+    return !this.base64;
   }
 }
