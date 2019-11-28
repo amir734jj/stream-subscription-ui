@@ -9,6 +9,8 @@ import {RegisterComponent} from './components/account/register/register.componen
 import {LoginComponent} from './components/account/login/login.component';
 import {BoardComponent} from './components/board/board.component';
 import {AboutComponent} from './components/about/about.component';
+import {ProfileComponent} from './components/profile/profile.component';
+import {WelcomeComponent} from './components/welcome/welcome.component';
 
 export const appRoutes: Routes = [
   {path: '', component: BoardComponent},
@@ -17,6 +19,8 @@ export const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'logout', component: LogoutComponent},
+  {path: 'profile', component: ProfileComponent},
+  {path: 'welcome', component: WelcomeComponent},
   {path: 'board', component: BoardComponent},
   {path: 'contractor/new', component: ContractorSaveComponent},
   {path: 'contractor/:id/edit', component: ContractorUpdateComponent},

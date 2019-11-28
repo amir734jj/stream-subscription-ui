@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     }).subscribe(x => {
-      this.router.navigate(['./']).then(() => {
+      this.router.navigate(['./welcome']).then(() => {
       });
     });
   }

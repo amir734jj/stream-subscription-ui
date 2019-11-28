@@ -8,13 +8,14 @@ import {
 } from '@angular/common/http';
 import {tap} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs';
+import * as _ from 'lodash';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
   static ON_ERROR_HANDLERS: Array<(HttpErrorResponse) => void> = [];
 
-  constructor() { }
+  invokeErrorHandlers = (err: HttpErrorResponse) => _.throttle(() => RequestInterceptor.ON_ERROR_HANDLERS.forEach(x => x(err)), 1000);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
@@ -22,7 +23,7 @@ export class RequestInterceptor implements HttpInterceptor {
         tap(() => { }, err => {
           if (err instanceof HttpErrorResponse) {
             // do error handling here
-            RequestInterceptor.ON_ERROR_HANDLERS.forEach(x => x(err));
+            this.invokeErrorHandlers(err);
           }
         })
       );

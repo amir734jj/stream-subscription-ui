@@ -12,11 +12,16 @@ import {AccountModule} from './modules/account.module';
 import {CommonComponentModule} from './modules/common.module';
 import {JwtInterceptor} from './intercepters/jwt.intercepter';
 import {AboutComponent} from './components/about/about.component';
+import {NgxFileDropModule} from 'ngx-file-drop';
+import {FormsModule} from '@angular/forms';
+import {ProfileModule} from './modules/profile.module';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponent
+    AboutComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,10 @@ import {AboutComponent} from './components/about/about.component';
     CommonComponentModule,
     AccountModule,
     BoardModule,
-    ContractorModule
+    ProfileModule,
+    ContractorModule,
+    NgxFileDropModule,
+    FormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

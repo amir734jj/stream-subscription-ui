@@ -6,4 +6,11 @@ export enum Role {
   Homeowner = 2
 }
 
-export const roles = EnumValues.getNamesAndValues(Role);
+const roleName = {
+  InternalUser: 'Internal-user'
+};
+
+export const roles: {
+  name: string,
+  value: string | number
+}[] = EnumValues.getNamesAndValues(Role).map(x => x.name in roleName ? {...x, name: roleName[x.name] } : x);
