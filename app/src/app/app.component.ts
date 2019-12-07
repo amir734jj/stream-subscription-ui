@@ -8,7 +8,7 @@ import {AuthenticationService} from './services/authentication.service';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  title = 'Contractor-Finder-UI';
+  title = 'wizpiti';
   public navBarCollapsed = true;
 
   constructor(private authenticationService: AuthenticationService) {
