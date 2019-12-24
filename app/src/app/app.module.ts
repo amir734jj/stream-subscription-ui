@@ -15,7 +15,7 @@ import {AboutComponent} from './components/about/about.component';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './modules/profile.module';
-import { WelcomeComponent } from './components/welcome/welcome.component';
+import {WelcomeComponent} from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [

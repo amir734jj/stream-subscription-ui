@@ -14,7 +14,7 @@ export class BoardComponent implements OnInit {
   constructor(private router: Router, private contractorService: ContractorService) { }
 
   ngOnInit() {
-    this.getContractors();
+    // this.getContractors();
   }
 
   getContractors() {

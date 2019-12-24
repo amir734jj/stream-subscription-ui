@@ -5,6 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {ProfileComponent} from '../components/profile/profile.component';
+import {ProfileService} from '../services/profile.service';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import {ProfileComponent} from '../components/profile/profile.component';
     AppRoutingModule,
     NgxFileDropModule
   ],
-  providers: [ ],
+  providers: [ProfileService],
   declarations: [ProfileComponent],
   exports: [ProfileComponent]
 })

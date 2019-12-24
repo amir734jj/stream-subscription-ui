@@ -20,15 +20,16 @@ export class LoginComponent implements OnInit {
 
   }
 
-  handleLogIn(event: Event) {
+  async handleLogIn(event: Event) {
     event.preventDefault();
 
-    this.authenticationService.login({
+    const response = await this.authenticationService.login({
       username: this.username,
       password: this.password
-    }).subscribe(x => {
-      this.router.navigate(['./welcome']).then(() => {
-      });
     });
+
+    if (!!response) {
+      await this.router.navigate(['./welcome']);
+    }
   }
 }

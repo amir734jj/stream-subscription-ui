@@ -8,7 +8,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = req.clone({
-      headers: req.headers.set('Authorization', this.getToken())
+      headers: req.headers.set('Authorization', `Bearer ${this.getToken()}`)
         .append('Content-Type', 'application/json')
         .append('Access-Control-Allow-Origin', '*')
         .append('Access-Control-Allow-Headers', 'Origin, Authorization, Content-Type, Accept')

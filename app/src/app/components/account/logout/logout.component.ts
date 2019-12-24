@@ -15,10 +15,11 @@ export class LogoutComponent implements AfterViewChecked {
     this.logOut();
   }
 
-  logOut() {
-    this.authenticationService.logout()
-      .subscribe(x => {
-        this.router.navigate(['./home']).then();
-      });
+  async logOut() {
+    const response = await this.authenticationService.logout();
+
+    if (!!response) {
+      this.router.navigate(['./home']).then();
+    }
   }
 }

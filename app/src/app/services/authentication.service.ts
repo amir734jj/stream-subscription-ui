@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, tap} from 'rxjs/operators';
 import {LoginRequest} from '../models/authentication.service/login/LoginRequest';
 import {RegisterRequest} from '../models/authentication.service/register/RegisterRequest';
-import {RegisterResponse} from '../models/authentication.service/register/RegisterResponse';
 import route from '../utilities/route.utility';
 import {Role} from '../models/RoleEnum';
 import * as jwtDecode from 'jwt-decode';
@@ -13,39 +11,30 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  isAuthenticated() {
-    return this.http.get<{}>(route('account'))
-      .pipe(map(response => {
-        return !!Object.keys(response).length;
-      }));
+  async isAuthenticated() {
+    const response = await this.http.get<{}>(route('account')).toPromise();
+
+    return !!Object.keys(response).length;
   }
 
-  login(loginRequest: LoginRequest) {
-    return this.http.post<{ token: string }>(route('account', 'login'), loginRequest)
-      .pipe(map(response => {
-        // login successful if there's a jwt token in the response
-        if (response.token) {
-          const jwtMetadata = jwtDecode(response.token);
-          // store email and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('user', JSON.stringify({...jwtMetadata, ...response}));
-        }
-      }));
+  async login(loginRequest: LoginRequest) {
+    const response = await this.http.post<{ token: string }>(route('account', 'login'), loginRequest).toPromise();
+
+    if (response.token) {
+      const jwtMetadata = jwtDecode(response.token);
+      // store email and jwt token in local storage to keep user logged in between page refreshes
+      localStorage.setItem('user', JSON.stringify({...jwtMetadata, ...response}));
+    }
+
+    return response;
   }
 
-  register(role: Role, registerRequest: RegisterRequest) {
-    return this.http.post(route('account', 'register', role.toString()), registerRequest, {responseType: 'text'})
-      .pipe(
-        map((response: RegisterResponse) => {
-          return response;
-        })
-      );
+  async register(role: Role, registerRequest: RegisterRequest) {
+    return await this.http.post(route('account', 'register', role.toString()), registerRequest, {responseType: 'text'}).toPromise();
   }
 
-  logout() {
+  async logout() {
     localStorage.removeItem('user');
-    return this.http.post(route('account', 'logout'), null, {responseType: 'text'})
-      .pipe(tap(_ => {
-        // clear token remove user from local storage to log user out
-      }));
+    return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }
 }

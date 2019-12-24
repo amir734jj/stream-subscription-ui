@@ -1,23 +1,26 @@
 <form (submit)="handleSaveContractor($event)">
   <div class="form-group">
+    <span class="label label-default">{{ profile.role }}</span>
+  </div>
+  <div class="form-group">
     <label for="email">Firstname:</label>
-    <input type="email" class="form-control" id="firstname" [(ngModel)]="contractor.firstname" name="firstname">
+    <input type="email" class="form-control" id="firstname" [(ngModel)]="profile.firstname" name="firstname">
   </div>
   <div class="form-group">
     <label for="email">Lastname:</label>
-    <input type="email" class="form-control" id="lastname" [(ngModel)]="contractor.lastname" name="lastname">
+    <input type="email" class="form-control" id="lastname" [(ngModel)]="profile.lastname" name="lastname">
   </div>
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email" [(ngModel)]="contractor.email" name="email">
+    <input type="email" class="form-control" id="email" [(ngModel)]="profile.email" name="email">
   </div>
   <div class="form-group">
     <label for="email">Phone Number:</label>
-    <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="contractor.phoneNumber" name="phoneNumber">
+    <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="profile.phoneNumber" name="phoneNumber">
   </div>
   <div class="form-group">
     <label for="description">Short Description:</label>
-    <textarea type="description" class="form-control" id="description" [(ngModel)]="contractor.description" name="description"></textarea>
+    <textarea type="description" class="form-control" id="description" [(ngModel)]="profile.description" name="description"></textarea>
   </div>
   <div class="form-group">
     <label for="photo">Photo:</label>

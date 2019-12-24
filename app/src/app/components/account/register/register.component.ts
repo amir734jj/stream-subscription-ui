@@ -25,17 +25,19 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleRegister(event: Event) {
+  async handleRegister(event: Event) {
     event.preventDefault();
 
-    this.authenticationService.register(this.roleRef, {
+    const response = await this.authenticationService.register(this.roleRef, {
       firstname: this.firstname,
       lastname: this.lastname,
       email: this.email,
       username: this.username,
       password: this.password
-    }).subscribe(x => {
-      this.router.navigate(['./login']);
     });
+
+    if (!!response) {
+      await this.router.navigate(['./login']);
+    }
   }
 }

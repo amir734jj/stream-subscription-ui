@@ -15,7 +15,7 @@ export class ContractorIndexComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.getContractor(params.id);
+      // this.getContractor(params.id);
     });
   }
 

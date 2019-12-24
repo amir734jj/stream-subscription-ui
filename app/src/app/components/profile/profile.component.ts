@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ContractorService} from '../../services/contractor.service';
-import Contractor from '../../models/entities/Contractor';
 import {NgxFileDropEntry} from 'ngx-file-drop';
 import {ActionContext, fileDropHandlerUtility} from '../../utilities/filedrop.utility';
 import {ContractorProfilePhoto} from '../../models/entities/ContractorProfilePhoto';
+import {Profile} from '../../models/entities/Profile';
+import {ProfileService} from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,29 +14,31 @@ import {ContractorProfilePhoto} from '../../models/entities/ContractorProfilePho
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private router: Router, private contractorService: ContractorService) {
-    this.contractor = new Contractor();
+  constructor(private router: Router, private profileService: ProfileService) {
+    this.profile = new Profile();
   }
 
-  public contractor: Contractor;
+  public profile: Profile;
 
   public file: NgxFileDropEntry = null;
 
   ngOnInit() {
-    this.contractor = new Contractor();
+    this.profileService.get().subscribe(profile => {
+      this.profile = profile;
+    });
   }
 
   handleSaveContractor(event: Event) {
     event.preventDefault();
 
-    this.contractorService.save(this.contractor)
-      .subscribe(res => {
-        this.router.navigate(['./']).then();
-      });
+    // this.profileService.save(this.profile)
+    //   .subscribe(res => {
+    //     this.router.navigate(['./']).then();
+    //   });
   }
 
   public dropped(files: NgxFileDropEntry[]) {
-    fileDropHandlerUtility(this, files, ActionContext.SAVE);
+    // fileDropHandlerUtility(this, files, ActionContext.SAVE);
   }
 
   public fileOver(event) {
@@ -43,10 +46,10 @@ export class ProfileComponent implements OnInit {
   }
 
   public fileLeave(event) {
-    this.contractor.profilePhoto = null;
+    // this.contractor.profilePhoto = null;
   }
 
   deleteImage() {
-    this.contractor.profilePhoto = new ContractorProfilePhoto();
+    // this.contractoror.profilePhoto = new ContractorProfilePhoto();
   }
 }
