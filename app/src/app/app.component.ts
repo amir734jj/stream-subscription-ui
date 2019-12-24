@@ -9,7 +9,7 @@ import * as _ from 'lodash';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  title = 'Contractor-Finder-UI';
+  title = 'wizpiti';
   public navBarCollapsed = true;
   public authenticated: () => boolean;
 
