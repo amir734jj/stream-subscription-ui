@@ -15,7 +15,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
   static ON_ERROR_HANDLERS: Array<(HttpErrorResponse) => void> = [];
 
-  invokeErrorHandlers = (err: HttpErrorResponse) => _.throttle(() => RequestInterceptor.ON_ERROR_HANDLERS.forEach(x => x(err)), 1000);
+  invokeErrorHandlers = (err: HttpErrorResponse) => RequestInterceptor.ON_ERROR_HANDLERS.forEach(x => x(err));
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)

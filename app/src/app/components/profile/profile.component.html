@@ -1,57 +1,57 @@
-<form (submit)="handleSaveContractor($event)">
+<form (submit)="handleSaveContractor($event)" [formGroup]="form">
   <div class="form-group">
     <span class="label label-default">{{ profile.role }}</span>
   </div>
   <div class="form-group">
     <label for="email">Firstname:</label>
-    <input type="email" class="form-control" id="firstname" [(ngModel)]="profile.firstname" name="firstname">
+    <input type="email" class="form-control" id="firstname" formControlName="firstname" name="firstname" />
   </div>
   <div class="form-group">
     <label for="email">Lastname:</label>
-    <input type="email" class="form-control" id="lastname" [(ngModel)]="profile.lastname" name="lastname">
+    <input type="email" class="form-control" id="lastname" formControlName="lastname" name="lastname" />
   </div>
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email" [(ngModel)]="profile.email" name="email">
+    <input type="email" class="form-control" id="email" formControlName="email" name="email" />
   </div>
   <div class="form-group">
-    <label for="email">Phone Number:</label>
-    <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="profile.phoneNumber" name="phoneNumber">
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" name="phoneNumber" />
   </div>
   <div class="form-group">
     <label for="description">Short Description:</label>
-    <textarea type="description" class="form-control" id="description" [(ngModel)]="profile.description" name="description"></textarea>
+    <textarea type="description" class="form-control" id="description" formControlName="description" name="description"></textarea>
   </div>
-  <div class="form-group">
-    <label for="photo">Photo:</label>
-    <div class="center" id="photo">
-      <ngx-file-drop
-        dropZoneLabel="Drop files here"
-        (onFileDrop)="dropped($event)"
-        (onFileOver)="fileOver($event)"
-        (onFileLeave)="fileLeave($event)"
-        multiple="false"
-        accept="image/*"
-        dropZoneClassName="custom-dropzone-style"
-        contentClassName="custom-dropzone-content"
-      >
-        <ng-template ngx-file-drop-content-tmp
-                     let-openFileSelector="openFileSelector">
-          <label style="margin: 1rem">
-            profile image
-          </label>
+<!--  <div class="form-group">-->
+<!--    <label for="photo">Photo:</label>-->
+<!--    <div class="center" id="photo">-->
+<!--      <ngx-file-drop-->
+<!--        dropZoneLabel="Drop files here"-->
+<!--        (onFileDrop)="dropped($event)"-->
+<!--        (onFileOver)="fileOver($event)"-->
+<!--        (onFileLeave)="fileLeave($event)"-->
+<!--        multiple="false"-->
+<!--        accept="image/*"-->
+<!--        dropZoneClassName="custom-dropzone-style"-->
+<!--        contentClassName="custom-dropzone-content"-->
+<!--      >-->
+<!--        <ng-template ngx-file-drop-content-tmp-->
+<!--                     let-openFileSelector="openFileSelector">-->
+<!--          <label style="margin: 1rem">-->
+<!--            profile image-->
+<!--          </label>-->
 
-          <img [src]="contractor.profilePhoto.base64"
-               *ngIf="!contractor.profilePhoto.isNull()"
-               alt="profile-image"
-               class="img-thumbnail profile-image-thumbnail"/>
+<!--          <img [src]="contractor.profilePhoto.base64"-->
+<!--               *ngIf="!contractor.profilePhoto.isNull()"-->
+<!--               alt="profile-image"-->
+<!--               class="img-thumbnail profile-image-thumbnail"/>-->
 
-          <button class="btn btn-primary" *ngIf="contractor.profilePhoto.isNull()" type="button" (click)="openFileSelector()">Browse Files</button>
-          <button class="btn btn-danger" *ngIf="!contractor.profilePhoto.isNull()" type="button" (click)="deleteImage()">Delete</button>
+<!--          <button class="btn btn-primary" *ngIf="contractor.profilePhoto.isNull()" type="button" (click)="openFileSelector()">Browse Files</button>-->
+<!--          <button class="btn btn-danger" *ngIf="!contractor.profilePhoto.isNull()" type="button" (click)="deleteImage()">Delete</button>-->
 
-        </ng-template>
-      </ngx-file-drop>
-    </div>
-  </div>
+<!--        </ng-template>-->
+<!--      </ngx-file-drop>-->
+<!--    </div>-->
+<!--  </div>-->
   <button type="submit" class="btn btn-default">Submit</button>
 </form>

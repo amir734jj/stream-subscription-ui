@@ -8,7 +8,9 @@
   <div class="modal-body">
     <alert type="warning">
       <h4>Error! Exception occurred while attempting a REST call </h4>
-      <pre>{{errorMessage}}</pre>
+      <p *ngIf="exceptionMessage" class="clear-fix"> {{ errorMessage}} </p>
+      <br />
+      <pre *ngIf="exceptionMessage"> {{exceptionMessage}} </pre>
     </alert>
   </div>
 </ng-template>

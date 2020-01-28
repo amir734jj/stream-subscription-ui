@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -28,8 +27,8 @@ export class AppComponent implements OnInit {
       .then(authenticated => {
         if (!authenticated) {
           localStorage.removeItem('user');
+          this.authenticated();
         }
-        this.authenticated();
       });
   }
 }

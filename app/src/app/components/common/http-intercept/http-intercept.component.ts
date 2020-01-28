@@ -2,6 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {AlertConfig, BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RequestInterceptor} from '../../../utilities/custom.error.handler.utility';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-http-intercept',
@@ -11,7 +12,9 @@ import {RequestInterceptor} from '../../../utilities/custom.error.handler.utilit
 })
 export class HttpInterceptComponent implements OnInit {
 
+  exceptionMessage = '';
   errorMessage = '';
+
   @ViewChild('templateRef', { static: true, read: false }) public templateRef: BsModalRef;
   private modalRef: BsModalRef;
 
@@ -26,7 +29,8 @@ export class HttpInterceptComponent implements OnInit {
   }
 
   onErrorHandler(errorResponse: HttpErrorResponse) {
-    this.errorMessage = errorResponse.message;
+    this.exceptionMessage = errorResponse.message;
+    this.errorMessage = _.get(errorResponse, ['error', 'error_description'], (errorResponse.error.toString() || '\n').split('\n', 1)[0]);
     this.showModal();
   }
 

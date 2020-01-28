@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {Role} from '../../../models/RoleEnum';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +10,16 @@ import {Role} from '../../../models/RoleEnum';
 })
 export class LoginComponent implements OnInit {
 
-  username: string;
-  password: string;
+  form: FormGroup;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
+    this.form = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+      ])
+    });
   }
 
   ngOnInit() {
@@ -23,10 +29,11 @@ export class LoginComponent implements OnInit {
   async handleLogIn(event: Event) {
     event.preventDefault();
 
-    const response = await this.authenticationService.login({
-      username: this.username,
-      password: this.password
-    });
+    if (this.form.invalid) {
+      return;
+    }
+
+    const response = await this.authenticationService.login(this.form.value);
 
     if (!!response) {
       await this.router.navigate(['./welcome']);

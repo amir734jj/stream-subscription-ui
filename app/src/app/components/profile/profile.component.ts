@@ -4,8 +4,10 @@ import {ContractorService} from '../../services/contractor.service';
 import {NgxFileDropEntry} from 'ngx-file-drop';
 import {ActionContext, fileDropHandlerUtility} from '../../utilities/filedrop.utility';
 import {ContractorProfilePhoto} from '../../models/entities/ContractorProfilePhoto';
-import {Profile} from '../../models/entities/Profile';
+import {IProfile, Profile} from '../../models/entities/Profile';
 import {ProfileService} from '../../services/profile.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-profile',
@@ -13,28 +15,46 @@ import {ProfileService} from '../../services/profile.service';
   styleUrls: ['./profile.component.sass']
 })
 export class ProfileComponent implements OnInit {
+  private form: FormGroup;
 
   constructor(private router: Router, private profileService: ProfileService) {
     this.profile = new Profile();
+    this.bind();
   }
 
-  public profile: Profile;
+  public profile: IProfile;
 
   public file: NgxFileDropEntry = null;
 
   ngOnInit() {
+    this.handleGetProfile();
+  }
+
+  bind() {
+    this.form = new FormGroup({
+      firstname: new FormControl(this.profile.firstname, Validators.required),
+      lastname: new FormControl(this.profile.lastname, Validators.required),
+      description: new FormControl(this.profile.description, Validators.required),
+      email: new FormControl(this.profile.email, [
+        Validators.required,
+        Validators.email
+      ]),
+      phoneNumber: new FormControl(this.profile.phoneNumber, Validators.required)
+    });
+  }
+
+  handleGetProfile() {
     this.profileService.get().subscribe(profile => {
       this.profile = profile;
+      this.bind();
     });
   }
 
   handleSaveContractor(event: Event) {
     event.preventDefault();
 
-    // this.profileService.save(this.profile)
-    //   .subscribe(res => {
-    //     this.router.navigate(['./']).then();
-    //   });
+    this.profileService.save(_.assign({}, this.profile, this.form.value))
+      .subscribe(_ => this.handleGetProfile());
   }
 
   public dropped(files: NgxFileDropEntry[]) {
@@ -50,6 +70,6 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteImage() {
-    // this.contractoror.profilePhoto = new ContractorProfilePhoto();
+    // this.contractor.profilePhoto = new ContractorProfilePhoto();
   }
 }

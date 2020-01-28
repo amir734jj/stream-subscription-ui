@@ -1,30 +1,31 @@
 <div class="container">
-  <form (submit)="handleRegister($event)">
+  <form (submit)="handleRegister($event)" [formGroup]="form">
     <div class="form-group">
       <label for="email">Firstname:</label>
-      <input type="text" class="form-control" id="fullname" [(ngModel)]="firstname" name="fullname">
+      <input type="text" class="form-control" id="fullname" formControlName="firstname" name="firstname" />
     </div>
     <div class="form-group">
       <label for="email">Lastname:</label>
-      <input type="text" class="form-control" id="lastname" [(ngModel)]="lastname" name="fullname">
+      <input type="text" class="form-control" id="lastname" formControlName="lastname" name="lastname" />
     </div>
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email">
+      <input type="email" class="form-control" id="email" formControlName="email" name="email" />
     </div>
     <div class="form-group">
       <label for="username">Username:</label>
-      <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username">
+      <input type="text" class="form-control" id="username" formControlName="username" name="username" />
     </div>
     <div class="form-group">
       <label for="password">Password (requires number, uppercase and special character):</label>
-      <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password">
+      <input type="password" class="form-control" id="password" formControlName="password" name="password" />
     </div>
     <div class="form-group">
       <label for="role">Context</label>
-      <div id="role">
-        <label class="radio-inline" *ngFor="let role of roles">
-          <input type="radio" name="role" value="{{ role.value }}" [(ngModel)]="roleRef" />
+      <div id="role" class="radio">
+        <label class="radio-inline" *ngFor="let role of roles; let i = index">
+          <input type="radio" name="role" value="{{ role.value }}" [checked]="i == 0" (change)="roleRef = role.value" />
+          <span class="cr"><i class="cr-icon fa fa-check-square"></i></span>
           {{ role.name }}
         </label>
       </div>
