@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import Contractor from '../../../models/entities/Contractor';
 import {ContractorService} from '../../../services/contractor.service';
 import {NgxFileDropEntry} from 'ngx-file-drop';
-import {ActionContext, fileDropHandlerUtility} from '../../../utilities/filedrop.utility';
 import {ContractorProfilePhoto} from '../../../models/entities/ContractorProfilePhoto';
 
 @Component({
@@ -35,7 +34,7 @@ export class ContractorSaveComponent implements OnInit {
   }
 
   public dropped(files: NgxFileDropEntry[]) {
-    fileDropHandlerUtility(this, files, ActionContext.SAVE);
+    // fileDropHandlerUtility(this, files, ActionContext.SAVE);
   }
 
   public fileOver(event) {

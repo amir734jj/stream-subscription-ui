@@ -7,6 +7,7 @@ export interface IProfile {
   role: string;
   phoneNumber: string;
   description: string;
+  photo: string;
 }
 
 export class Profile extends AbstractEntity implements IProfile {
@@ -16,6 +17,7 @@ export class Profile extends AbstractEntity implements IProfile {
   role: string;
   phoneNumber: string;
   description: string;
+  photo: string;
 
   constructor() {
     super();

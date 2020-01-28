@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ContractorService} from '../../services/contractor.service';
 import {NgxFileDropEntry} from 'ngx-file-drop';
-import {ActionContext, fileDropHandlerUtility} from '../../utilities/filedrop.utility';
-import {ContractorProfilePhoto} from '../../models/entities/ContractorProfilePhoto';
+import {fileDropHandlerUtility} from '../../utilities/filedrop.utility';
 import {IProfile, Profile} from '../../models/entities/Profile';
 import {ProfileService} from '../../services/profile.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
+import {ImageService} from '../../services/image.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +16,7 @@ import * as _ from 'lodash';
 export class ProfileComponent implements OnInit {
   private form: FormGroup;
 
-  constructor(private router: Router, private profileService: ProfileService) {
+  constructor(private router: Router, private profileService: ProfileService, private imageService: ImageService) {
     this.profile = new Profile();
     this.bind();
   }
@@ -57,8 +56,8 @@ export class ProfileComponent implements OnInit {
       .subscribe(_ => this.handleGetProfile());
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
-    // fileDropHandlerUtility(this, files, ActionContext.SAVE);
+  public async dropped(files: NgxFileDropEntry[]) {
+    this.profile.photo = await this.imageService.upload(fileDropHandlerUtility(_.head(files)));
   }
 
   public fileOver(event) {

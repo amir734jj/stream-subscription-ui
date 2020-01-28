@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {ProfileComponent} from '../components/profile/profile.component';
 import {ProfileService} from '../services/profile.service';
+import {ImageService} from '../services/image.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import {ProfileService} from '../services/profile.service';
     AppRoutingModule,
     NgxFileDropModule
   ],
-  providers: [ProfileService],
+  providers: [ProfileService, ImageService],
   declarations: [ProfileComponent],
   exports: [ProfileComponent]
 })
