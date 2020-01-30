@@ -3,6 +3,7 @@ import {AuthenticationService} from '../../../services/authentication.service';
 import {Router} from '@angular/router';
 import {Role, roles} from '../../../models/RoleEnum';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormErrorTable, resolveFormGroupErrors} from "../../../utilities/form.utility";
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ export class RegisterComponent implements OnInit {
   roleRef: Role;
   roles: { name: string; value: string | number }[];
   private form: FormGroup;
+	errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     this.roles = roles;
@@ -38,9 +40,12 @@ export class RegisterComponent implements OnInit {
   async handleRegister(event: Event) {
     event.preventDefault();
 
-    if (this.form.invalid) {
-      return;
-    }
+	  if (this.form.invalid) {
+		  this.errorTable = resolveFormGroupErrors(this.form);
+		  return;
+	  } else {
+		  this.errorTable = [] as FormErrorTable;
+	  }
 
     const response = await this.authenticationService.register(this.roleRef, this.form.value);
 

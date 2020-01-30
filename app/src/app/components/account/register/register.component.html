@@ -1,4 +1,6 @@
 <div class="container">
+  <app-form-validation-error [error-table]="errorTable"></app-form-validation-error>
+
   <form (submit)="handleRegister($event)" [formGroup]="form">
     <div class="form-group">
       <label for="email">Firstname:</label>

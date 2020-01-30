@@ -7,6 +7,7 @@ import {ProfileService} from '../../services/profile.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {ImageService} from '../../services/image.service';
+import {FormErrorTable} from "../../utilities/form.utility";
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ import {ImageService} from '../../services/image.service';
 })
 export class ProfileComponent implements OnInit {
   private form: FormGroup;
+	errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private profileService: ProfileService, private imageService: ImageService) {
     this.profile = new Profile();

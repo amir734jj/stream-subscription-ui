@@ -6,6 +6,7 @@ import {LoginComponent} from '../components/account/login/login.component';
 import {RegisterComponent} from '../components/account/register/register.component';
 import {LogoutComponent} from '../components/account/logout/logout.component';
 import {AuthenticationService} from '../services/authentication.service';
+import {FormValidationErrorComponent} from "../components/helpers/form-validation-error.component";
 
 @NgModule({
   imports: [
@@ -15,8 +16,8 @@ import {AuthenticationService} from '../services/authentication.service';
     ReactiveFormsModule,
   ],
   providers: [AuthenticationService],
-  declarations: [LoginComponent, RegisterComponent, LogoutComponent],
-  exports: [LoginComponent, RegisterComponent, LogoutComponent]
+	declarations: [LoginComponent, RegisterComponent, LogoutComponent, FormValidationErrorComponent],
+	exports: [LoginComponent, RegisterComponent, LogoutComponent, FormValidationErrorComponent]
 })
 export class AccountModule {
 

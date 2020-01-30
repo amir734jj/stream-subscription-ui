@@ -7,16 +7,18 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 import {ProfileComponent} from '../components/profile/profile.component';
 import {ProfileService} from '../services/profile.service';
 import {ImageService} from '../services/image.service';
+import {AccountModule} from "./account.module";
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    AppRoutingModule,
-    NgxFileDropModule
-  ],
+	imports: [
+		BrowserAnimationsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		CommonModule,
+		AppRoutingModule,
+		NgxFileDropModule,
+		AccountModule
+	],
   providers: [ProfileService, ImageService],
   declarations: [ProfileComponent],
   exports: [ProfileComponent]
