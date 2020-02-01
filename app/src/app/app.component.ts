@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   public navBarCollapsed = true;
   public authenticated: () => boolean;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
     setTheme('bs3');
 
     this.authenticated = (() => {
@@ -24,10 +25,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.isAuthenticated()
-      .then(authenticated => {
+      .then(async authenticated => {
         if (!authenticated) {
           localStorage.removeItem('user');
-          this.authenticated();
+	        await this.router.navigate(['./login']);
         }
       });
   }

@@ -12,9 +12,9 @@ import {FormErrorTable, resolveFormGroupErrors} from "../../../utilities/form.ut
 })
 export class RegisterComponent implements OnInit {
 
-  roleRef: Role;
+  roleRef: Role = Role.InternalUser;
   roles: { name: string; value: string | number }[];
-  private form: FormGroup;
+  private readonly form: FormGroup;
 	errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {

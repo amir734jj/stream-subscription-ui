@@ -1,7 +1,7 @@
 <div class="container">
   <app-form-validation-error [error-table]="errorTable"></app-form-validation-error>
 
-  <form (submit)="handleSaveContractor($event)" [formGroup]="form">
+  <form (submit)="handleSaveProfile($event)" [formGroup]="form">
     <div class="form-group">
       <span class="label label-default">{{ profile.role }}</span>
     </div>
@@ -45,7 +45,7 @@
               profile image
             </label>
 
-            <img [src]=""
+            <img [src]="imageService.downloadUrl(profile.photo)" *ngIf="profile.photo"
                  alt="profile-image"
                  class="img-thumbnail profile-image-thumbnail"/>
 

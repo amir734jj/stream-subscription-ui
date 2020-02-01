@@ -30,7 +30,7 @@ export class HttpInterceptComponent implements OnInit {
 
   onErrorHandler(errorResponse: HttpErrorResponse) {
     this.exceptionMessage = errorResponse.message;
-    this.errorMessage = _.get(errorResponse, ['error', 'error_description'], (errorResponse.error.toString() || '\n').split('\n', 1)[0]);
+    this.errorMessage = _.get(errorResponse, ['error', 'error_description'], ((errorResponse.error && errorResponse.error.toString()) || '\n').split('\n', 1)[0]);
     this.showModal();
   }
 
