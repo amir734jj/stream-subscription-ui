@@ -16,10 +16,10 @@ import {NGXLogger} from "ngx-logger";
 	styleUrls: ['./profile.component.sass']
 })
 export class ProfileComponent implements OnInit {
-	private form: FormGroup;
+	form: FormGroup;
 	errorTable: FormErrorTable = [];
 
-	constructor(private router: Router, private profileService: ProfileService, protected imageService: ImageService, private logger: NGXLogger) {
+	constructor(private router: Router, private profileService: ProfileService, public imageService: ImageService, private logger: NGXLogger) {
 		this.profile = new Profile();
 		this.bind();
 	}
