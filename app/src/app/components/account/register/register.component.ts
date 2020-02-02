@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
 
   roleRef: Role = Role.InternalUser;
   roles: { name: string; value: string | number }[];
-  private readonly form: FormGroup;
+  form: FormGroup;
 	errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
