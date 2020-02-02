@@ -30,7 +30,9 @@ export class HttpInterceptComponent implements OnInit {
 
   onErrorHandler(errorResponse: HttpErrorResponse) {
     this.exceptionMessage = errorResponse.message;
-    this.errorMessage = _.get(errorResponse, ['error', 'error_description'], ((errorResponse.error && errorResponse.error.toString()) || '\n').split('\n', 1)[0]);
+
+    const errorMessage = _.get(errorResponse, ['error', 'error_description'], _.head(((errorResponse.error && errorResponse.error.toString()) || '\n').split('\n', 1)));
+    this.errorMessage = _.isObject(errorMessage) ? JSON.stringify(errorMessage) : errorMessage.toString();
     this.showModal();
   }
 
