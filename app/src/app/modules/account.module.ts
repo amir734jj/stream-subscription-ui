@@ -6,7 +6,7 @@ import {LoginComponent} from '../components/account/login/login.component';
 import {RegisterComponent} from '../components/account/register/register.component';
 import {LogoutComponent} from '../components/account/logout/logout.component';
 import {AuthenticationService} from '../services/authentication.service';
-import {FormValidationErrorComponent} from "../components/helpers/form-validation-error.component";
+import {FormValidationErrorComponent} from '../components/helpers/form-validation-error.component';
 
 @NgModule({
   imports: [
