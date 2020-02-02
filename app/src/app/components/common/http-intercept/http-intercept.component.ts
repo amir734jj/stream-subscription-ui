@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AlertConfig, BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RequestInterceptor} from '../../../utilities/custom.error.handler.utility';
@@ -22,6 +22,7 @@ export class HttpInterceptComponent implements OnInit {
               private alertConfig: AlertConfig) {
     alertConfig.type = 'warning';
     alertConfig.dismissible = false;
+    this.onErrorHandler = _.throttle(this.onErrorHandler);
     requestInterceptor.addOnErrorHandler(error => this.onErrorHandler(error));
   }
 
@@ -30,9 +31,22 @@ export class HttpInterceptComponent implements OnInit {
 
   onErrorHandler(errorResponse: HttpErrorResponse) {
     this.exceptionMessage = errorResponse.message;
+    let errorMessage: string = _.get(errorResponse, ['error', 'error_description']);
 
-    const errorMessage = _.get(errorResponse, ['error', 'error_description'], _.head(((errorResponse.error && errorResponse.error.toString()) || '\n').split('\n', 1)));
-    this.errorMessage = _.isObject(errorMessage) || errorMessage instanceof Event ? JSON.stringify(errorMessage) : errorMessage.toString();
+    // If error has a message
+    if (errorMessage) {
+    	errorMessage = ((errorResponse.error && errorResponse.error.toString()) || '\n').split('\n', 1);
+    }
+    // If error is an event
+    else if (errorResponse.error instanceof Event) {
+	    errorMessage = `Event type: ${_.get(errorResponse, ['error', 'constructor', 'name']) || (typeof errorResponse.error).toString()}`;
+    }
+    // Anything else
+    else {
+	    errorMessage = _.toString(errorResponse.error);
+    }
+
+    this.errorMessage = errorMessage;
     this.showModal();
   }
 
