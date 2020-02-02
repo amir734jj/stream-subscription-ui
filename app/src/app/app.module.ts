@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {appRoutes} from './RouterConfig';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {BoardModule} from './modules/board.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ContractorModule} from './modules/contractor.module';
@@ -16,33 +16,38 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './modules/profile.module';
 import {WelcomeComponent} from './components/welcome/welcome.component';
+import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AboutComponent,
-    WelcomeComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(appRoutes, {useHash: true}),
-    ButtonsModule.forRoot(),
-    HttpClientModule,
-    CommonComponentModule,
-    AccountModule,
-    BoardModule,
-    ProfileModule,
-    ContractorModule,
-    NgxFileDropModule,
-    FormsModule
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		AboutComponent,
+		WelcomeComponent
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		RouterModule.forRoot(appRoutes, {useHash: true}),
+		ButtonsModule.forRoot(),
+		LoggerModule.forRoot({
+			level: NgxLoggerLevel.DEBUG,
+			disableConsoleLogging: false
+		}),
+		HttpClientModule,
+		CommonComponentModule,
+		AccountModule,
+		BoardModule,
+		ProfileModule,
+		ContractorModule,
+		NgxFileDropModule,
+		FormsModule
+	],
+	providers: [{
+		provide: HTTP_INTERCEPTORS,
+		useClass: JwtInterceptor,
+		multi: true
+	}],
+	bootstrap: [AppComponent]
 })
 export class AppModule {
 }

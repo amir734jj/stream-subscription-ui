@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgxFileDropEntry} from 'ngx-file-drop';
-import {fileDropHandlerUtility} from '../../utilities/filedrop.utility';
+import {resolveFile} from '../../utilities/filedrop.utility';
 import {IProfile, Profile} from '../../models/entities/Profile';
 import {ProfileService} from '../../services/profile.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import {ImageService} from '../../services/image.service';
 import {FormErrorTable} from "../../utilities/form.utility";
+import {NGXLogger} from "ngx-logger";
 
 @Component({
 	selector: 'app-profile',
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit {
 	private form: FormGroup;
 	errorTable: FormErrorTable = [];
 
-	constructor(private router: Router, private profileService: ProfileService, private imageService: ImageService) {
+	constructor(private router: Router, private profileService: ProfileService, private imageService: ImageService, private logger: NGXLogger) {
 		this.profile = new Profile();
 		this.bind();
 	}
@@ -64,15 +65,15 @@ export class ProfileComponent implements OnInit {
 		if (this.profile.photo) {
 			await this.deleteImage();
 		}
-		this.profile.photo = await this.imageService.upload(fileDropHandlerUtility(_.head(files)), 'profile-image');
+		this.profile.photo = await this.imageService.upload(await resolveFile(_.head(files)), 'profile-image');
 	}
 
 	public fileOver(event) {
-		console.log(event);
+		this.logger.debug(event);
 	}
 
 	public fileLeave(event) {
-		console.log(event);
+		this.logger.debug(event);
 	}
 
 	async deleteImage() {
