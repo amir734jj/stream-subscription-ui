@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
 	private form: FormGroup;
 	errorTable: FormErrorTable = [];
 
-	constructor(private router: Router, private profileService: ProfileService, private imageService: ImageService, private logger: NGXLogger) {
+	constructor(private router: Router, private profileService: ProfileService, protected imageService: ImageService, private logger: NGXLogger) {
 		this.profile = new Profile();
 		this.bind();
 	}
