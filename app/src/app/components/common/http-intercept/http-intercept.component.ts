@@ -35,7 +35,7 @@ export class HttpInterceptComponent implements OnInit {
 
     // If error has a message
     if (errorMessage) {
-    	errorMessage = ((errorResponse.error && errorResponse.error.toString()) || '\n').split('\n', 1);
+    	errorMessage = ((errorMessage.toString()) || '\n').split('\n', 1);
     }
     // If error is an event
     else if (errorResponse.error instanceof Event) {
