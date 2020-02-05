@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../../services/user.service';
+import User from '../../models/entities/User';
 
 @Component({
   selector: 'app-users',
@@ -8,12 +9,15 @@ import {UserService} from "../../services/user.service";
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  public users: User[] = [];
+
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit() {
-  	this.userService.getAll().subscribe(response => {
-  		console.log(response)
-	  })
+    this.userService.getAll().subscribe(response => {
+      this.users = response;
+    });
   }
 
 }
