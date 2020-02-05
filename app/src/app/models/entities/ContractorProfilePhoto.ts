@@ -1,4 +1,4 @@
-import AbstractEntity from './AbstractEntity';
+import AbstractEntity from './abstracts/AbstractEntity';
 
 export class ContractorProfilePhoto extends AbstractEntity {
   id: string;

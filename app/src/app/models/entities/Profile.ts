@@ -1,5 +1,4 @@
-import AbstractEntity from './AbstractEntity';
-import {Guid} from 'guid-typescript';
+import AbstractEntity from './abstracts/AbstractEntity';
 
 export interface IProfile {
   firstname: string;

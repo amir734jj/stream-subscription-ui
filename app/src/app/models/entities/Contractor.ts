@@ -1,4 +1,4 @@
-import AbstractEntity from './AbstractEntity';
+import AbstractEntity from './abstracts/AbstractEntity';
 import {ContractorProfilePhoto} from './ContractorProfilePhoto';
 
 export default class Contractor extends AbstractEntity {

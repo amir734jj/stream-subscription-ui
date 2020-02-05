@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {localStorageKey} from "../models/constants/BrowserConstants";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -21,8 +22,7 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   getToken() {
-    const currentUser = JSON.parse(localStorage.getItem('user'));
-    const token = currentUser && currentUser.token;
-    return token ? token : '';
+    const { token = '' } = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+		return token;
   }
 }

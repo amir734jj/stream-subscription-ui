@@ -17,6 +17,8 @@ import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './modules/profile.module';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
+import { UsersComponent } from './components/users/users.component';
+import {UserModule} from "./modules/user.module";
 
 @NgModule({
 	declarations: [
@@ -38,6 +40,7 @@ import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
 		AccountModule,
 		BoardModule,
 		ProfileModule,
+		UserModule,
 		ContractorModule,
 		NgxFileDropModule,
 		FormsModule

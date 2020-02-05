@@ -13,6 +13,9 @@
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/" routerLinkActive="active">Home</a>
         </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="profile?.role == roles.InternalUser">
+          <a routerLink="/user" routerLinkActive="active">Users</a>
+        </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/about" routerLinkActive="active">About</a>
         </li>

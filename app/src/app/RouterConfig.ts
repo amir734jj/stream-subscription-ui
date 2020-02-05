@@ -11,6 +11,7 @@ import {BoardComponent} from './components/board/board.component';
 import {AboutComponent} from './components/about/about.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
+import {UsersComponent} from "./components/users/users.component";
 
 export const appRoutes: Routes = [
   {path: '', component: BoardComponent},
@@ -22,7 +23,8 @@ export const appRoutes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'welcome', component: WelcomeComponent},
   {path: 'board', component: BoardComponent},
-  {path: 'contractor/new', component: ContractorSaveComponent},
+	{path: 'user', component: UsersComponent},
+	{path: 'contractor/new', component: ContractorSaveComponent},
   {path: 'contractor/:id/edit', component: ContractorUpdateComponent},
   {path: 'contractor/:id', component: ContractorIndexComponent}
 ];

@@ -5,16 +5,18 @@ import {RegisterRequest} from '../models/authentication.service/register/Registe
 import route from '../utilities/route.utility';
 import {Role} from '../models/RoleEnum';
 import * as jwtDecode from 'jwt-decode';
+import {ProfileType} from "../types/common.type";
+import {localStorageKey} from "../models/constants/BrowserConstants";
 
 @Injectable()
 export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  async isAuthenticated() {
-    const response = await this.http.get<{}>(route('account')).toPromise();
+  async isAuthenticated(): Promise<[boolean, ProfileType]> {
+    const response = await this.http.get<{ role: Role }>(route('account')).toPromise();
 
-    return !!Object.keys(response).length;
+    return [!!Object.keys(response).length, response];
   }
 
   async login(loginRequest: LoginRequest) {
@@ -23,7 +25,7 @@ export class AuthenticationService {
     if (response.token) {
       const jwtMetadata = jwtDecode(response.token);
       // store email and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem('user', JSON.stringify({...jwtMetadata, ...response}));
+      localStorage.setItem(localStorageKey, JSON.stringify({...jwtMetadata, ...response }));
     }
 
     return response;
