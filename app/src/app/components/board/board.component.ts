@@ -18,8 +18,6 @@ export class BoardComponent implements OnInit {
   }
 
   getContractors() {
-    this.contractorService.getAll().subscribe(x => {
-      this.contractors = x;
-    });
+
   }
 }

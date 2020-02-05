@@ -24,6 +24,7 @@ export const appRoutes: Routes = [
   {path: 'welcome', component: WelcomeComponent},
   {path: 'board', component: BoardComponent},
 	{path: 'user', component: UsersComponent},
+	{path: 'contractor', component: ContractorIndexComponent},
 	{path: 'contractor/new', component: ContractorSaveComponent},
   {path: 'contractor/:id/edit', component: ContractorUpdateComponent},
   {path: 'contractor/:id', component: ContractorIndexComponent}

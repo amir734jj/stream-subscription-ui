@@ -46,6 +46,6 @@ export class ContractorUpdateComponent implements OnInit {
   }
 
   public fileLeave(event) {
-    this.contractor.profilePhoto = null;
+    // this.contractor.profilePhoto = null;
   }
 }

@@ -1,22 +1,6 @@
-import AbstractEntity from './abstracts/AbstractEntity';
-import {ContractorProfilePhoto} from './ContractorProfilePhoto';
+import User from './User';
 
-export default class Contractor extends AbstractEntity {
+export default class Contractor {
   id: string;
-  firstname: string;
-  lastname: string;
-  description: string;
-  email: string;
-  phoneNumber: string;
-  profilePhoto: ContractorProfilePhoto;
-
-  constructor() {
-    super();
-    this.profilePhoto = new ContractorProfilePhoto();
-  }
-
-  reset() {
-    super.reset();
-    this.profilePhoto.reset();
-  }
+  user: User;
 }

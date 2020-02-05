@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Contractors</h2>
+  <p>This is the list of all types Contractors:</p>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th> Firstname </th>
+      <th> Lastname </th>
+      <th> Email </th>
+      <th> Phone </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let contractor of contractors">
+      <td> {{ contractor.user.firstname }} </td>
+      <td> {{ contractor.user.lastname }} </td>
+      <td> {{ contractor.user.email }} </td>
+      <td> {{ contractor.user.phoneNumber }} </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

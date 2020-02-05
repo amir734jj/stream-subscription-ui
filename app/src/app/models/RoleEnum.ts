@@ -15,4 +15,4 @@ const roleName = {
 export const Roles: {
   name: string,
   value: string | number
-}[] = EnumValues.getNamesAndValues(Role).map(x => x.name in roleName ? {...x, name: roleName[x.value] } : x);
+}[] = EnumValues.getNamesAndValues(Role).map(x => ({...x, name: roleName[x.value] }));

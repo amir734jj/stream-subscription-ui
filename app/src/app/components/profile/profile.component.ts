@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgxFileDropEntry} from 'ngx-file-drop';
 import {resolveFile} from '../../utilities/filedrop.utility';
-import {IProfile, Profile} from '../../models/entities/Profile';
+import {Profile} from '../../models/entities/Profile';
 import {ProfileService} from '../../services/profile.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as _ from 'lodash';
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
 		this.bind();
 	}
 
-	public profile: IProfile;
+	public profile: Profile;
 
 	public file: NgxFileDropEntry = null;
 

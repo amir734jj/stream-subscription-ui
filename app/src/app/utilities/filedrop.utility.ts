@@ -1,5 +1,9 @@
 import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 
+/**
+ * Handles actions after file being dropped
+ * @param droppedFile
+ */
 export const resolveFile = async (droppedFile: NgxFileDropEntry) => {
   // Is it a file?
 	if (!droppedFile.fileEntry.isFile) {

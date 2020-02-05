@@ -42,10 +42,10 @@ export class ContractorSaveComponent implements OnInit {
   }
 
   public fileLeave(event) {
-    this.contractor.profilePhoto = null;
+    // this.contractor.profilePhoto = null;
   }
 
   deleteImage() {
-    this.contractor.profilePhoto = new ContractorProfilePhoto();
+    // this.contractor.profilePhoto = new ContractorProfilePhoto();
   }
 }
