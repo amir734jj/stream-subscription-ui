@@ -2,16 +2,16 @@
   <div class="container" *ngIf="contractor">
     <div class="panel panel-default">
       <div class="panel-heading">
-        {{ contractor.user.firstname }} {{ contractor.user.lastname }}
+        {{ contractor.userRef.firstname }} {{ contractor.userRef.lastname }}
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-8">
-            <p>{{ contractor.user.email }}</p>
-            <p>{{ contractor.user.phoneNumber }}</p>
+            <p>{{ contractor.userRef.email }}</p>
+            <p>{{ contractor.userRef.phoneNumber }}</p>
           </div>
           <div class="col-sm-4">
-            <img class="img-rounded contractor-profile-image" [src]="imageService.downloadUrl(contractor?.user?.profileImage)" alt="profile-photo" *ngIf="contractor?.user?.profileImage">
+            <img class="img-rounded contractor-profile-image" [src]="imageService.downloadUrl(contractor?.userRef?.profileImage)" alt="profile-photo" *ngIf="contractor?.userRef?.profileImage">
           </div>
         </div>
       </div>

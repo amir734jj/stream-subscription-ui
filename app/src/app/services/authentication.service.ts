@@ -24,7 +24,7 @@ export class AuthenticationService {
 
     if (response.token) {
       const jwtMetadata = jwtDecode(response.token);
-      // store email and jwt token in local storage to keep user logged in between page refreshes
+      // store email and jwt token in local storage to keep userRef logged in between page refreshes
       localStorage.setItem(localStorageKey, JSON.stringify({...jwtMetadata, ...response }));
     }
 

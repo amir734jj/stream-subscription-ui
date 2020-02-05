@@ -12,10 +12,10 @@
     </thead>
     <tbody>
     <tr *ngFor="let contractor of contractors">
-      <td> {{ contractor.user.firstname }} </td>
-      <td> {{ contractor.user.lastname }} </td>
-      <td> {{ contractor.user.email }} </td>
-      <td> {{ contractor.user.phoneNumber }} </td>
+      <td> {{ contractor.userRef.firstname }} </td>
+      <td> {{ contractor.userRef.lastname }} </td>
+      <td> {{ contractor.userRef.email }} </td>
+      <td> {{ contractor.userRef.phoneNumber }} </td>
     </tr>
     </tbody>
   </table>

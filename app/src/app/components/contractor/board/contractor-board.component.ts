@@ -17,5 +17,4 @@ export class ContractorBoardComponent implements OnInit {
   		this.contractors = contractors;
 	  })
   }
-
 }
