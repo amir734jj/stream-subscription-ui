@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Router} from '@angular/router';
-import {Role, roles} from '../../../models/RoleEnum';
+import {Role, Roles} from '../../../models/RoleEnum';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {FormErrorTable, resolveFormGroupErrors} from "../../../utilities/form.utility";
+import {FormErrorTable, resolveFormGroupErrors} from '../../../utilities/form.utility';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 	errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
-    this.roles = roles;
+    this.roles = Roles;
     this.form = new FormGroup({
       firstname: new FormControl('', Validators.required),
       lastname: new FormControl('', Validators.required),

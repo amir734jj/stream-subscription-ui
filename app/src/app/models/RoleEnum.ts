@@ -8,11 +8,11 @@ export enum Role {
 
 const roleName = {
   [Role.InternalUser]: 'Internal-User',
-	[Role.Contractor]: 'Contractor',
+  [Role.Contractor]: 'Contractor',
 	[Role.Homeowner]: 'Homeowner',
 };
 
-export const roles: {
+export const Roles: {
   name: string,
   value: string | number
 }[] = EnumValues.getNamesAndValues(Role).map(x => x.name in roleName ? {...x, name: roleName[x.value] } : x);

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
-import {Router} from "@angular/router";
-import {Role} from "./models/RoleEnum";
-import {ProfileType, ProfileWithTokenType} from "./types/common.type";
-import {localStorageKey} from "./models/constants/BrowserConstants";
+import {Router} from '@angular/router';
+import {Role} from './models/RoleEnum';
+import {ProfileType, ProfileWithTokenType} from './types/common.type';
+import {localStorageKey} from './models/constants/BrowserConstants';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
     setTheme('bs3');
 
     this.authenticated = (() => {
-      const { token, role } =  (JSON.parse(localStorage.getItem(localStorageKey)) || {}) as ProfileWithTokenType;
-	    this.profile = { role };
+      const {token, role} = (JSON.parse(localStorage.getItem(localStorageKey)) || {}) as ProfileWithTokenType;
+      this.profile = {role};
       return !!token;
     });
   }
@@ -31,11 +31,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.isAuthenticated()
       .then(async response => {
-      	const [authenticated, profile] = response;
-      	this.profile = profile;
+        const [authenticated, profile] = response;
+        this.profile = profile;
         if (!authenticated) {
           localStorage.removeItem(localStorageKey);
-	        await this.router.navigate(['./login']);
+          await this.router.navigate(['./login']);
         }
       });
   }
