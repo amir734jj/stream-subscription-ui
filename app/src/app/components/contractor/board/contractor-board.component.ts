@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ContractorService} from "../../../services/contractor.service";
-import Contractor from "../../../models/entities/Contractor";
+import {ContractorService} from '../../../services/contractor.service';
+import Contractor from '../../../models/entities/Contractor';
 
 @Component({
   selector: 'app-contractor-board',
@@ -15,6 +15,6 @@ export class ContractorBoardComponent implements OnInit {
   ngOnInit() {
   	this.contractorService.getAll().subscribe(contractors => {
   		this.contractors = contractors;
-	  })
+	  });
   }
 }

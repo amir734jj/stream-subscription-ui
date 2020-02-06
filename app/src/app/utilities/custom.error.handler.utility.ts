@@ -8,7 +8,6 @@ import {
 } from '@angular/common/http';
 import {tap} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs';
-import * as _ from 'lodash';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Router} from '@angular/router';
-import {Role, Roles} from '../../../models/RoleEnum';
+import {Role, RoleNameTable} from '../../../models/RoleEnum';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FormErrorTable, resolveFormGroupErrors} from '../../../utilities/form.utility';
 
@@ -13,12 +13,11 @@ import {FormErrorTable, resolveFormGroupErrors} from '../../../utilities/form.ut
 export class RegisterComponent implements OnInit {
 
   roleRef: Role = Role.InternalUser;
-  roles: { name: string; value: string | number }[];
+  roles = RoleNameTable;
   form: FormGroup;
-	errorTable: FormErrorTable = [];
+  errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
-    this.roles = Roles;
     this.form = new FormGroup({
       firstname: new FormControl('', Validators.required),
       lastname: new FormControl('', Validators.required),
@@ -40,12 +39,12 @@ export class RegisterComponent implements OnInit {
   async handleRegister(event: Event) {
     event.preventDefault();
 
-	  if (this.form.invalid) {
-		  this.errorTable = resolveFormGroupErrors(this.form);
-		  return;
-	  } else {
-		  this.errorTable = [] as FormErrorTable;
-	  }
+    if (this.form.invalid) {
+      this.errorTable = resolveFormGroupErrors(this.form);
+      return;
+    } else {
+      this.errorTable = [] as FormErrorTable;
+    }
 
     const response = await this.authenticationService.register(this.roleRef, this.form.value);
 

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import User from '../../models/entities/User';
-import {Role, Roles} from '../../models/RoleEnum';
-import * as _ from 'lodash';
+import {Role, RoleToString} from '../../models/RoleEnum';
 
 @Component({
   selector: 'app-users',
@@ -12,20 +11,15 @@ import * as _ from 'lodash';
 export class UsersComponent implements OnInit {
 
   public users: User[] = [];
+  private roleToString: (role: Role) => string;
 
   constructor(private userService: UserService) {
+    this.roleToString = RoleToString;
   }
 
   ngOnInit() {
     this.userService.getAll().subscribe(response => {
       this.users = response;
     });
-  }
-
-  roleToString(role: Role) {
-  	return _.chain(Roles)
-		  .find(x => x.value == role)
-		  .get('name')
-		  .value();
   }
 }

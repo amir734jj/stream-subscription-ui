@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import {IProfile} from '../models/entities/Profile';
+import {Profile} from '../models/entities/Profile';
 import route from '../utilities/route.utility';
 
 @Injectable()
@@ -12,10 +12,10 @@ export class ProfileService {
   }
 
   get() {
-    return this.http.get<IProfile>(route('profile'));
+    return this.http.get<Profile>(route('profile'));
   }
 
-  save(profile: IProfile) {
-    return this.http.post<IProfile>(route('profile'), profile);
+  save(profile: Profile) {
+    return this.http.post<Profile>(route('profile'), profile);
   }
 }

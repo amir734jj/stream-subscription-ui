@@ -16,41 +16,40 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './modules/profile.module';
 import {WelcomeComponent} from './components/welcome/welcome.component';
-import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
-import { UsersComponent } from './components/users/users.component';
-import {UserModule} from "./modules/user.module";
+import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
+import {UserModule} from './modules/user.module';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		AboutComponent,
-		WelcomeComponent
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		RouterModule.forRoot(appRoutes, {useHash: true}),
-		ButtonsModule.forRoot(),
-		LoggerModule.forRoot({
-			level: NgxLoggerLevel.DEBUG,
-			disableConsoleLogging: false
-		}),
-		HttpClientModule,
-		CommonComponentModule,
-		AccountModule,
-		BoardModule,
-		ProfileModule,
-		UserModule,
-		ContractorModule,
-		NgxFileDropModule,
-		FormsModule
-	],
-	providers: [{
-		provide: HTTP_INTERCEPTORS,
-		useClass: JwtInterceptor,
-		multi: true
-	}],
-	bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    AboutComponent,
+    WelcomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule.forRoot(appRoutes, {useHash: true}),
+    ButtonsModule.forRoot(),
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.DEBUG,
+      disableConsoleLogging: false
+    }),
+    HttpClientModule,
+    CommonComponentModule,
+    AccountModule,
+    BoardModule,
+    ProfileModule,
+    UserModule,
+    ContractorModule,
+    NgxFileDropModule,
+    FormsModule
+  ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  }],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
