@@ -23,7 +23,7 @@ import {UserModule} from './modules/user.module';
   declarations: [
     AppComponent,
     AboutComponent,
-    WelcomeComponent
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
