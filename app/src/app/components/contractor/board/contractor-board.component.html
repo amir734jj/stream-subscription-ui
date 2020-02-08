@@ -8,6 +8,8 @@
       <th> Lastname </th>
       <th> Email </th>
       <th> Phone </th>
+      <th> Speciality </th>
+      <th> Actions </th>
     </tr>
     </thead>
     <tbody>
@@ -16,6 +18,10 @@
       <td> {{ contractor.userRef.lastname }} </td>
       <td> {{ contractor.userRef.email }} </td>
       <td> {{ contractor.userRef.phoneNumber }} </td>
+      <td> {{ contractor.speciality.map(specialityToString) }} </td>
+      <td>
+        <a [routerLink]="[contractor.id]" class="btn btn-primary"> Details </a>
+      </td>
     </tr>
     </tbody>
   </table>

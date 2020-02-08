@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import User from '../../models/entities/User';
-import {Role, RoleToString} from '../../models/RoleEnum';
+import {RoleToString} from '../../models/RoleEnum';
 
 @Component({
   selector: 'app-users',
@@ -11,10 +11,9 @@ import {Role, RoleToString} from '../../models/RoleEnum';
 export class UsersComponent implements OnInit {
 
   public users: User[] = [];
-  public roleToString: (role: Role) => string;
+  public roleToString = RoleToString;
 
   constructor(private userService: UserService) {
-    this.roleToString = RoleToString;
   }
 
   ngOnInit() {

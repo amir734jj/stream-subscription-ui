@@ -1,6 +1,5 @@
 /**
  * Converts file object to base64
- * @param file
  */
 export const toBase64 = file => new Promise<string>((resolve, reject) => {
 	const reader = new FileReader();

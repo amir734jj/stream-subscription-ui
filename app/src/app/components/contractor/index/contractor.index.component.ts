@@ -12,7 +12,8 @@ import {ImageService} from '../../../services/image.service';
 export class ContractorIndexComponent implements OnInit {
   public contractor: Contractor;
 
-  constructor(private route: ActivatedRoute, private router: Router, private contractorService: ContractorService, public imageService: ImageService) {
+  constructor(private route: ActivatedRoute, private router: Router,
+              private contractorService: ContractorService, public imageService: ImageService) {
   }
 
   ngOnInit() {
