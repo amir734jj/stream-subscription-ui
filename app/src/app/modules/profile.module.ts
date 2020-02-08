@@ -9,6 +9,7 @@ import {ProfileService} from '../services/profile.service';
 import {ImageService} from '../services/image.service';
 import {AccountModule} from './account.module';
 import {ContractorProfileComponent} from '../components/profile/contractor-profile/contractor-profile.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {ContractorProfileComponent} from '../components/profile/contractor-profi
     CommonModule,
     AppRoutingModule,
     NgxFileDropModule,
-    AccountModule
+    AccountModule,
+    MatSelectModule
   ],
   providers: [ProfileService, ImageService],
   declarations: [ProfileComponent, ContractorProfileComponent],

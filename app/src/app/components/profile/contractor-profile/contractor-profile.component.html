@@ -1,8 +1,12 @@
 <h4> Extended Profile </h4>
 
 <div class="form-group">
-  <label for="select-speciality">Speciality:</label>
-  <select multiple class="form-control" [ngModel]="speciality" id="select-speciality">
-    <option *ngFor="let speciality of specialities" [value]="speciality.value"> {{ speciality.name }} </option>
-  </select>
+  <mat-form-field id="select-speciality">
+    <mat-label> Speciality </mat-label>
+    <mat-select [(value)]="speciality" multiple>
+      <mat-option *ngFor="let speciality of specialities" [value]="speciality.value"> {{ speciality.name }} </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
+
+
