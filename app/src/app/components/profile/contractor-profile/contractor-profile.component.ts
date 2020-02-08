@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SpecialityEnum, SpecialityNameTable} from '../../../models/SpecialityEnum';
 
 @Component({
@@ -6,12 +6,18 @@ import {SpecialityEnum, SpecialityNameTable} from '../../../models/SpecialityEnu
   templateUrl: './contractor-profile.component.html',
   styleUrls: ['./contractor-profile.component.sass']
 })
-export class ContractorProfileComponent implements OnInit {
+export class ContractorProfileComponent implements OnInit, DoCheck {
 
-  speciality: SpecialityEnum;
+  @Input() speciality: SpecialityEnum[];
+  @Output() specialityChange: EventEmitter<SpecialityEnum[]> = new EventEmitter<SpecialityEnum[]>();
   specialities = SpecialityNameTable;
 
-  constructor() { }
+  ngDoCheck() {
+    this.specialityChange.next(this.speciality);
+  }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

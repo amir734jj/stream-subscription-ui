@@ -1,4 +1,5 @@
 import {Role} from '../RoleEnum';
+import Contractor from './Contractor';
 
 export class Profile {
   firstname: string;
@@ -8,4 +9,5 @@ export class Profile {
   phoneNumber: string;
   description: string;
   photo: string;
+  contractor?: Contractor;
 }
