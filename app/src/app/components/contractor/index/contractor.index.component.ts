@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ContractorService} from '../../../services/contractor.service';
 import Contractor from '../../../models/entities/Contractor';
 import {ImageService} from '../../../services/image.service';
+import {SpecialityToString} from '../../../models/SpecialityEnum';
 
 @Component({
   selector: 'app-question-index',
@@ -11,6 +12,7 @@ import {ImageService} from '../../../services/image.service';
 })
 export class ContractorIndexComponent implements OnInit {
   public contractor: Contractor;
+  public specialityToString = SpecialityToString;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private contractorService: ContractorService, public imageService: ImageService) {

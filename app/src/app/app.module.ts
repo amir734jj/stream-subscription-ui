@@ -18,13 +18,13 @@ import {ProfileModule} from './modules/profile.module';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {UserModule} from './modules/user.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    WelcomeComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

@@ -17,9 +17,15 @@
       <td> {{ contractor.userRef.firstname }} </td>
       <td> {{ contractor.userRef.lastname }} </td>
       <td>
-        <a href="mailto:{{ contractor.userRef.email }}"> {{ contractor.userRef.email }} </a>
+        <a href="mailto:{{ contractor.userRef.email }}">
+          {{ contractor.userRef.email }}
+        </a>
       </td>
-      <td> {{ contractor.userRef.phoneNumber }} </td>
+      <td>
+        <a href="tel:{{ contractor.userRef.phoneNumber }}">
+          {{ contractor.userRef.phoneNumber }}
+        </a>
+      </td>
       <td> {{ contractor.speciality.map(specialityToString) }} </td>
       <td>
         <a [routerLink]="[contractor.id]" class="btn btn-primary"> Details </a>

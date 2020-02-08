@@ -3,20 +3,36 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         {{ contractor.userRef.firstname }} {{ contractor.userRef.lastname }}
+
+        <span class="label label-primary" *ngFor="let speciality of contractor.speciality.map(specialityToString)">
+          {{ speciality }}
+        </span>
+
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-8">
-            <p>{{ contractor.userRef.email }}</p>
-            <p>{{ contractor.userRef.phoneNumber }}</p>
+            <p>
+              <a href="mailto:{{ contractor.userRef.email }}">
+                {{ contractor.userRef.email }}
+              </a>
+            </p>
+            <p>
+              <a href="tel:{{ contractor.userRef.phoneNumber }}">
+                {{ contractor.userRef.phoneNumber }}
+              </a>
+            </p>
+            <p>
+              {{ contractor.userRef.description }}
+            </p>
           </div>
           <div class="col-sm-4">
-            <img class="img-rounded contractor-profile-image" [src]="imageService.downloadUrl(contractor?.userRef?.profileImage)" alt="profile-photo" *ngIf="contractor?.userRef?.profileImage">
+            <img class="img-rounded contractor-profile-image" [src]="imageService.downloadUrl(contractor?.userRef?.photo)" alt="profile-photo" *ngIf="contractor?.userRef?.photo">
           </div>
         </div>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-default">
+        <button class="btn btn-success">
           Contact
         </button>
       </div>
