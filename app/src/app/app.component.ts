@@ -29,14 +29,17 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationService.isAuthenticated()
-      .then(async response => {
-        const [authenticated, profile] = response;
-        this.profile = profile;
-        if (!authenticated) {
-          localStorage.removeItem(localStorageKey);
-          await this.router.navigate(['./login']);
-        }
-      });
+    // If session key exist then continue
+    if (this.authenticated()) {
+      this.authenticationService.isAuthenticated()
+        .then(async response => {
+          const [authenticated, profile] = response;
+          this.profile = profile;
+          if (!authenticated) {
+            localStorage.removeItem(localStorageKey);
+            await this.router.navigate(['./login']);
+          }
+        });
+    }
   }
 }

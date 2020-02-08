@@ -1,36 +1,38 @@
 <div class="container">
   <h2>Contractors</h2>
   <p>This is the list of all types Contractors:</p>
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th> Firstname </th>
-      <th> Lastname </th>
-      <th> Email </th>
-      <th> Phone </th>
-      <th> Speciality </th>
-      <th> Actions </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let contractor of contractors">
-      <td> {{ contractor.userRef.firstname }} </td>
-      <td> {{ contractor.userRef.lastname }} </td>
-      <td>
-        <a href="mailto:{{ contractor.userRef.email }}">
-          {{ contractor.userRef.email }}
-        </a>
-      </td>
-      <td>
-        <a href="tel:{{ contractor.userRef.phoneNumber }}">
-          {{ contractor.userRef.phoneNumber }}
-        </a>
-      </td>
-      <td> {{ contractor.speciality.map(specialityToString) }} </td>
-      <td>
-        <a [routerLink]="[contractor.id]" class="btn btn-primary"> Details </a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th> Firstname </th>
+        <th> Lastname </th>
+        <th> Email </th>
+        <th> Phone </th>
+        <th> Speciality </th>
+        <th> Actions </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contractor of contractors">
+        <td> {{ contractor.userRef.firstname }} </td>
+        <td> {{ contractor.userRef.lastname }} </td>
+        <td>
+          <a href="mailto:{{ contractor.userRef.email }}">
+            {{ contractor.userRef.email }}
+          </a>
+        </td>
+        <td>
+          <a href="tel:{{ contractor.userRef.phoneNumber }}">
+            {{ contractor.userRef.phoneNumber }}
+          </a>
+        </td>
+        <td> {{ contractor.speciality.map(specialityToString) }} </td>
+        <td>
+          <a [routerLink]="[contractor.id]" class="btn btn-primary"> Details </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

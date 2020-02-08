@@ -5,8 +5,8 @@ import {RegisterRequest} from '../models/authentication.service/register/Registe
 import route from '../utilities/route.utility';
 import {Role} from '../models/RoleEnum';
 import * as jwtDecode from 'jwt-decode';
-import {ProfileType} from "../types/common.type";
-import {localStorageKey} from "../models/constants/BrowserConstants";
+import {ProfileType} from '../types/common.type';
+import {localStorageKey} from '../models/constants/BrowserConstants';
 
 @Injectable()
 export class AuthenticationService {
@@ -25,6 +25,7 @@ export class AuthenticationService {
     if (response.token) {
       const jwtMetadata = jwtDecode(response.token);
       // store email and jwt token in local storage to keep userRef logged in between page refreshes
+      // @ts-ignore
       localStorage.setItem(localStorageKey, JSON.stringify({...jwtMetadata, ...response }));
     }
 
