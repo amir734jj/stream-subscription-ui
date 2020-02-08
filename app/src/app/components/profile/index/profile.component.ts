@@ -5,11 +5,11 @@ import {resolveFile} from '../../../utilities/filedrop.utility';
 import {Profile} from '../../../models/entities/Profile';
 import {ProfileService} from '../../../services/profile.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import * as _ from 'lodash';
 import {ImageService} from '../../../services/image.service';
 import {FormErrorTable} from '../../../utilities/form.utility';
 import {NGXLogger} from 'ngx-logger';
 import {Role, RoleToString} from '../../../models/RoleEnum';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-profile',
