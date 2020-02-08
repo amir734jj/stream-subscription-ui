@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ContractorService} from '../services/contractor.service';
 import {NgxFileDropModule} from 'ngx-file-drop';
+import {ContractorBoardComponent} from "../components/contractor/board/contractor-board.component";
 
 @NgModule({
   imports: [
@@ -19,8 +20,8 @@ import {NgxFileDropModule} from 'ngx-file-drop';
     NgxFileDropModule
   ],
   providers: [ContractorService],
-  declarations: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent],
-  exports: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent]
+  declarations: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent, ContractorBoardComponent],
+  exports: [ContractorIndexComponent, ContractorSaveComponent, ContractorUpdateComponent, ContractorBoardComponent]
 })
 export class ContractorModule {
 

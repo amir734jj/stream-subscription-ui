@@ -1,34 +1,4 @@
 <div class="container">
-    <h3> Contractors Board </h3>
+    <h3> Front page! </h3>
     <p> In progress ... </p>
-
-    <ng-container *ngFor="let contractor of contractors">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a [routerLink]="['/contractor', contractor.id]">
-                    {{ contractor.firstname }} {{ contractor.lastname }}
-                </a>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-8">
-                        <p>
-                            <a [href]="['mailto:', contractor.email]">{{ contractor.email }}</a>
-                        </p>
-                        <p>
-                            <a [href]="['tel:', contractor.phoneNumber]"> {{ contractor.phoneNumber }}</a>
-                        </p>
-                        <p>
-                            {{ contractor.description }}
-                        </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <img class="img-rounded contractor-profile-image"
-                             [src]="contractor.profilePhoto.base64" alt="profile-photo"
-                             *ngIf="!!contractor?.profilePhoto?.base64">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-container>
 </div>

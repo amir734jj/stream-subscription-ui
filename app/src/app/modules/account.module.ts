@@ -7,6 +7,8 @@ import {RegisterComponent} from '../components/account/register/register.compone
 import {LogoutComponent} from '../components/account/logout/logout.component';
 import {AuthenticationService} from '../services/authentication.service';
 import {FormValidationErrorComponent} from '../components/helpers/form-validation-error.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -14,10 +16,12 @@ import {FormValidationErrorComponent} from '../components/helpers/form-validatio
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSelectModule
   ],
   providers: [AuthenticationService],
-	declarations: [LoginComponent, RegisterComponent, LogoutComponent, FormValidationErrorComponent],
-	exports: [LoginComponent, RegisterComponent, LogoutComponent, FormValidationErrorComponent]
+  declarations: [LoginComponent, RegisterComponent, LogoutComponent, FormValidationErrorComponent],
+  exports: [LoginComponent, RegisterComponent, LogoutComponent, FormValidationErrorComponent]
 })
 export class AccountModule {
 

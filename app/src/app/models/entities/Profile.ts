@@ -1,25 +1,13 @@
-import AbstractEntity from './abstracts/AbstractEntity';
+import {Role} from '../RoleEnum';
+import Contractor from './Contractor';
 
-export interface IProfile {
+export class Profile {
   firstname: string;
   lastname: string;
   email: string;
-  role: string;
+  role: Role;
   phoneNumber: string;
   description: string;
   photo: string;
-}
-
-export class Profile extends AbstractEntity implements IProfile {
-  firstname: string;
-  lastname: string;
-  email: string;
-  role: string;
-  phoneNumber: string;
-  description: string;
-  photo: string;
-
-  constructor() {
-    super();
-  }
+  contractor?: Contractor;
 }

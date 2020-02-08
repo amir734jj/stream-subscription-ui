@@ -1,4 +1,4 @@
-import { EnumValues } from 'enum-values';
+import {EnumToString, ResolveEnumNameTable} from '../utilities/enum.utility';
 
 export enum Role {
   InternalUser = 0,
@@ -6,13 +6,10 @@ export enum Role {
   Homeowner = 2
 }
 
-const roleName = {
-  [Role.InternalUser]: 'Internal-User',
-  [Role.Contractor]: 'Contractor',
-	[Role.Homeowner]: 'Homeowner',
-};
 
-export const Roles: {
-  name: string,
-  value: string | number
-}[] = EnumValues.getNamesAndValues(Role).map(x => x.name in roleName ? {...x, name: roleName[x.value] } : x);
+export const RoleNameTable = ResolveEnumNameTable(Role, {
+  // Here is the place to override names
+  [Role.InternalUser]: 'Internal'
+});
+
+export const RoleToString = (role: Role): string => EnumToString(RoleNameTable, role);

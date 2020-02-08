@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import Contractor from '../../../models/entities/Contractor';
 import {ContractorService} from '../../../services/contractor.service';
 import {NgxFileDropEntry} from 'ngx-file-drop';
-import {ContractorProfilePhoto} from '../../../models/entities/ContractorProfilePhoto';
 
 @Component({
   selector: 'app-question-save',
@@ -42,10 +41,10 @@ export class ContractorSaveComponent implements OnInit {
   }
 
   public fileLeave(event) {
-    this.contractor.profilePhoto = null;
+    // this.contractor.profilePhoto = null;
   }
 
   deleteImage() {
-    this.contractor.profilePhoto = new ContractorProfilePhoto();
+    // this.contractor.profilePhoto = new ContractorProfilePhoto();
   }
 }

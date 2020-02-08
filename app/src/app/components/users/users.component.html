@@ -4,16 +4,20 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Email</th>
+      <th> Firstname </th>
+      <th> Lastname </th>
+      <th> Email </th>
+      <th> Role </th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let user of users">
-      <td>{{ user.firstname }}</td>
-      <td>{{ user.lastname }}</td>
-      <td>{{ user.email }}</td>
+      <td> {{ user.firstname }} </td>
+      <td> {{ user.lastname }} </td>
+      <td> {{ user.email }} </td>
+      <td>
+        <span class="label label-default" > {{ roleToString(user.role) }} </span>
+      </td>
     </tr>
     </tbody>
   </table>

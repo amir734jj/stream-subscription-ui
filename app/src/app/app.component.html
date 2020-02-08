@@ -17,6 +17,9 @@
           <a routerLink="/user" routerLinkActive="active">Users</a>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/contractor" routerLinkActive="active">Contractors</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/about" routerLinkActive="active">About</a>
         </li>
       </ul>
@@ -47,4 +50,5 @@
   <router-outlet></router-outlet>
 </div>
 
+<!--Component to wrap all common components-->
 <app-common></app-common>
