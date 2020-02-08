@@ -1,0 +1,8 @@
+<h4> Extended Profile </h4>
+
+<div class="form-group">
+  <label for="select-speciality">Speciality:</label>
+  <select multiple class="form-control" [ngModel]="speciality" id="select-speciality">
+    <option *ngFor="let speciality of specialities" [value]="speciality.value"> {{ speciality.name }} </option>
+  </select>
+</div>
