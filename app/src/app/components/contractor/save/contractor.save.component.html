@@ -1,23 +1,23 @@
 <form (submit)="handleSaveContractor($event)">
   <div class="form-group">
     <label for="email">Firstname:</label>
-    <input type="email" class="form-control" id="firstname" [(ngModel)]="contractor.firstname" name="firstname">
+    <input type="email" class="form-control" id="firstname" [(ngModel)]="contractor.userRef.firstname" name="firstname">
   </div>
   <div class="form-group">
     <label for="email">Lastname:</label>
-    <input type="email" class="form-control" id="lastname" [(ngModel)]="contractor.lastname" name="lastname">
+    <input type="email" class="form-control" id="lastname" [(ngModel)]="contractor.userRef.lastname" name="lastname">
   </div>
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email" [(ngModel)]="contractor.email" name="email">
+    <input type="email" class="form-control" id="email" [(ngModel)]="contractor.userRef.email" name="email">
   </div>
   <div class="form-group">
     <label for="email">Phone Number:</label>
-    <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="contractor.phoneNumber" name="phoneNumber">
+    <input type="email" class="form-control" id="phoneNumber" [(ngModel)]="contractor.userRef.phoneNumber" name="phoneNumber">
   </div>
   <div class="form-group">
     <label for="description">Short Description:</label>
-    <textarea type="description" class="form-control" id="description" [(ngModel)]="contractor.description" name="description"></textarea>
+    <textarea type="description" class="form-control" id="description" [(ngModel)]="contractor.userRef.description" name="description"></textarea>
   </div>
   <div class="form-group">
     <label for="photo">Photo:</label>
@@ -38,13 +38,13 @@
             profile image
           </label>
 
-          <img [src]="contractor.profilePhoto.base64"
-               *ngIf="!!contractor?.profilePhoto?.base64"
+          <img [src]="contractor.userRef.profileImage"
+               *ngIf="!!contractor?.userRef?.profileImage"
                alt="profile-image"
                class="img-thumbnail profile-image-thumbnail"/>
 
-          <button class="btn btn-primary" *ngIf="contractor.profilePhoto.isNull()" type="button" (click)="openFileSelector()">Browse Files</button>
-          <button class="btn btn-danger" *ngIf="contractor.profilePhoto" type="button" (click)="deleteImage()">Delete</button>
+          <button class="btn btn-primary" *ngIf="contractor.userRef.profileImage" type="button" (click)="openFileSelector()">Browse Files</button>
+          <button class="btn btn-danger" *ngIf="contractor.userRef.profileImage" type="button" (click)="deleteImage()">Delete</button>
 
         </ng-template>
       </ngx-file-drop>

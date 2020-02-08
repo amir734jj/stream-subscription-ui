@@ -11,7 +11,7 @@ import {Role, RoleToString} from '../../models/RoleEnum';
 export class UsersComponent implements OnInit {
 
   public users: User[] = [];
-  private roleToString: (role: Role) => string;
+  public roleToString: (role: Role) => string;
 
   constructor(private userService: UserService) {
     this.roleToString = RoleToString;

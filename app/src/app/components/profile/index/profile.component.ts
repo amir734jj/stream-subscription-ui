@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   public profile: Profile;
   public file: NgxFileDropEntry = null;
-  private roleToString: (role: Role) => string;
+  public roleToString: (role: Role) => string;
 
   constructor(private router: Router, private profileService: ProfileService,
               public imageService: ImageService, private logger: NGXLogger) {

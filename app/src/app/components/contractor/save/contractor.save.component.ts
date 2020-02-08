@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import Contractor from '../../../models/entities/Contractor';
 import {ContractorService} from '../../../services/contractor.service';
 import {NgxFileDropEntry} from 'ngx-file-drop';
-import {ContractorProfilePhoto} from '../../../models/entities/ContractorProfilePhoto';
 
 @Component({
   selector: 'app-question-save',

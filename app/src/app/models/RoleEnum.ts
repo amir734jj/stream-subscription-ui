@@ -9,7 +9,7 @@ export enum Role {
 
 export const RoleNameTable = ResolveEnumNameTable(Role, {
   // Here is the place to override names
-  [Role.InternalUser]: 'Internal-User'
+  [Role.InternalUser]: 'Internal'
 });
 
 export const RoleToString = (role: Role): string => EnumToString(RoleNameTable, role);
