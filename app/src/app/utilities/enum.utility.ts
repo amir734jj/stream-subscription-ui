@@ -16,7 +16,7 @@ export function ResolveEnumNameTable<T extends EnumValueType>(enumDef: any,
 export function EnumToString<T>(enumNameTable: EnumNameTableType, enumValue: EnumValueType): string {
   return _.chain(enumNameTable)
     .find(x => x.value === enumValue)
-    .get('name')
+    .get('name', '')
     .value()
     .toString();
 }

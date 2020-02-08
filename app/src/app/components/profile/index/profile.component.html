@@ -63,7 +63,7 @@
      </div>
 
      <div *ngIf="profile.role == roles.Contractor" class="col-lg-6">
-        <app-contractor-profile [(speciality)]="profile.contractor.speciality"></app-contractor-profile>
+        <app-contractor-profile [(speciality)]="profile.contractor?.speciality"></app-contractor-profile>
      </div>
 
      <div class="col-sm-12">
