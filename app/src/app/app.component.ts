@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Role} from './models/RoleEnum';
 import {ProfileType, ProfileWithTokenType} from './types/common.type';
 import {localStorageKey} from './models/constants/BrowserConstants';
+import * as memoize from 'memoizee';
 
 @Component({
   selector: 'app-root',
@@ -21,11 +22,11 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     setTheme('bs3');
 
-    this.authenticated = (() => {
+    this.authenticated = memoize(() => {
       const {token, role} = (JSON.parse(localStorage.getItem(localStorageKey)) || {}) as ProfileWithTokenType;
       this.profile = {role};
       return !!token;
-    });
+    }, { maxAge: 1000, preFetch: true});
   }
 
   ngOnInit() {

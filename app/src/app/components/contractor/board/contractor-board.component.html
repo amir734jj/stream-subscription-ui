@@ -5,8 +5,7 @@
     <table class="table table-bordered">
       <thead>
       <tr>
-        <th> Firstname </th>
-        <th> Lastname </th>
+        <th> Name </th>
         <th> Email </th>
         <th> Phone </th>
         <th> Speciality </th>
@@ -15,8 +14,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let contractor of contractors">
-        <td> {{ contractor.userRef.firstname }} </td>
-        <td> {{ contractor.userRef.lastname }} </td>
+        <td> {{ contractor.name() }} </td>
         <td>
           <a href="mailto:{{ contractor.userRef.email }}">
             {{ contractor.userRef.email }}

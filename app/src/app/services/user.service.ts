@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import CrudService from './abstracts/crud.service';
 import User from '../models/entities/User';
 
@@ -17,5 +17,9 @@ export class UserService extends CrudService<User> {
 
 	resolveRoute(): string {
 		return 'user';
+	}
+
+	default(): User {
+		return new User();
 	}
 }
