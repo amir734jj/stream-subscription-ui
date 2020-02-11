@@ -2,4 +2,4 @@ import {Role} from '../models/RoleEnum';
 
 export type ProfileType = { role: Role }
 
-export type ProfileWithTokenType = ProfileType & { token: string };
+export type ProfileWithTokenType = ProfileType & { token: string, timestamp: Date };

@@ -23,10 +23,9 @@ export class AuthenticationService {
     const response = await this.http.post<{ token: string }>(route('account', 'login'), loginRequest).toPromise();
 
     if (response.token) {
-      const jwtMetadata = jwtDecode(response.token);
+      const jwtMetadata = jwtDecode<{}>(response.token);
       // store email and jwt token in local storage to keep userRef logged in between page refreshes
-      // @ts-ignore
-      localStorage.setItem(localStorageKey, JSON.stringify({...jwtMetadata, ...response }));
+      localStorage.setItem(localStorageKey, JSON.stringify({...jwtMetadata, ...response, timestamp: new Date()}));
     }
 
     return response;
