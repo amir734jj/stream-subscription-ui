@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {appRoutes} from './RouterConfig';
-import {RouterModule} from '@angular/router';
+import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import {BoardModule} from './modules/board.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ContractorModule} from './modules/contractor.module';
@@ -19,7 +19,8 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {UserModule} from './modules/user.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CustomCanActivate} from "./utilities/injectables/custom.can.activate";
+import {CustomCanActivate} from './utilities/injectables/custom.can.activate';
+import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy.utility';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import {CustomCanActivate} from "./utilities/injectables/custom.can.activate";
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
     multi: true
-  }],
+  }, {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

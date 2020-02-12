@@ -13,34 +13,44 @@
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/">Home</a>
         </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="profile?.role == roles.InternalUser">
-          <a routerLink="/user">Users</a>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/contractor">Contractors</a>
-        </li>
+
+        <ng-template [ngIf]="authenticated()">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+              *ngIf="profile?.role == roles.InternalUser">
+            <a routerLink="/user">Users</a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/contractor">Contractors</a>
+          </li>
+        </ng-template>
+
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a routerLink="/about">About</a>
         </li>
       </ul>
+
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="authenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/profile">
-            Profile
-          </a>
-        </li>
+        <ng-template [ngIf]="authenticated()">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/profile">
+              Profile
+            </a>
+          </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+          </li>
+        </ng-template>
 
-        <li *ngIf="!authenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-        </li>
+        <ng-template [ngIf]="!authenticated()">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+          </li>
 
-        <li *ngIf="!authenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-        </li>
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+          </li>
+        </ng-template>
 
-        <li *ngIf="authenticated()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
-        </li>
       </ul>
     </div>
   </div>

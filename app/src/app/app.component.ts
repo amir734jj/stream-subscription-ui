@@ -3,10 +3,9 @@ import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
 import {Role} from './models/RoleEnum';
-import {accessTokenDurationInMinutes, localStorageKey} from './models/constants/BrowserConstants';
-import * as memoize from 'memoizee';
-import * as moment from "moment";
-import {ProfileType, ProfileWithTokenType} from "./types/profile.type";
+import {ProfileType} from './types/profile.type';
+import {clearAuthInfo, anyAuthInfo} from './utilities/auth.utility';
+import {Profile} from './models/entities/Profile';
 
 @Component({
   selector: 'app-root',
@@ -14,21 +13,20 @@ import {ProfileType, ProfileWithTokenType} from "./types/profile.type";
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  title = 'wizpiti';
+  title = 'Wizpiti';
   public navBarCollapsed = true;
   public authenticated: () => boolean;
   public profile: ProfileType;
   public roles = Role;
-  private now = moment();
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     setTheme('bs3');
 
-    this.authenticated = memoize(() => {
-      const {token, role, timestamp} = (JSON.parse(localStorage.getItem(localStorageKey)) || {}) as ProfileWithTokenType;
-      this.profile = {role};
-      return !!token && moment.duration(this.now.diff(timestamp)).asMinutes() < accessTokenDurationInMinutes;
-    }, { maxAge: 1000, preFetch: true});
+    this.authenticated = () => {
+      const {item1 = false, item2 = new Profile()} = anyAuthInfo();
+      this.profile = item2;
+      return item1;
+    };
   }
 
   ngOnInit() {
@@ -39,7 +37,7 @@ export class AppComponent implements OnInit {
           const [authenticated, profile] = response;
           this.profile = profile;
           if (!authenticated) {
-            localStorage.removeItem(localStorageKey);
+            clearAuthInfo();
             await this.router.navigate(['./login']);
           }
         });

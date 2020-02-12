@@ -1,7 +1,11 @@
-import {Route} from '@angular/router';
+export type RouteDataType =
+  { allowAnonymous: boolean }
+  | { disallowAuthenticated: boolean }
+  | { shouldReuse: boolean };
 
-export type RouterDataType = ({ allowAnonymous: boolean } | { requireAuthenticated: boolean });
+export type RouteDataStrictType =
+  { allowAnonymous: boolean }
+  & { disallowAuthenticated: boolean }
+  & { shouldReuse: boolean };
 
-export type RouteExtended = Route & { data: RouterDataType };
-
-export type RoutesExtended = RouteExtended[];
+export type RoutesDataType = RouteDataType[];

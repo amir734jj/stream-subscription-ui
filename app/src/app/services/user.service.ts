@@ -5,21 +5,21 @@ import User from '../models/entities/User';
 
 @Injectable()
 export class UserService extends CrudService<User> {
-	public token: string;
+  public token: string;
 
-	constructor(private http: HttpClient) {
-		super();
-	}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-	resolveHttpClient(): HttpClient {
-		return this.http;
-	}
+  resolveHttpClient(): HttpClient {
+    return this.http;
+  }
 
-	resolveRoute(): string {
-		return 'user';
-	}
+  resolveRoute(): string {
+    return 'user';
+  }
 
-	default(): User {
-		return new User();
-	}
+  default(): User {
+    return new User();
+  }
 }

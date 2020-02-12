@@ -1,5 +1,5 @@
 import {Role} from '../RoleEnum';
-import {AbstractUserEntity} from "../abstracts/AbstractUserEntity";
+import {AbstractUserEntity} from '../abstracts/AbstractUserEntity';
 
 export default class User extends AbstractUserEntity {
     id: string;

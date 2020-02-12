@@ -6,4 +6,4 @@ export const localStorageKey = 'user';
 /**
  * Max minutes where token expires
  */
-export const accessTokenDurationInMinutes = 1;
+export const accessTokenDurationInMinutes = 60;

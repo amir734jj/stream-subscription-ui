@@ -1,12 +1,14 @@
 // This impl. bases upon one that can be found in the router's test cases.
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
+import {RouteDataStrictType} from '../../types/router.data.type';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
   handlers: { [key: string]: DetachedRouteHandle } = {};
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return route.data.shouldReuse || false;
+    const { shouldReuse = false } = route.data as RouteDataStrictType;
+    return shouldReuse;
   }
 
   store(route: ActivatedRouteSnapshot, handle: {}): void {
@@ -25,6 +27,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    return future.data.shouldReuse || false;
+    const { shouldReuse = false } = future.data as RouteDataStrictType;
+    return shouldReuse;
   }
 }

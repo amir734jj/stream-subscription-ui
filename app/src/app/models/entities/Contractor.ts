@@ -4,10 +4,10 @@ import {AbstractUserEntity} from '../abstracts/AbstractUserEntity';
 
 export default class Contractor extends AbstractUserEntity {
   id: string;
-  userRef: User;
+  userRef: User = new User();
   speciality: SpecialityEnum[];
 
   name(): string {
-	  return this.userRef.name();
+    return this.userRef.name();
   }
 }
