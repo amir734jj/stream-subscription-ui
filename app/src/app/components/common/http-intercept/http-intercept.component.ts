@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AlertConfig, BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {HttpErrorResponse} from '@angular/common/http';
-import {RequestInterceptor} from '../../../utilities/custom.error.handler.utility';
+import {RequestInterceptor} from '../../../utilities/injectables/custom.error.handler.utility';
 import * as _ from 'lodash';
 
 @Component({

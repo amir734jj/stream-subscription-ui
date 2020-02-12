@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import User from "../../models/entities/User";
+import * as _ from "lodash";
+import {RoleToString} from "../../models/RoleEnum";
 
 @Component({
   selector: 'app-welcome',
@@ -7,9 +10,8 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  userInfo: {
-    firstname: string
-  } = JSON.parse(localStorage.getItem('user'));
+	public roleToString = RoleToString;
+	userInfo: User = _.merge(new User(), JSON.parse(localStorage.getItem('user')));
 
   constructor() {
   }

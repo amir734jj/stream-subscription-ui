@@ -3,10 +3,10 @@ import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
 import {Role} from './models/RoleEnum';
-import {ProfileType, ProfileWithTokenType} from './types/common.type';
 import {accessTokenDurationInMinutes, localStorageKey} from './models/constants/BrowserConstants';
 import * as memoize from 'memoizee';
 import * as moment from "moment";
+import {ProfileType, ProfileWithTokenType} from "./types/profile.type";
 
 @Component({
   selector: 'app-root',

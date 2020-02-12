@@ -1,7 +1,10 @@
-<h3>
-  Welcome {{ userInfo?.firstname }}
-</h3>
+<div class="page-header">
+  <h3>
+    Welcome {{ userInfo.name() }}
+    <span class="label label-default"> {{ roleToString(userInfo.role) }} </span>
+  </h3>
 
-<pre>
-  {{ userInfo | json }}
-</pre>
+  <pre>
+{{ userInfo | json }}
+  </pre>
+</div>

@@ -5,8 +5,8 @@ import {RegisterRequest} from '../models/authentication.service/register/Registe
 import route from '../utilities/route.utility';
 import {Role} from '../models/RoleEnum';
 import * as jwtDecode from 'jwt-decode';
-import {ProfileType} from '../types/common.type';
 import {localStorageKey} from '../models/constants/BrowserConstants';
+import {ProfileType} from "../types/profile.type";
 
 @Injectable()
 export class AuthenticationService {

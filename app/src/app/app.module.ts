@@ -19,6 +19,7 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {UserModule} from './modules/user.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CustomCanActivate} from "./utilities/injectables/custom.can.activate";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [{
+  providers: [CustomCanActivate, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
     multi: true

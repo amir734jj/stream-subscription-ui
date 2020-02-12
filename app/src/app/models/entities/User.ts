@@ -1,6 +1,7 @@
 import {Role} from '../RoleEnum';
+import {AbstractUserEntity} from "../abstracts/AbstractUserEntity";
 
-export default class User {
+export default class User extends AbstractUserEntity {
     id: string;
     firstname: string;
     lastname: string;
