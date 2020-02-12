@@ -24,4 +24,9 @@ export const clearAuthInfo = () => localStorage.removeItem(localStorageKey);
 /**
  * Set auth info into localStorage
  */
-export const seAuthInfo = (info: ProfileWithTokenType) => localStorage.setItem(localStorageKey, JSON.stringify(info));
+export const seAuthInfo = (info: ProfileWithTokenType) => {
+  localStorage.setItem(localStorageKey, JSON.stringify(info));
+
+  // Clear cache
+  anyAuthInfo.clear();
+};
