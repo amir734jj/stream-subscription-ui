@@ -18,10 +18,10 @@ export class CustomCanActivate implements CanActivate {
 
     switch (item1) {
       case true:
-        if (!allowAnonymous) {
-          return true;
-        } else if (disallowAuthenticated) {
+        if (disallowAuthenticated) {
           return await this.router.navigate(['./']);
+        } else if (!allowAnonymous) {
+          return true;
         } else {
           return true;
         }
