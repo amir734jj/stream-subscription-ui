@@ -14,6 +14,7 @@ import {UsersComponent} from './components/users/users.component';
 import {ContractorBoardComponent} from './components/contractor/board/contractor-board.component';
 import {CustomCanActivate} from './utilities/injectables/custom.can.activate';
 import {RoutesDataType} from './types/router.data.type';
+import {ShowcaseProjectComponent} from './components/profile/contractor/showcase/showcase-project.component';
 
 export const appRoutes: Routes = _.map([
   {path: '', component: BoardComponent, data: {allowAnonymous: true}},
@@ -27,6 +28,7 @@ export const appRoutes: Routes = _.map([
   {path: 'board', component: BoardComponent, data: {allowAnonymous: false}},
   {path: 'user', component: UsersComponent, data: {allowAnonymous: false}},
   {path: 'contractor', component: ContractorBoardComponent, data: {allowAnonymous: false}},
-  {path: 'contractor/:id', component: ContractorIndexComponent, data: {allowAnonymous: false}}
+  {path: 'contractor/:id', component: ContractorIndexComponent, data: {allowAnonymous: false}},
+  {path: 'profile/contractor/showcase', component: ShowcaseProjectComponent, data: {allowAnonymous: false}},
 ] as Route | { data: RoutesDataType }, x => ({...x, canActivate: [CustomCanActivate]} as Route));
 

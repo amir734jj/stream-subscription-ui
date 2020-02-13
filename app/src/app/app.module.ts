@@ -53,6 +53,7 @@ import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy
     useClass: JwtInterceptor,
     multi: true
   }, {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}],
+  exports: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

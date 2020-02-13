@@ -8,8 +8,9 @@ import {ProfileComponent} from '../components/profile/index/profile.component';
 import {ProfileService} from '../services/profile.service';
 import {ImageService} from '../services/image.service';
 import {AccountModule} from './account.module';
-import {ContractorProfileComponent} from '../components/profile/contractor-profile/contractor-profile.component';
+import {ContractorProfileComponent} from '../components/profile/contractor/index/contractor-profile.component';
 import {MatSelectModule} from '@angular/material/select';
+import {ShowcaseProjectComponent} from '../components/profile/contractor/showcase/showcase-project.component';
 
 @NgModule({
   imports: [
@@ -23,8 +24,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSelectModule
   ],
   providers: [ProfileService, ImageService],
-  declarations: [ProfileComponent, ContractorProfileComponent],
-  exports: [ProfileComponent]
+  declarations: [ProfileComponent, ContractorProfileComponent, ShowcaseProjectComponent],
+  exports: [ProfileComponent, ShowcaseProjectComponent]
 })
 export class ProfileModule {
 
