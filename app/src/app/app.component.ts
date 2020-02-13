@@ -4,7 +4,7 @@ import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
 import {Role} from './models/RoleEnum';
 import {ProfileType} from './types/profile.type';
-import {clearAuthInfo, anyAuthInfo} from './utilities/auth.utility';
+import {clearAuthInfo, resolveAuthInfo} from './utilities/auth.utility';
 import {Profile} from './models/entities/Profile';
 
 @Component({
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     setTheme('bs3');
 
     this.authenticated = () => {
-      const {item1 = false, item2 = new Profile()} = anyAuthInfo();
+      const {item1 = false, item2 = new Profile()} = resolveAuthInfo();
       this.profile = item2;
       return item1;
     };

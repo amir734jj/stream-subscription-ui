@@ -1,8 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {localStorageKey} from "../models/constants/BrowserConstants";
+import {resolveAuthInfo} from '../utilities/auth.utility';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -18,11 +25,12 @@ export class JwtInterceptor implements HttpInterceptor {
       if (event instanceof HttpResponse) {
         // do stuff with response if you want
       }
-    }, (response: HttpErrorResponse) => { }));
+    }, (response: HttpErrorResponse) => {
+    }));
   }
 
   getToken() {
-    const { token = '' } = JSON.parse(localStorage.getItem(localStorageKey)) || {};
-		return token;
+    const {token = ''} = resolveAuthInfo().item2;
+    return token;
   }
 }

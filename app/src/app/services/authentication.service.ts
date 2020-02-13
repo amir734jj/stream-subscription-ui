@@ -6,7 +6,7 @@ import route from '../utilities/route.utility';
 import {Role} from '../models/RoleEnum';
 import * as jwtDecode from 'jwt-decode';
 import {ProfileType, ProfileWithTokenType} from '../types/profile.type';
-import {seAuthInfo} from '../utilities/auth.utility';
+import {setAuthInfo, clearAuthInfo} from '../utilities/auth.utility';
 
 @Injectable()
 export class AuthenticationService {
@@ -25,7 +25,7 @@ export class AuthenticationService {
     if (response.token) {
       const jwtMetadata = jwtDecode<{}>(response.token);
       // store email and jwt token in local storage to keep userRef logged in between page refreshes
-      seAuthInfo({...jwtMetadata, ...response, timestamp: new Date()});
+      setAuthInfo({...jwtMetadata, ...response, timestamp: new Date()});
     }
 
     return response;
@@ -36,7 +36,7 @@ export class AuthenticationService {
   }
 
   async logout() {
-    localStorage.removeItem('user');
+    clearAuthInfo();
     return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }
 }

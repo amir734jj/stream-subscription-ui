@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {RouteDataStrictType} from '../../types/router.data.type';
-import {anyAuthInfo} from '../auth.utility';
+import {resolveAuthInfo} from '../auth.utility';
 
 @Injectable()
 export class CustomCanActivate implements CanActivate {
@@ -14,7 +14,7 @@ export class CustomCanActivate implements CanActivate {
     state: RouterStateSnapshot
   ) {
     const {allowAnonymous = false, disallowAuthenticated = false} = route.data as RouteDataStrictType;
-    const {item1 = false} = anyAuthInfo();
+    const {item1 = false} = resolveAuthInfo();
 
     switch (item1) {
       case true:

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import User from "../../models/entities/User";
-import * as _ from "lodash";
-import {RoleToString} from "../../models/RoleEnum";
+import User from '../../models/entities/User';
+import * as _ from 'lodash';
+import {RoleToString} from '../../models/RoleEnum';
+import {resolveAuthInfo} from '../../utilities/auth.utility';
 
 @Component({
   selector: 'app-welcome',
@@ -10,8 +11,8 @@ import {RoleToString} from "../../models/RoleEnum";
 })
 export class WelcomeComponent implements OnInit {
 
-	public roleToString = RoleToString;
-	userInfo: User = _.merge(new User(), JSON.parse(localStorage.getItem('user')));
+  public roleToString = RoleToString;
+  userInfo: User = _.merge(new User(), resolveAuthInfo().item2);
 
   constructor() {
   }
