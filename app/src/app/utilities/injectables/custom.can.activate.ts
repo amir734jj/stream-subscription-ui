@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
 import {RouteDataStrictType} from '../../types/router.data.type';
 import {resolveAuthInfo} from '../auth.utility';
 
+
 @Injectable()
 export class CustomCanActivate implements CanActivate {
 
