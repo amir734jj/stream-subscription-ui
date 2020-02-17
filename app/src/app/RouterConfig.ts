@@ -32,3 +32,9 @@ export const appRoutes: Routes = _.map([
   {path: 'profile/contractor/showcase', component: ShowcaseProjectComponent, data: {allowAnonymous: false}},
 ] as Route | { data: RoutesDataType }, x => ({...x, canActivate: [CustomCanActivate]} as Route));
 
+appRoutes = appRoutes.map(x => ({
+	...x,
+	canActivate: [CustomCanActivate]
+}));
+
+export { appRoutes };
