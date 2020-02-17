@@ -38,7 +38,7 @@
     "moment": "2.24.0",
     "ngx-bootstrap": "5.3.2",
     "ngx-file-drop": "8.0.8",
-    "ngx-logger": "4.1.1",
+    "ngx-logger": "4.1.2",
     "rxjs": "6.5.4",
     "store": "2.0.12",
     "tslib": "1.10.0",
