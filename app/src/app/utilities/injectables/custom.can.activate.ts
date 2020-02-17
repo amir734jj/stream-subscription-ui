@@ -10,7 +10,7 @@ export class CustomCanActivate implements CanActivate {
   }
 
   async canActivate(
-	  { data }: ActivatedRouteSnapshot,
+    {data}: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
     const {allowAnonymous = false, disallowAuthenticated = false} = data as RouteDataStrictType;
