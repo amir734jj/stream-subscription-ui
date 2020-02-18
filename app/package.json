@@ -43,7 +43,7 @@
     "store": "2.0.12",
     "tslib": "1.10.0",
     "url-join": "latest",
-    "webpack": "4.41.5",
+    "webpack": "4.41.6",
     "webpack-dev-server": "3.10.3",
     "zone.js": "0.10.2"
   },
