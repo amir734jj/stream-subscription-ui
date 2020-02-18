@@ -5,10 +5,10 @@ import {FormErrorTable} from '../../../../utilities/form.utility';
 
 @Component({
   selector: 'app-showcase-project',
-  templateUrl: './showcase-project.component.html',
-  styleUrls: ['./showcase-project.component.sass']
+  templateUrl: './showcase-project-add.component.html',
+  styleUrls: ['./showcase-project-add.component.sass']
 })
-export class ShowcaseProjectComponent implements OnInit {
+export class ShowcaseProjectAddComponent implements OnInit {
 
   errorTable: FormErrorTable = [];
   form: FormGroup;

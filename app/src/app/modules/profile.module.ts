@@ -10,7 +10,7 @@ import {ImageService} from '../services/image.service';
 import {AccountModule} from './account.module';
 import {ContractorProfileComponent} from '../components/profile/contractor/index/contractor-profile.component';
 import {MatSelectModule} from '@angular/material/select';
-import {ShowcaseProjectComponent} from '../components/profile/contractor/showcase/showcase-project.component';
+import {ShowcaseProjectAddComponent} from '../components/profile/contractor/showcase/showcase-project-add.component';
 
 @NgModule({
   imports: [
@@ -24,8 +24,8 @@ import {ShowcaseProjectComponent} from '../components/profile/contractor/showcas
     MatSelectModule
   ],
   providers: [ProfileService, ImageService],
-  declarations: [ProfileComponent, ContractorProfileComponent, ShowcaseProjectComponent],
-  exports: [ProfileComponent, ShowcaseProjectComponent]
+  declarations: [ProfileComponent, ContractorProfileComponent, ShowcaseProjectAddComponent],
+  exports: [ProfileComponent, ShowcaseProjectAddComponent]
 })
 export class ProfileModule {
 
