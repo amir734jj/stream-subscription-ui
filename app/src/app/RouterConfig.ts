@@ -16,7 +16,7 @@ import {CustomCanActivate} from './utilities/injectables/custom.can.activate';
 import {RoutesDataType} from './types/router.data.type';
 import {ShowcaseProjectComponent} from './components/profile/contractor/showcase/showcase-project.component';
 
-export const appRoutes: Routes = _.map([
+let appRoutes: Routes = _.map([
   {path: '', component: BoardComponent, data: {allowAnonymous: true}},
   {path: 'home', component: BoardComponent, data: {allowAnonymous: true}},
   {path: 'about', component: AboutComponent, data: {allowAnonymous: true}},
@@ -33,8 +33,8 @@ export const appRoutes: Routes = _.map([
 ] as Route | { data: RoutesDataType }, x => ({...x, canActivate: [CustomCanActivate]} as Route));
 
 appRoutes = appRoutes.map(x => ({
-	...x,
-	canActivate: [CustomCanActivate]
+  ...x,
+  canActivate: [CustomCanActivate]
 }));
 
-export { appRoutes };
+export {appRoutes};

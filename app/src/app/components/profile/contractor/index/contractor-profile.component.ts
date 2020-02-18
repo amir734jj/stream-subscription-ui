@@ -25,6 +25,6 @@ export class ContractorProfileComponent implements OnInit, DoCheck {
   }
 
   async addShowcaseProject() {
-    await this.router.navigate(['profile', 'contractor', 'showcase']);
+    await this.router.navigate(['profile', 'contractor', 'showcase'], { state: null });
   }
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import Contractor from '../../../../models/entities/Contractor';
+import {FormGroup} from '@angular/forms';
+import {FormErrorTable} from '../../../../utilities/form.utility';
 
 @Component({
   selector: 'app-showcase-project',
@@ -8,10 +10,16 @@ import Contractor from '../../../../models/entities/Contractor';
 })
 export class ShowcaseProjectComponent implements OnInit {
 
-  contractor: Contractor;
+  errorTable: FormErrorTable = [];
+  form: FormGroup;
+  @Input() contractor: Contractor;
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+  addShowcaseProject(event: Event) {
+
+  }
 }
