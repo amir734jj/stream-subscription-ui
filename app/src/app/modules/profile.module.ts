@@ -6,11 +6,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {ProfileComponent} from '../components/profile/index/profile.component';
 import {ProfileService} from '../services/profile.service';
-import {ImageService} from '../services/image.service';
 import {AccountModule} from './account.module';
-import {ContractorProfileComponent} from '../components/profile/contractor/index/contractor-profile.component';
 import {MatSelectModule} from '@angular/material/select';
-import {ShowcaseProjectAddComponent} from '../components/profile/contractor/showcase/showcase-project-add.component';
 
 @NgModule({
   imports: [
@@ -23,9 +20,9 @@ import {ShowcaseProjectAddComponent} from '../components/profile/contractor/show
     AccountModule,
     MatSelectModule
   ],
-  providers: [ProfileService, ImageService],
-  declarations: [ProfileComponent, ContractorProfileComponent, ShowcaseProjectAddComponent],
-  exports: [ProfileComponent, ShowcaseProjectAddComponent]
+  providers: [ProfileService],
+  declarations: [ProfileComponent],
+  exports: [ProfileComponent]
 })
 export class ProfileModule {
 

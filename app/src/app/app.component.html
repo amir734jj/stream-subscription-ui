@@ -15,8 +15,7 @@
         </li>
 
         <ng-template [ngIf]="authenticated()">
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-              *ngIf="profile?.role == roles.InternalUser">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a routerLink="/user">Users</a>
           </li>
           <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

@@ -6,7 +6,6 @@ import {appRoutes} from './RouterConfig';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import {BoardModule} from './modules/board.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ContractorModule} from './modules/contractor.module';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
 import {AccountModule} from './modules/account.module';
 import {CommonComponentModule} from './modules/common.module';
@@ -43,7 +42,6 @@ import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy
     BoardModule,
     ProfileModule,
     UserModule,
-    ContractorModule,
     NgxFileDropModule,
     FormsModule,
     BrowserAnimationsModule

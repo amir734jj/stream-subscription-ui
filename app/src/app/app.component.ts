@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
-import {Role} from './models/RoleEnum';
 import {ProfileType} from './types/profile.type';
 import {clearAuthInfo, resolveAuthInfo} from './utilities/auth.utility';
 import {Profile} from './models/entities/Profile';
@@ -13,17 +12,16 @@ import {Profile} from './models/entities/Profile';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  title = 'Wizpiti';
+  title = 'Stream-Subscription-UI';
   public navBarCollapsed = true;
   public authenticated: () => boolean;
   public profile: ProfileType;
-  public roles = Role;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     setTheme('bs3');
 
     this.authenticated = () => {
-      const {item1 = false, item2 = new Profile()} = resolveAuthInfo();
+      const {item1 = false, item2 = new Profile() as ProfileType} = resolveAuthInfo();
       this.profile = item2;
       return item1;
     };
@@ -34,9 +32,7 @@ export class AppComponent implements OnInit {
     if (this.authenticated()) {
       this.authenticationService.isAuthenticated()
         .then(async response => {
-          const [authenticated, profile] = response;
-          this.profile = profile;
-          if (!authenticated) {
+          if (!response) {
             clearAuthInfo();
             await this.router.navigate(['./login']);
           }

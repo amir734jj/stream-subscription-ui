@@ -1,13 +1,10 @@
-import {Role} from '../RoleEnum';
-import Contractor from './Contractor';
+import User from './User';
 
 export class Profile {
-  firstname: string;
-  lastname: string;
+  name: string;
   email: string;
-  role: Role;
   phoneNumber: string;
   description: string;
   photo: string;
-  contractor?: Contractor;
+  user?: User;
 }
