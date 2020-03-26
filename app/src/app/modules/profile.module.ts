@@ -8,6 +8,7 @@ import {ProfileComponent} from '../components/profile/index/profile.component';
 import {ProfileService} from '../services/profile.service';
 import {AccountModule} from './account.module';
 import {MatSelectModule} from '@angular/material/select';
+import {CommonComponentModule} from './common.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {MatSelectModule} from '@angular/material/select';
     AppRoutingModule,
     NgxFileDropModule,
     AccountModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonComponentModule
   ],
   providers: [ProfileService],
   declarations: [ProfileComponent],

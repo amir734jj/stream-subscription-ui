@@ -14,6 +14,8 @@ import {CustomCanActivate} from './utilities/injectables/custom.can.activate';
 import {RoutesDataType} from './types/router.data.type';
 import {StreamComponent} from './components/stream/index/stream.component';
 import {AddStreamComponent} from './components/stream/add/add-stream.component';
+import {ManageStreamComponent} from './components/stream/manage/manage-stream.component';
+import {EditStreamComponent} from './components/stream/edit/edit-stream.component';
 
 let appRoutes: Routes = _.map([
   {path: '', component: BoardComponent, data: {allowAnonymous: true}},
@@ -24,8 +26,10 @@ let appRoutes: Routes = _.map([
   {path: 'logout', component: LogoutComponent, data: {allowAnonymous: false}},
   {path: 'welcome', component: WelcomeComponent, data: {allowAnonymous: false}},
   {path: 'board', component: BoardComponent, data: {allowAnonymous: false, shouldReuse: true}},
-  {path: 'stream', component: StreamComponent, data: {allowAnonymous: false}},
   {path: 'stream/add', component: AddStreamComponent, data: {allowAnonymous: false}},
+  {path: 'stream', component: StreamComponent, data: {allowAnonymous: false}},
+  {path: 'stream/:id', component: ManageStreamComponent, data: {allowAnonymous: false}},
+  {path: 'stream/:id/edit', component: EditStreamComponent, data: {allowAnonymous: false}},
   {path: 'user', component: UsersComponent, data: {allowAnonymous: false}},
   {path: 'profile', component: ProfileComponent, data: {allowAnonymous: false}},
 ] as Route | { data: RoutesDataType }, x => ({...x, canActivate: [CustomCanActivate]} as Route));

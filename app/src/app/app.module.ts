@@ -21,14 +21,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomCanActivate} from './utilities/injectables/custom.can.activate';
 import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy.utility';
 import {StreamModule} from './modules/stream.module';
-import {FormValidationErrorComponent} from './components/helpers/form-validation-error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    WelcomeComponent,
-    FormValidationErrorComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +53,7 @@ import {FormValidationErrorComponent} from './components/helpers/form-validation
     useClass: JwtInterceptor,
     multi: true
   }, {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}],
-  exports: [ FormValidationErrorComponent ],
+  exports: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

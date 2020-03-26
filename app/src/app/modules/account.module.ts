@@ -8,6 +8,7 @@ import {LogoutComponent} from '../components/account/logout/logout.component';
 import {AuthenticationService} from '../services/authentication.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
+import {CommonComponentModule} from './common.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {MatSelectModule} from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonComponentModule
   ],
   providers: [AuthenticationService],
   declarations: [LoginComponent, RegisterComponent, LogoutComponent],

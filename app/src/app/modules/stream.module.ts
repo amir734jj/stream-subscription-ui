@@ -7,7 +7,10 @@ import {StreamComponent} from '../components/stream/index/stream.component';
 import {StreamService} from '../services/stream.service';
 import {FtpsinkComponent} from '../components/ftpsink/ftpsink.component';
 import {AddStreamComponent} from '../components/stream/add/add-stream.component';
-import {UpdateStreamComponent} from '../components/stream/update/update-stream.component'; // this is needed!
+import {EditStreamComponent} from '../components/stream/edit/edit-stream.component';
+import {CommonComponentModule} from './common.module';
+import {ManageStreamComponent} from '../components/stream/manage/manage-stream.component';
+import {ManageStreamService} from '../services/manage.stream.service'; // this is needed!
 
 @NgModule({
   imports: [
@@ -15,14 +18,16 @@ import {UpdateStreamComponent} from '../components/stream/update/update-stream.c
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonComponentModule
   ],
-  providers: [StreamService],
+  providers: [StreamService, ManageStreamService],
   declarations: [
     StreamComponent,
     FtpsinkComponent,
     AddStreamComponent,
-    UpdateStreamComponent
+    EditStreamComponent,
+    ManageStreamComponent
   ],
   exports: [StreamComponent]
 })
