@@ -8,9 +8,11 @@ import {FormErrorTable} from '../../utilities/form.utility';
 })
 export class FormValidationErrorComponent implements OnInit {
 
-	@Input('error-table') errorTable: FormErrorTable = [];
+  @Input('error-table')
+  errorTable: FormErrorTable = [];
 
-	constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

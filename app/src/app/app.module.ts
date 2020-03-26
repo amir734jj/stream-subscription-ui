@@ -20,12 +20,15 @@ import {UserModule} from './modules/user.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomCanActivate} from './utilities/injectables/custom.can.activate';
 import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy.utility';
+import {StreamModule} from './modules/stream.module';
+import {FormValidationErrorComponent} from './components/helpers/form-validation-error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    FormValidationErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy
     BoardModule,
     ProfileModule,
     UserModule,
+    StreamModule,
     NgxFileDropModule,
     FormsModule,
     BrowserAnimationsModule
@@ -51,7 +55,7 @@ import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy
     useClass: JwtInterceptor,
     multi: true
   }, {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}],
-  exports: [ ],
+  exports: [ FormValidationErrorComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

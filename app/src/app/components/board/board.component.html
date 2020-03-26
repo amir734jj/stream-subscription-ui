@@ -1,8 +1,22 @@
 <div class="container">
-  <div class="jumbotron">
+  <div class="jumbotron" *ngIf="!isAuthenticated">
     <h2> Welcome to Stream-Subscription-UI portal </h2>
     <p>
       You need to be authenticated to use any feature of this website
     </p>
+  </div>
+
+  <div *ngIf="isAuthenticated">
+    <p>
+      <strong>
+        Live log
+      </strong>
+      <span class="label label-primary pull-right">
+        {{ count}} active users
+      </span>
+    </p>
+    <pre>
+{{ log.join('\n') }}
+  </pre>
   </div>
 </div>
