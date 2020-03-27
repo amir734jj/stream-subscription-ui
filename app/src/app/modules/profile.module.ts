@@ -6,10 +6,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {ProfileComponent} from '../components/profile/index/profile.component';
 import {ProfileService} from '../services/profile.service';
-import {ImageService} from '../services/image.service';
 import {AccountModule} from './account.module';
-import {ContractorProfileComponent} from '../components/profile/contractor-profile/contractor-profile.component';
 import {MatSelectModule} from '@angular/material/select';
+import {CommonComponentModule} from './common.module';
 
 @NgModule({
   imports: [
@@ -20,10 +19,11 @@ import {MatSelectModule} from '@angular/material/select';
     AppRoutingModule,
     NgxFileDropModule,
     AccountModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonComponentModule
   ],
-  providers: [ProfileService, ImageService],
-  declarations: [ProfileComponent, ContractorProfileComponent],
+  providers: [ProfileService],
+  declarations: [ProfileComponent],
   exports: [ProfileComponent]
 })
 export class ProfileModule {

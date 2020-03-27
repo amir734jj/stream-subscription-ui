@@ -8,12 +8,12 @@ export type EnumNameTableType = {
   value: EnumValueType
 }[];
 
-export function ResolveEnumNameTable<T extends EnumValueType>(enumDef: any,
+export function resolveEnumNameTable<T extends EnumValueType>(enumDef: any,
                                                               overrideNameTable: { [key in T]?: string } = {}): EnumNameTableType {
   return EnumValues.getNamesAndValues(enumDef).map(x => ({...x, name: _.get(overrideNameTable, x.value, x.name)}));
 }
 
-export function EnumToString<T>(enumNameTable: EnumNameTableType, enumValue: EnumValueType): string {
+export function enumToString<T>(enumNameTable: EnumNameTableType, enumValue: EnumValueType): string {
   return _.chain(enumNameTable)
     .find(x => x.value === enumValue)
     .get('name', '')

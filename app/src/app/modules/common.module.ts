@@ -15,6 +15,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 // for Core use:
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {FormValidationErrorComponent} from '../components/helpers/form-validation-error.component';
 
 @NgModule({
   imports: [
@@ -34,9 +35,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     useClass: RequestInterceptor,
     multi: true,
   }],
-  exports: [CommonComponent],
+  exports: [CommonComponent, FormValidationErrorComponent],
   declarations: [
-    CommonComponent, HttpInterceptComponent, ProgressBarComponent
+    CommonComponent, HttpInterceptComponent, ProgressBarComponent, FormValidationErrorComponent
   ]
 })
 export class CommonComponentModule {

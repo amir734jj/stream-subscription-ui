@@ -1,9 +1,15 @@
-# contractor-finder-ui
+# stream-subscription-ui
+
+By providing an Url and Access Token, this website rips the stream or partitions the stream into `.mp3` file and subsequently uploads the to a service. 
+
+This service is free, we do not own the ripped `.mp3` files and we do not store them, only store them in your file sharing service.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
 
 ### URL
-https://contractor-finder-ui.herokuapp.com/
+
+- [API](https://streaming-subscription.herokuapp.com/) Url
+- [UI](https://stream-subscription-ui.herokuapp.com/) Url
 
 ## Development server
 

@@ -5,8 +5,6 @@ import route from '../utilities/route.utility';
 
 @Injectable()
 export class ProfileService {
-  public token: string;
-
   constructor(private http: HttpClient) {
 
   }

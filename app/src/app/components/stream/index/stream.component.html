@@ -1,0 +1,70 @@
+<div class="container">
+  <h2>Streams</h2>
+
+  <div class="row bottom-margin">
+    <div class="col-sm-10">
+      <p>This is the list of streams</p>
+    </div>
+
+    <div class="col-sm-2">
+      <button class="btn btn-default pull-right" (click)="addStream()">
+        <strong>
+          Add Stream
+        </strong>
+      </button>
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th> Id</th>
+      <th> Name </th>
+      <th> Url</th>
+      <th> Sinks</th>
+      <th> Status </th>
+      <th> Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let stream of streams">
+      <td> {{ stream.id }} </td>
+      <td> {{ stream.name }} </td>
+      <td>
+        <a [href]="stream.url">
+          {{ stream.url }}
+        </a>
+      </td>
+      <td>
+        <ul *ngIf="stream.ftpSinkRelationships.length">
+          <li *ngFor="let sink of stream.ftpSinkRelationships">
+            {{ sink.ftpSink.name }}
+          </li>
+        </ul>
+
+        <ng-template [ngIf]="!stream.ftpSinkRelationships.length">
+          None
+        </ng-template>
+      </td>
+      <td>
+        <label class="label label-{{ resolveBootstrapClass(statusTable[stream.id] === StreamStatus.Started) }}">
+          {{ statusToString(statusTable[stream.id]) }}
+        </label>
+      </td>
+      <td>
+        <div class="btn-group">
+          <a class="btn btn-default" [routerLink] = "['/stream', stream.id]">
+            Manage
+          </a>
+          <a class="btn btn-default" [routerLink] = "['/stream', stream.id, 'edit']">
+            Edit
+          </a>
+          <button class="btn btn-danger" (click)="deleteStream($event, stream.id)">
+            Delete
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

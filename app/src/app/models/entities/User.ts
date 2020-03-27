@@ -1,13 +1,5 @@
-import {Role} from '../RoleEnum';
-import {AbstractUserEntity} from '../abstracts/AbstractUserEntity';
-
-export default class User extends AbstractUserEntity {
+export default class User {
     id: string;
-    firstname: string;
-    lastname: string;
-    description: string;
+    name: string;
     email: string;
-    phoneNumber: string;
-    role: Role;
-    photo: string;
 }

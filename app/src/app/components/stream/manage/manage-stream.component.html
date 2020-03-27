@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <a [href]="stream.url">
+      <label>
+        {{stream.name}}
+      </label>
+    </a>
+    <span class="label label-{{ resolveBootstrapClass(status == StreamStatus.Started) }} pull-right">
+        {{ statusToString(status) }}
+      </span>
+  </div>
+  <div class="panel-body">
+    <div *ngIf="true">
+      Stream is currently running!
+    </div>
+    <ng-template #elseBlock>
+      Stream is not running {{ status }}!
+    </ng-template>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-{{ resolveBootstrapClass(status !== StreamStatus.Started) }}" (click)="toggle()">
+      {{status === StreamStatus.Started ? 'Stop' : 'Start' }}
+    </button>
+  </div>
+</div>

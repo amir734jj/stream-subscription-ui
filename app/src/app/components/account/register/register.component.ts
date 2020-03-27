@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Router} from '@angular/router';
-import {Role, RoleNameTable} from '../../../models/RoleEnum';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FormErrorTable, resolveFormGroupErrors} from '../../../utilities/form.utility';
 
@@ -12,15 +11,12 @@ import {FormErrorTable, resolveFormGroupErrors} from '../../../utilities/form.ut
 })
 export class RegisterComponent implements OnInit {
 
-  roleRef: Role = Role.InternalUser;
-  roles = RoleNameTable;
   form: FormGroup;
   errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     this.form = new FormGroup({
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
       email: new FormControl('', [
         Validators.required,
         Validators.email
@@ -46,7 +42,7 @@ export class RegisterComponent implements OnInit {
       this.errorTable = [] as FormErrorTable;
     }
 
-    const response = await this.authenticationService.register(this.roleRef, this.form.value);
+    const response = await this.authenticationService.register(this.form.value);
 
     if (!!response) {
       await this.router.navigate(['./login']);
