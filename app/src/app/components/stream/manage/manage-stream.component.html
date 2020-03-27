@@ -10,7 +10,7 @@
       </span>
   </div>
   <div class="panel-body">
-    <div *ngIf="true">
+    <div *ngIf="status === StreamStatus.Started">
       Stream is currently running!
     </div>
     <ng-template #elseBlock>

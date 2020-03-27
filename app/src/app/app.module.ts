@@ -23,6 +23,7 @@ import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy
 import {StreamModule} from './modules/stream.module';
 import {FtpSinkModule} from './modules/ftp.sink.module';
 import {LowerCaseUrlSerializer} from './utilities/injectables/custom.url.serializer.utility';
+import {HubService} from './services/hub.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import {LowerCaseUrlSerializer} from './utilities/injectables/custom.url.seriali
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [CustomCanActivate, {
+  providers: [CustomCanActivate, HubService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
     multi: true

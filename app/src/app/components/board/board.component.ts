@@ -5,7 +5,7 @@ import {HttpTransportType, IHttpConnectionOptions} from '@microsoft/signalr';
 import * as store from 'store';
 import {authStorageKey} from '../../models/constants/BrowserConstants';
 import * as _ from 'lodash';
-import {environment} from '../../../environments/environment';
+import {HubService} from '../../services/hub.service';
 
 @Component({
   selector: 'app-board',
@@ -18,36 +18,18 @@ export class BoardComponent implements OnInit {
   public count = 0;
   public isAuthenticated = false;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private hubService: HubService) {
   }
 
   async ngOnInit() {
-    this.isAuthenticated = await this.authenticationService.isAuthenticated();
-    const BASE_ADDRESS = environment.hubUrl;
 
-    if (this.isAuthenticated) {
-      const options: IHttpConnectionOptions = {
-        transport: HttpTransportType.LongPolling,
+    this.hubService.connection.on('log', (...data) => {
+      this.log.unshift(data.join('-'));
+    });
 
-        accessTokenFactory: () => {
-          return _.get(store.get(authStorageKey), 'token');
-        }
-      };
-
-      const connection = new signalR.HubConnectionBuilder()
-        .withUrl(`${BASE_ADDRESS}`, options)
-        .build();
-
-      connection.on('log', (...data) => {
-        this.log.unshift(data.join('-'));
-      });
-
-      connection.on('count', count => {
-        this.count = count;
-      });
-
-      await connection.start();
-    }
+    this.hubService.connection.on('count', count => {
+      this.count = count;
+    });
   }
 
 }
