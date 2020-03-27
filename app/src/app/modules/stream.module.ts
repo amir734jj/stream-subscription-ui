@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {StreamComponent} from '../components/stream/index/stream.component';
 import {StreamService} from '../services/stream.service';
-import {FtpsinkComponent} from '../components/ftpsink/ftpsink.component';
+import {FtpSinkComponent} from '../components/ftpsink/index/ftp-sink.component';
 import {AddStreamComponent} from '../components/stream/add/add-stream.component';
 import {EditStreamComponent} from '../components/stream/edit/edit-stream.component';
 import {CommonComponentModule} from './common.module';
@@ -24,7 +24,6 @@ import {ManageStreamService} from '../services/manage.stream.service'; // this i
   providers: [StreamService, ManageStreamService],
   declarations: [
     StreamComponent,
-    FtpsinkComponent,
     AddStreamComponent,
     EditStreamComponent,
     ManageStreamComponent
@@ -34,3 +33,4 @@ import {ManageStreamService} from '../services/manage.stream.service'; // this i
 export class StreamModule {
 
 }
+
