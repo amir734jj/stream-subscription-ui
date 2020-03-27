@@ -1,10 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import * as signalR from '@microsoft/signalr';
 import {AuthenticationService} from '../../services/authentication.service';
-import {HttpTransportType, IHttpConnectionOptions} from '@microsoft/signalr';
-import * as store from 'store';
-import {authStorageKey} from '../../models/constants/BrowserConstants';
-import * as _ from 'lodash';
 import {HubService} from '../../services/hub.service';
 
 @Component({
@@ -18,10 +13,11 @@ export class BoardComponent implements OnInit {
   public count = 0;
   public isAuthenticated = false;
 
-  constructor(private hubService: HubService) {
+  constructor(private hubService: HubService, private authenticationService: AuthenticationService) {
   }
 
   async ngOnInit() {
+    this.isAuthenticated = await this.authenticationService.isAuthenticated();
 
     this.hubService.connection.on('log', (...data) => {
       this.log.unshift(data.join('-'));
