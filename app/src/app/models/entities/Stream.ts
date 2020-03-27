@@ -6,5 +6,5 @@ export class Stream {
   name: string;
   url: string;
   user: User;
-  ftpSinksRelationships: StreamFtpSinkRelationship[];
+  ftpSinkRelationships: StreamFtpSinkRelationship[] = [];
 }

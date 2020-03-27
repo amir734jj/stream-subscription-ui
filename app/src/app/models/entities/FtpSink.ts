@@ -1,4 +1,5 @@
 import User from './User';
+import {StreamFtpSinkRelationship} from './StreamFtpSinkRelationship';
 
 export class FtpSink {
   id: string;
@@ -9,4 +10,5 @@ export class FtpSink {
   port = 21;
   path = '';
   user: User;
+  ftpSinkRelationships: StreamFtpSinkRelationship[] = [];
 }

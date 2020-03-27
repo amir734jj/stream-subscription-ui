@@ -9,7 +9,8 @@ import {CommonComponentModule} from './common.module';
 import {FtpSinkService} from '../services/ftp.sink.service';
 import {AddFtpSinkComponent} from '../components/ftpsink/add/add-ftp-sink.component';
 import {EditFtpSinkComponent} from '../components/ftpsink/edit/edit-ftp-sink.component';
-import {MatSelectModule} from '@angular/material/select'; // this is needed!
+import {MatSelectModule} from '@angular/material/select';
+import {ManageFtpSinkComponent} from '../components/ftpsink/manage/manage-ftp-sink.component'; // this is needed!
 
 @NgModule({
   imports: [
@@ -25,9 +26,10 @@ import {MatSelectModule} from '@angular/material/select'; // this is needed!
   declarations: [
     FtpSinkComponent,
     AddFtpSinkComponent,
-    EditFtpSinkComponent
+    EditFtpSinkComponent,
+    ManageFtpSinkComponent
   ],
-  exports: [FtpSinkComponent, AddFtpSinkComponent, EditFtpSinkComponent]
+  exports: [FtpSinkComponent, AddFtpSinkComponent, EditFtpSinkComponent, ManageFtpSinkComponent]
 })
 export class FtpSinkModule {
 

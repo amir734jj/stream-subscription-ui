@@ -1,0 +1,66 @@
+<div class="container">
+  <h2>FTP Sinks</h2>
+
+  <div class="row bottom-margin">
+    <div class="col-sm-10">
+      <p>This is the list of ftp sinks</p>
+    </div>
+
+    <div class="col-sm-2">
+      <button class="btn btn-default pull-right" (click)="addFtpSink()">
+        <strong>
+          Add FTP Sink
+        </strong>
+      </button>
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th> Id </th>
+      <th> Name </th>
+      <th> Host </th>
+      <th> Authorization </th>
+      <th> Path </th>
+      <th> Port </th>
+      <th> Streams </th>
+      <th> Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ftpSink of ftpSinks">
+      <td> {{ ftpSink.id }} </td>
+      <td> {{ ftpSink.name }} </td>
+      <td> {{ ftpSink.host }} </td>
+      <td> {{ ftpSink.username }} : {{ ftpSink.password }} </td>
+      <td> {{ ftpSink.path }} </td>
+      <td> {{ ftpSink.port }} </td>
+      <td>
+        <ul *ngIf="ftpSink.ftpSinkRelationships.length">
+          <li *ngFor="let relationship of ftpSink.ftpSinkRelationships">
+            {{ relationship.stream.name }}
+          </li>
+        </ul>
+
+        <ng-template [ngIf]="!ftpSink.ftpSinkRelationships.length">
+          None
+        </ng-template>
+      </td>
+      <td>
+        <div class="btn-group">
+          <a class="btn btn-default" [routerLink] = "['/ftpSink', ftpSink.id]">
+            Manage
+          </a>
+          <a class="btn btn-default" [routerLink] = "['/ftpSink', ftpSink.id, 'edit']">
+            Edit
+          </a>
+          <button class="btn btn-danger" (click)="deleteFtpSink($event, ftpSink.id)">
+            Delete
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

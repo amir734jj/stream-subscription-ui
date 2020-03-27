@@ -12,7 +12,7 @@ import {CommonComponentModule} from './modules/common.module';
 import {JwtInterceptor} from './intercepters/jwt.intercepter';
 import {AboutComponent} from './components/about/about.component';
 import {NgxFileDropModule} from 'ngx-file-drop';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProfileModule} from './modules/profile.module';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
@@ -23,14 +23,12 @@ import {CustomReuseStrategy} from './utilities/injectables/custom.reuse.strategy
 import {StreamModule} from './modules/stream.module';
 import {FtpSinkModule} from './modules/ftp.sink.module';
 import {LowerCaseUrlSerializer} from './utilities/injectables/custom.url.serializer.utility';
-import { ManageFtpSinkComponent } from './components/ftpsink/manage/manage-ftp-sink.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    WelcomeComponent,
-    ManageFtpSinkComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

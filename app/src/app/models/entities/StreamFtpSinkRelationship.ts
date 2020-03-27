@@ -5,4 +5,6 @@ export class StreamFtpSinkRelationship {
   id: string;
   stream: Stream;
   ftpSink: FtpSink;
+  streamId: string;
+  ftpSinkId: string;
 }
