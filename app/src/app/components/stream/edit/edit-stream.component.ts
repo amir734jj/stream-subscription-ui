@@ -27,7 +27,8 @@ export class EditStreamComponent implements OnInit {
   bind() {
     this.form = new FormGroup({
       name: new FormControl(this.stream.name, Validators.required),
-      url: new FormControl(this.stream.url, Validators.required)
+      url: new FormControl(this.stream.url, Validators.required),
+      filter: new FormControl(this.stream.filter)
     });
   }
 
