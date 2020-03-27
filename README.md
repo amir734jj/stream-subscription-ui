@@ -8,8 +8,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ### URL
 
-- [API](https://streaming-subscription.herokuapp.com/) Url
-- [UI](https://stream-subscription-ui.herokuapp.com/) Url
+- [API](https://streaming-subscription.herokuapp.com/) URL
+- [UI](https://stream-subscription-ui.herokuapp.com/) URL
 
 ## Development server
 
