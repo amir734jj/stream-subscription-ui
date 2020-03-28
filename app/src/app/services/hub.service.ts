@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
-import {HttpTransportType, HubConnection, IHttpConnectionOptions} from '@microsoft/signalr';
 import * as signalR from '@microsoft/signalr';
+import {HttpTransportType, HubConnection, HubConnectionState, IHttpConnectionOptions} from '@microsoft/signalr';
 import {environment} from '../../environments/environment';
+import * as store from 'store';
+import {authStorageKey} from '../models/constants/BrowserConstants';
+import {ProfileType} from '../types/profile.type';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HubService {
 
   public connection: HubConnection;
 
-  async login(token) {
+  async init() {
+    const {token} = store.get(authStorageKey, {}) as ProfileType;
     const BASE_ADDRESS = environment.hubUrl;
     const options: IHttpConnectionOptions = {
       transport: HttpTransportType.LongPolling,
@@ -20,11 +22,5 @@ export class HubService {
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(`${BASE_ADDRESS}`, options)
       .build();
-
-    await this.connection.start();
-  }
-
-  async logOut() {
-    await this.connection.stop();
   }
 }

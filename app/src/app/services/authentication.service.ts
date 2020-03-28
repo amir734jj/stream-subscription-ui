@@ -7,11 +7,10 @@ import * as jwtDecode from 'jwt-decode';
 import {ProfileType} from '../types/profile.type';
 import {setAuthInfo, clearAuthInfo} from '../utilities/auth.utility';
 import * as _ from 'lodash';
-import {HubService} from './hub.service';
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private http: HttpClient, private hubService: HubService) {
+  constructor(private http: HttpClient) {
   }
 
   async isAuthenticated(): Promise<boolean> {
@@ -27,8 +26,6 @@ export class AuthenticationService {
       const jwtMetadata = jwtDecode<{}>(response.token);
       // store email and jwt token in local storage to keep userRef logged in between page refreshes
       setAuthInfo({...jwtMetadata, ...response, timestamp: new Date()});
-
-      await this.hubService.login(response.token);
     }
 
     return response;
@@ -40,8 +37,6 @@ export class AuthenticationService {
 
   async logout() {
     clearAuthInfo();
-
-    await this.hubService.logOut();
 
     return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }

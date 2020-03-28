@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {HubService} from '../../services/hub.service';
 
@@ -7,7 +7,7 @@ import {HubService} from '../../services/hub.service';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.sass']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
 
   public log: string[] = [];
   public count = 0;
@@ -19,13 +19,25 @@ export class BoardComponent implements OnInit {
   async ngOnInit() {
     this.isAuthenticated = await this.authenticationService.isAuthenticated();
 
-    this.hubService.connection.on('log', (...data) => {
-      this.log.unshift(data.join('-'));
-    });
+    if (this.isAuthenticated) {
+      await this.hubService.init();
 
-    this.hubService.connection.on('count', count => {
-      this.count = count;
-    });
+      this.hubService.connection.on('log', (...data) => {
+        this.log.unshift(data.join('-'));
+      });
+
+      this.hubService.connection.on('count', count => {
+        this.count = count;
+      });
+
+      await this.hubService.connection.start();
+    }
+  }
+
+  async ngOnDestroy() {
+    if (await this.authenticationService.isAuthenticated()) {
+      await this.hubService.connection.stop();
+    }
   }
 
 }
