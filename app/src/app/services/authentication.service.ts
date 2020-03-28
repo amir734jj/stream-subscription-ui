@@ -5,12 +5,12 @@ import {RegisterRequest} from '../models/authentication.service/register/Registe
 import route from '../utilities/route.utility';
 import * as jwtDecode from 'jwt-decode';
 import {ProfileType} from '../types/profile.type';
-import {setAuthInfo, clearAuthInfo} from '../utilities/auth.utility';
 import * as _ from 'lodash';
+import {CachedAuthenticationService} from './cached.authentication.service';
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
   async isAuthenticated(): Promise<boolean> {
@@ -25,7 +25,7 @@ export class AuthenticationService {
     if (response.token) {
       const jwtMetadata = jwtDecode<{}>(response.token);
       // store email and jwt token in local storage to keep userRef logged in between page refreshes
-      setAuthInfo({...jwtMetadata, ...response, timestamp: new Date()});
+      this.cachedAuthenticationService.setAuthInfo({...jwtMetadata, ...response, timestamp: new Date()});
     }
 
     return response;
@@ -36,7 +36,7 @@ export class AuthenticationService {
   }
 
   async logout() {
-    clearAuthInfo();
+    this.cachedAuthenticationService.clearAuthInfo();
 
     return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }

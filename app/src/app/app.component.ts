@@ -3,8 +3,7 @@ import {setTheme} from 'ngx-bootstrap';
 import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
 import {ProfileType} from './types/profile.type';
-import {clearAuthInfo, resolveAuthInfo} from './utilities/auth.utility';
-import {Profile} from './models/entities/Profile';
+import {CachedAuthenticationService} from './services/cached.authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +16,11 @@ export class AppComponent implements OnInit {
   public authenticated: () => boolean;
   public profile: ProfileType;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService,
+              private cachedAuthenticationService: CachedAuthenticationService) {
     setTheme('bs3');
 
-    this.authenticated = () => {
-      const {item1 = false, item2 = new Profile() as ProfileType} = resolveAuthInfo();
-      this.profile = item2;
-      return item1;
-    };
+    this.authenticated = () => this.cachedAuthenticationService.resolveAuthInfo().authenticated;
   }
 
   ngOnInit() {
@@ -33,7 +29,7 @@ export class AppComponent implements OnInit {
       this.authenticationService.isAuthenticated()
         .then(async response => {
           if (!response) {
-            clearAuthInfo();
+            this.cachedAuthenticationService.clearAuthInfo();
             await this.router.navigate(['./login']);
           }
         });

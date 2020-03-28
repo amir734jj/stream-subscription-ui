@@ -9,10 +9,13 @@ import {
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {resolveAuthInfo} from '../utilities/auth.utility';
+import {CachedAuthenticationService} from '../services/cached.authentication.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+
+  constructor(private cachedAuthenticationService: CachedAuthenticationService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authReq = req.clone({
@@ -30,7 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   getToken() {
-    const {token = ''} = resolveAuthInfo().item2;
+    const {token = ''} = this.cachedAuthenticationService.resolveAuthInfo().profile;
     return token;
   }
 }

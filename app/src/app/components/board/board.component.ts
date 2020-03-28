@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../services/authentication.service';
 import {HubService} from '../../services/hub.service';
+import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 
 @Component({
   selector: 'app-board',
@@ -13,11 +13,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   public count = 0;
   public isAuthenticated = false;
 
-  constructor(private hubService: HubService, private authenticationService: AuthenticationService) {
+  constructor(private hubService: HubService, private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
   async ngOnInit() {
-    this.isAuthenticated = await this.authenticationService.isAuthenticated();
+    this.isAuthenticated = await this.cachedAuthenticationService.isAuthenticated();
 
     if (this.isAuthenticated) {
       await this.hubService.init();
@@ -35,7 +35,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async ngOnDestroy() {
-    if (await this.authenticationService.isAuthenticated()) {
+    if (await this.cachedAuthenticationService.isAuthenticated()) {
       await this.hubService.connection.stop();
     }
   }

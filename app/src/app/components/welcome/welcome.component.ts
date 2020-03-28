@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import User from '../../models/entities/User';
 import * as _ from 'lodash';
-import {resolveAuthInfo} from '../../utilities/auth.utility';
+import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 
 @Component({
   selector: 'app-welcome',
@@ -10,9 +10,10 @@ import {resolveAuthInfo} from '../../utilities/auth.utility';
 })
 export class WelcomeComponent implements OnInit {
 
-  userInfo: User = _.merge(new User(), resolveAuthInfo().item2);
+  userInfo: User;
 
-  constructor() {
+  constructor(private cachedAuthenticationService: CachedAuthenticationService) {
+    this.userInfo = _.merge(new User(), cachedAuthenticationService.resolveAuthInfo().profile);
   }
 
   ngOnInit() {

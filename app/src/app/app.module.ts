@@ -24,6 +24,7 @@ import {StreamModule} from './modules/stream.module';
 import {FtpSinkModule} from './modules/ftp.sink.module';
 import {LowerCaseUrlSerializer} from './utilities/injectables/custom.url.serializer.utility';
 import {HubService} from './services/hub.service';
+import {CachedAuthenticationService} from './services/cached.authentication.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import {HubService} from './services/hub.service';
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [CustomCanActivate, HubService, {
+  providers: [CustomCanActivate, CachedAuthenticationService, HubService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
     multi: true
