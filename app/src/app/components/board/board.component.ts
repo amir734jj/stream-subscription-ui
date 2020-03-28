@@ -36,6 +36,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.hubService.connection.on('log', (...data) => {
         this.log.unshift(data.join('-'));
+        this.log = this.log.slice(0, 100);
       });
 
       this.hubService.connection.on('count', count => {
