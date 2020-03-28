@@ -10,11 +10,11 @@
       </span>
   </div>
   <div class="panel-body">
-    <div *ngIf="status === StreamStatus.Started">
+    <div *ngIf="status === StreamStatus.Started; else elseBlock">
       Stream is currently running!
     </div>
     <ng-template #elseBlock>
-      Stream is not running {{ status }}!
+      Stream is not running, it is <label>{{ statusToString(status) }}</label>!
     </ng-template>
   </div>
   <div class="panel-footer">
