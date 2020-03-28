@@ -21,6 +21,7 @@
       <th> Id</th>
       <th> Name </th>
       <th> Url</th>
+      <th> Filter </th>
       <th> Sinks</th>
       <th> Status </th>
       <th> Action</th>
@@ -34,6 +35,9 @@
         <a [href]="stream.url">
           {{ stream.url }}
         </a>
+      </td>
+      <td>
+        {{ stream.filter }}
       </td>
       <td>
         <ul *ngIf="stream.ftpSinkRelationships.length">

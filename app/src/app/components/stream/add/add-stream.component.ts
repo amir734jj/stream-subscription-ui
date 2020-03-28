@@ -20,7 +20,8 @@ export class AddStreamComponent implements OnInit {
   constructor(private router: Router, private streamService: StreamService) {
     this.form = new FormGroup({
       name: new FormControl(this.stream.name, Validators.required),
-      url: new FormControl(this.stream.url, Validators.required)
+      url: new FormControl(this.stream.url, Validators.required),
+      filter: new FormControl(this.stream.filter)
     });
   }
 
