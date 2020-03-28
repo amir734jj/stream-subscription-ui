@@ -12,11 +12,23 @@ export class BoardComponent implements OnInit, OnDestroy {
   public log: string[] = [];
   public count = 0;
   public isAuthenticated = false;
+  public initialized = false;
 
   constructor(private hubService: HubService, private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
+
+  async ngOnDestroy() {
+    if (this.initialized) {
+      await this.hubService.connection.stop();
+    }
+  }
+
   async ngOnInit() {
+    if (this.initialized) {
+      return;
+    }
+
     this.isAuthenticated = await this.cachedAuthenticationService.isAuthenticated();
 
     if (this.isAuthenticated) {
@@ -31,12 +43,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       });
 
       await this.hubService.connection.start();
-    }
-  }
 
-  async ngOnDestroy() {
-    if (await this.cachedAuthenticationService.isAuthenticated()) {
-      await this.hubService.connection.stop();
+      this.initialized = true;
     }
   }
 
