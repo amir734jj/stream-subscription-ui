@@ -35,18 +35,26 @@ export class BoardComponent implements OnInit, OnDestroy {
       await this.hubService.init();
 
       this.hubService.connection.on('log', (...data) => {
-        this.log.unshift(data.join('-'));
-        this.log = this.log.slice(0, 100);
+        this.appendLog(data);
       });
 
       this.hubService.connection.on('count', count => {
         this.count = count;
       });
 
+      this.hubService.connection.on('download', (...data) => {
+        this.appendLog(data);
+      });
+
       await this.hubService.connection.start();
 
       this.initialized = true;
     }
+  }
+
+  appendLog(...arg: any) {
+    this.log.unshift(arg.join('-'));
+    this.log = this.log.slice(0, 100);
   }
 
 }
