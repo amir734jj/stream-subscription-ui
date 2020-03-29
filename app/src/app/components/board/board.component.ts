@@ -45,7 +45,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       const logHandler = _.throttle((...data) => {
         this.appendLog(data);
-      }, 100, {trailing: true});
+      }, 200, {trailing: true});
 
       this.hubService.connection.on('log', logHandler);
 
