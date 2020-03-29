@@ -21,7 +21,6 @@
       <th> Id</th>
       <th> Name </th>
       <th> Url</th>
-      <th> Filter </th>
       <th> Sinks</th>
       <th> Status </th>
       <th> Action</th>
@@ -35,16 +34,6 @@
         <a [href]="stream.url">
           {{ stream.url }}
         </a>
-      </td>
-      <td>
-        <div class="pre-formatted">
-          <div *ngIf="stream.filter?.length > showFilterUpTo; else elseBlock">
-            {{ stream.filter.substring(0, showFilterUpTo) }}...
-          </div>
-          <ng-template #elseBlock>
-            {{ stream.filter }}
-          </ng-template>
-        </div>
       </td>
       <td>
         <ul *ngIf="stream.ftpSinkRelationships.length">
