@@ -19,7 +19,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   public msaapPageSizeOptions = [2, 4, 6, 8];
   public msaapDisplayVolumeControls = true;
 
-  public count = 0;
+  public userCount = 0;
+  private logLimit = 75;
   public isAuthenticated = false;
   public initialized = false;
 
@@ -49,8 +50,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.hubService.connection.on('log', logHandler);
 
-      this.hubService.connection.on('count', count => {
-        this.count = count;
+      this.hubService.connection.on('count', userCount => {
+        this.userCount = userCount;
       });
 
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string) => {
@@ -69,7 +70,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   appendLog(...arg: any) {
     this.log.unshift(arg.join('-'));
-    this.log = this.log.slice(0, 100);
+    this.log = this.log.slice(0, this.logLimit);
   }
 
 }
