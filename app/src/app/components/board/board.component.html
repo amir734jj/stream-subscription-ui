@@ -7,8 +7,8 @@
             Live log
           </strong>
           <span class="label label-primary pull-right">
-        {{ count}} active users
-      </span>
+            {{ count}} active users
+          </span>
         </p>
         <pre>
 {{ log.join('\n') }}
@@ -19,6 +19,9 @@
           <strong>
             Songs
           </strong>
+          <span class="label label-primary pull-right">
+            {{msaapPlaylist.length}} tracks
+          </span>
         </p>
 
         <mat-advanced-audio-player [playlist]="msaapPlaylist"
