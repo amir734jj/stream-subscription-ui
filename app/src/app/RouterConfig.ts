@@ -22,14 +22,13 @@ import {EditFtpSinkComponent} from './components/ftpsink/edit/edit-ftp-sink.comp
 import {ManageFtpSinkComponent} from './components/ftpsink/manage/manage-ftp-sink.component';
 
 let appRoutes: Routes = _.map([
-  {path: '', component: BoardComponent, data: {allowAnonymous: true}},
-  {path: 'home', component: BoardComponent, data: {allowAnonymous: true}},
+  {path: '', component: WelcomeComponent, data: {allowAnonymous: true, disallowAuthenticated: true}},
+  {path: 'home', component: WelcomeComponent, data: {allowAnonymous: true, disallowAuthenticated: true}},
   {path: 'about', component: AboutComponent, data: {allowAnonymous: true}},
   {path: 'login', component: LoginComponent, data: {disallowAuthenticated: true}},
   {path: 'register', component: RegisterComponent, data: {disallowAuthenticated: true}},
   {path: 'logout', component: LogoutComponent, data: {allowAnonymous: false}},
-  {path: 'welcome', component: WelcomeComponent, data: {allowAnonymous: false}},
-  {path: 'board', component: BoardComponent, data: {allowAnonymous: false}},
+  {path: 'board', component: BoardComponent, data: {allowAnonymous: false, shouldReuse: true}},
   {path: 'stream', component: StreamComponent, data: {allowAnonymous: false}},
   {path: 'stream/add', component: AddStreamComponent, data: {allowAnonymous: false}},
   {path: 'stream/:id', component: ManageStreamComponent, data: {allowAnonymous: false}},

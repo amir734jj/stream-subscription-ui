@@ -10,11 +10,17 @@
     </div>
     <div class="collapse navbar-collapse" [ngClass]="{ collapse: navBarCollapsed }">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/">Home</a>
-        </li>
+
+        <ng-template [ngIf]="!authenticated()">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/">Home</a>
+          </li>
+        </ng-template>
 
         <ng-template [ngIf]="authenticated()">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/board">Board</a>
+          </li>
           <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <a routerLink="/user">Users</a>
           </li>

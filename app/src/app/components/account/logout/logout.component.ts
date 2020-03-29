@@ -19,7 +19,7 @@ export class LogoutComponent implements AfterViewChecked {
     const response = await this.authenticationService.logout();
 
     if (!!response) {
-      this.router.navigate(['./home']).then();
+      this.router.navigate(['./']).then();
     }
   }
 }

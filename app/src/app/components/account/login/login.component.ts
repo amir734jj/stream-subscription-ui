@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     const response = await this.authenticationService.login(this.form.value);
 
     if (!!response) {
-      await this.router.navigate(['./welcome']);
+      await this.router.navigate(['./board']);
     }
   }
 }
