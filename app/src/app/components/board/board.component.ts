@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
-import {TupleType} from '../../types/tuple.type';
+import {Track} from 'ngx-audio-player';
 
 @Component({
   selector: 'app-board',
@@ -12,7 +12,11 @@ import {TupleType} from '../../types/tuple.type';
 export class BoardComponent implements OnInit, OnDestroy {
 
   public log: string[] = [];
-  public songs: TupleType<SongMetadata, string>[] = [];
+  public msaapPlaylist: Track[] = [];
+  public msaapDisplayTitle = true;
+  public msaapDisplayPlayList = true;
+  public msaapPageSizeOptions = [2, 4, 6];
+  public msaapDisplayVolumeControls = true;
 
   public count = 0;
   public isAuthenticated = false;
@@ -46,10 +50,10 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
-      this.hubService.connection.on('download', (filename: string, songMetadata: SongMetadata, bytes: ArrayBuffer) => {
-        this.songs.unshift({
-          item1: songMetadata,
-          item2: `data:audio/mp3;base64,${bytes}`
+      this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string) => {
+        this.msaapPlaylist.push({
+          title: `${artist}-${title}`,
+          link: `data:audio/mp3;base64,${base64}`
         });
         this.appendLog(`downloaded ${filename}`);
       });

@@ -21,23 +21,21 @@
 {{ log.join('\n') }}
   </pre>
       </div>
-      <div class="col-sm-6">
-        <p *ngIf="songs.length">
+      <div class="col-sm-6" *ngIf="msaapPlaylist.length">
+        <p>
           <strong>
             Songs
           </strong>
         </p>
-        <div class="panel panel-default" *ngFor="let song of songs">
-          <div class="panel-heading">
-            {{ song.item1.raw }}
-          </div>
-          <div class="panel-body">
-            <audio controls>
-              <source src="{{song.item2}}" type="audio/mpeg">
-              Your browser does not support the audio element.
-            </audio>
-          </div>
-        </div>
+
+        <mat-advanced-audio-player [playlist]="msaapPlaylist"
+                                   [displayTitle]="msaapDisplayTitle"
+                                   [autoPlay]="false"
+                                   [displayPlaylist]="msaapDisplayPlayList"
+                                   [pageSizeOptions]="msaapPageSizeOptions"
+                                   [expanded]="true"
+                                   [displayVolumeControls]="msaapDisplayVolumeControls">
+        </mat-advanced-audio-player>
       </div>
     </div>
   </div>
