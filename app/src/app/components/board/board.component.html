@@ -1,7 +1,7 @@
 <div class="container">
   <div *ngIf="isAuthenticated">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <p>
           <strong>
             Live log
@@ -14,7 +14,7 @@
 {{ log.join('\n') }}
   </pre>
       </div>
-      <div class="col-sm-6" *ngIf="msaapPlaylist.length">
+      <div class="col-sm-8" *ngIf="msaapPlaylist.length">
         <p>
           <strong>
             Songs
