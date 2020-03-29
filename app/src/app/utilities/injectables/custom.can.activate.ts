@@ -20,7 +20,7 @@ export class CustomCanActivate implements CanActivate {
     switch (authenticated) {
       case true:
         if (disallowAuthenticated) {
-          return await this.router.navigate(['./']);
+          return await this.router.navigate(['./board']);
         } else if (!allowAnonymous) {
           return true;
         } else {
