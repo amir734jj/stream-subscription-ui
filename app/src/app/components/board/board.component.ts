@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
+import {SongMetadata} from '../../types/song.metadata.type';
+import {TupleType} from '../../types/tuple.type';
 
 @Component({
   selector: 'app-board',
@@ -10,6 +12,8 @@ import {CachedAuthenticationService} from '../../services/cached.authentication.
 export class BoardComponent implements OnInit, OnDestroy {
 
   public log: string[] = [];
+  public songs: TupleType<SongMetadata, string>[] = [];
+
   public count = 0;
   public isAuthenticated = false;
   public initialized = false;
@@ -42,8 +46,12 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
-      this.hubService.connection.on('download', (...data) => {
-        this.appendLog(data);
+      this.hubService.connection.on('download', (filename: string, songMetadata: SongMetadata, bytes: ArrayBuffer) => {
+        this.songs.unshift({
+          item1: songMetadata,
+          item2: `data:audio/mp3;base64,${bytes}`
+        });
+        this.appendLog(`downloaded ${filename}`);
       });
 
       await this.hubService.connection.start();

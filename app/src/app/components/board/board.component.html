@@ -7,16 +7,38 @@
   </div>
 
   <div *ngIf="isAuthenticated">
-    <p>
-      <strong>
-        Live log
-      </strong>
-      <span class="label label-primary pull-right">
+    <div class="row">
+      <div class="col-sm-6">
+        <p>
+          <strong>
+            Live log
+          </strong>
+          <span class="label label-primary pull-right">
         {{ count}} active users
       </span>
-    </p>
-    <pre>
+        </p>
+        <pre>
 {{ log.join('\n') }}
   </pre>
+      </div>
+      <div class="col-sm-6">
+        <p *ngIf="songs.length">
+          <strong>
+            Songs
+          </strong>
+        </p>
+        <div class="panel panel-default" *ngFor="let song of songs">
+          <div class="panel-heading">
+            {{ song.item1.raw }}
+          </div>
+          <div class="panel-body">
+            <audio controls>
+              <source src="{{song.item2}}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
