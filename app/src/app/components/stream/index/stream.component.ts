@@ -19,6 +19,7 @@ export class StreamComponent implements OnInit {
   public statusToString = StatusToString;
   public resolveBootstrapClass = ResolveBootstrapClass;
   public StreamStatus = StreamStatus;
+  public showFilterUpTo = 10;
 
   constructor(private streamService: StreamService, private router: Router,
               private manageStreamService: ManageStreamService) {

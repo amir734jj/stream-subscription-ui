@@ -38,7 +38,11 @@
            {{ ftpSink.username }}:{{ ftpSink.password }}
         </div>
       </td>
-      <td> {{ ftpSink.path }} </td>
+      <td>
+        <div class="pre-formatted">
+          {{ ftpSink.path }}
+        </div>
+      </td>
       <td> {{ ftpSink.port }} </td>
       <td>
         <ul *ngIf="ftpSink.ftpSinkRelationships.length">

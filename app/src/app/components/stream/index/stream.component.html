@@ -37,7 +37,14 @@
         </a>
       </td>
       <td>
-        {{ stream.filter }}
+        <div class="pre-formatted">
+          <div *ngIf="stream.filter?.length > showFilterUpTo; else elseBlock">
+            {{ stream.filter.substring(0, showFilterUpTo) }}...
+          </div>
+          <ng-template #elseBlock>
+            {{ stream.filter }}
+          </ng-template>
+        </div>
       </td>
       <td>
         <ul *ngIf="stream.ftpSinkRelationships.length">
