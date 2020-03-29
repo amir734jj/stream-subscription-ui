@@ -20,7 +20,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public msaapDisplayVolumeControls = true;
 
   public userCount = 0;
-  private logLimit = 75;
+  private logLimit = 50;
   public isAuthenticated = false;
   public initialized = false;
 
