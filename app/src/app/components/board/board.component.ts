@@ -3,6 +3,7 @@ import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
 import {Track} from 'ngx-audio-player';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-board',
@@ -15,7 +16,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public msaapPlaylist: Track[] = [];
   public msaapDisplayTitle = true;
   public msaapDisplayPlayList = true;
-  public msaapPageSizeOptions = [2, 4, 6];
+  public msaapPageSizeOptions = [2, 4, 6, 8];
   public msaapDisplayVolumeControls = true;
 
   public count = 0;
@@ -42,9 +43,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.isAuthenticated) {
       await this.hubService.init();
 
-      this.hubService.connection.on('log', (...data) => {
+      const logHandler = _.throttle((...data) => {
         this.appendLog(data);
-      });
+      }, 100, {trailing: true});
+
+      this.hubService.connection.on('log', logHandler);
 
       this.hubService.connection.on('count', count => {
         this.count = count;
