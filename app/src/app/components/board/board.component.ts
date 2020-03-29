@@ -32,7 +32,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.initialized) {
       await this.hubService.connection.stop();
     }
-    this.msaapPlaylist = [];
   }
 
   async ngOnInit() {

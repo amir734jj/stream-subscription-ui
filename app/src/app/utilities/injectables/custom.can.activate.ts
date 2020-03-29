@@ -18,7 +18,9 @@ export class CustomCanActivate implements CanActivate {
     const {authenticated} = this.cachedAuthenticationService.resolveAuthInfo();
 
     switch (authenticated) {
+      // User is authenticated
       case true:
+        // And disallow authenticated is true then redirect to board
         if (disallowAuthenticated) {
           return await this.router.navigate(['./board']);
         } else if (!allowAnonymous) {
@@ -26,6 +28,7 @@ export class CustomCanActivate implements CanActivate {
         } else {
           return true;
         }
+      // User is not authenticated
       case false:
         if (allowAnonymous || disallowAuthenticated) {
           return true;
