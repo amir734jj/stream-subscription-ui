@@ -14,3 +14,4 @@ This service is free, we do not own the ripped `.mp3` files and we do not store 
   - SignalR
   - Angular Material UI
   - ngx-bootstrap
+  - RxJS
