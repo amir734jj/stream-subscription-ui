@@ -6,7 +6,7 @@ This service is free, we do not own the ripped `.mp3` files and we do not store 
 
 ### URL
 
-- [API](https://streaming-subscription.herokuapp.com/) URL
+- [API](https://stream-subscription-api.herokuapp.com/) URL
 - [UI](https://stream-subscription-ui.herokuapp.com/) URL
 
 ### Libraries
