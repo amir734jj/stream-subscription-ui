@@ -28,7 +28,7 @@ let appRoutes: Routes = _.map([
   {path: 'login', component: LoginComponent, data: {disallowAuthenticated: true}},
   {path: 'register', component: RegisterComponent, data: {disallowAuthenticated: true}},
   {path: 'logout', component: LogoutComponent, data: {allowAnonymous: false}},
-  {path: 'board', component: BoardComponent, data: {allowAnonymous: false}},
+  {path: 'board', component: BoardComponent, data: {allowAnonymous: false, shouldReuse: true}},
   {path: 'stream', component: StreamComponent, data: {allowAnonymous: false}},
   {path: 'stream/add', component: AddStreamComponent, data: {allowAnonymous: false}},
   {path: 'stream/:id', component: ManageStreamComponent, data: {allowAnonymous: false}},
