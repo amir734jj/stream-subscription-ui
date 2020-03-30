@@ -44,22 +44,21 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.isAuthenticated) {
       await this.hubService.init();
 
-      const logHandler = _.throttle((...data) => {
-        this.appendLog(data);
-      }, 200, {trailing: true});
+      const logHandler = _.throttle((...data) => this.appendLog(data), 200, {trailing: true});
 
       this.hubService.connection.on('log', logHandler);
 
-      this.hubService.connection.on('count', userCount => {
-        this.userCount = userCount;
-      });
+      this.hubService.connection.on('count', userCount => this.userCount = userCount);
 
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string) => {
-        this.msaapPlaylist.push({
-          title: `${artist}-${title}`,
-          link: `data:audio/mp3;base64,${base64}`
-        });
-        this.appendLog(`downloaded ${filename}`);
+        if (base64 && base64.length) {
+          this.msaapPlaylist.push({
+            title: `${artist}-${title}`,
+            link: `data:audio/mp3;base64,${base64}`
+          });
+
+          this.appendLog(`downloaded ${filename}`);
+        }
       });
 
       await this.hubService.connection.start();
