@@ -4,7 +4,8 @@ import {AppRoutingModule} from '../app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {BoardComponent} from '../components/board/board.component';
-import {NgxAudioPlayerModule} from 'ngx-audio-player'; // this is needed!
+import {NgxAudioPlayerModule} from 'ngx-audio-player';
+import {TabsModule} from 'ngx-bootstrap/tabs';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {NgxAudioPlayerModule} from 'ngx-audio-player'; // this is needed!
     ReactiveFormsModule,
     CommonModule,
     AppRoutingModule,
-    NgxAudioPlayerModule
+    NgxAudioPlayerModule,
+    TabsModule
   ],
   providers: [],
   declarations: [BoardComponent],

@@ -1,38 +1,41 @@
 <div class="container">
   <div *ngIf="isAuthenticated">
-    <div class="row">
-      <div class="col-sm-4">
-        <p>
-          <strong>
-            Live log
-          </strong>
-          <span class="label label-primary pull-right">
-            {{ userCount }} active users
-          </span>
-        </p>
-        <pre>
-{{ log.join('\n') }}
-        </pre>
-      </div>
-      <div class="col-sm-8" *ngIf="msaapPlaylist.length">
-        <p>
-          <strong>
-            Songs
-          </strong>
-          <span class="label label-primary pull-right">
-            {{msaapPlaylist.length}} tracks
-          </span>
-        </p>
 
-        <mat-advanced-audio-player [playlist]="msaapPlaylist"
-                                   [displayTitle]="msaapDisplayTitle"
-                                   [autoPlay]="false"
-                                   [displayPlaylist]="msaapDisplayPlayList"
-                                   [pageSizeOptions]="msaapPageSizeOptions"
-                                   [expanded]="true"
-                                   [displayVolumeControls]="msaapDisplayVolumeControls">
-        </mat-advanced-audio-player>
-      </div>
-    </div>
+    <tabset [justified]="true">
+      <tab heading="Live log" [active]="true" customClass="bold">
+        <div class="top-margin">
+          <p class="tab-header">
+            <span class="label label-primary pull-right"> {{ userCount }} active users </span>
+          </p>
+          <pre>
+{{ log.join('\n') }}
+            </pre>
+        </div>
+      </tab>
+      <tab heading="Tracks" customClass="bold">
+        <div class="alert alert-info bottom-margin top-margin" *ngIf="msaapPlaylist.length === 0; else elseBlock">
+          <strong> Info! </strong> No song has been downloaded yet!
+        </div>
+        <ng-template #elseBlock>
+          <div class="top-margin">
+            <p class="tab-header">
+              <span class="label label-primary pull-right"> {{msaapPlaylist.length}} tracks </span>
+            </p>
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-advanced-audio-player [playlist]="msaapPlaylist"
+                                           [displayTitle]="msaapDisplayTitle"
+                                           [autoPlay]="false"
+                                           [displayPlaylist]="msaapDisplayPlayList"
+                                           [pageSizeOptions]="msaapPageSizeOptions"
+                                           [expanded]="true"
+                                           [displayVolumeControls]="msaapDisplayVolumeControls">
+                </mat-advanced-audio-player>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </tab>
+    </tabset>
   </div>
 </div>

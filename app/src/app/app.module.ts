@@ -25,6 +25,7 @@ import {FtpSinkModule} from './modules/ftp.sink.module';
 import {LowerCaseUrlSerializer} from './utilities/injectables/custom.url.serializer.utility';
 import {HubService} from './services/hub.service';
 import {CachedAuthenticationService} from './services/cached.authentication.service';
+import {TabsModule} from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {CachedAuthenticationService} from './services/cached.authentication.serv
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, {useHash: true}),
     ButtonsModule.forRoot(),
+    TabsModule.forRoot(),
     LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG,
       disableConsoleLogging: false
