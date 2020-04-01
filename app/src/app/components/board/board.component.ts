@@ -4,6 +4,9 @@ import {CachedAuthenticationService} from '../../services/cached.authentication.
 import {SongMetadata} from '../../types/song.metadata.type';
 import {Track} from 'ngx-audio-player';
 import * as _ from 'lodash';
+import {Subscription, timer} from 'rxjs';
+import {ManageStreamService} from '../../services/manage.stream.service';
+import {StreamStatus} from '../../models/enums/Status';
 
 @Component({
   selector: 'app-board',
@@ -23,14 +26,19 @@ export class BoardComponent implements OnInit, OnDestroy {
   private logLimit = 30;
   public isAuthenticated = false;
   public initialized = false;
+  public streamsCount = 0;
+  private streamCountSubscription: Subscription;
 
-  constructor(private hubService: HubService, private cachedAuthenticationService: CachedAuthenticationService) {
+  constructor(private hubService: HubService,
+              private manageStreamService: ManageStreamService,
+              private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
 
   async ngOnDestroy() {
     if (this.initialized) {
       await this.hubService.connection.stop();
+      this.streamCountSubscription.unsubscribe();
     }
   }
 
@@ -60,6 +68,15 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.appendLog(`downloaded ${filename}`);
         }
       });
+
+      this.streamCountSubscription = timer(0, 10000)
+        .subscribe(async () => {
+          const status = await this.manageStreamService.status();
+          this.streamsCount = _.chain(status)
+            .filter((value) => value === StreamStatus.Started)
+            .size()
+            .value();
+        });
 
       await this.hubService.connection.start();
 

@@ -18,9 +18,12 @@
         </div>
         <ng-template #elseBlock>
           <div class="top-margin">
-            <p class="tab-header">
-              <span class="label label-primary pull-right"> {{msaapPlaylist.length}} tracks </span>
-            </p>
+            <div class="tab-header">
+              <p class="pull-right">
+                <span class="label label-primary margin-right"> {{streamsCount}} active streams </span>
+                <span class="label label-primary"> {{msaapPlaylist.length}} tracks </span>
+              </p>
+            </div>
             <div class="row">
               <div class="col-sm-12">
                 <mat-advanced-audio-player [playlist]="msaapPlaylist"
