@@ -14,7 +14,7 @@
       </tab>
       <tab heading="Tracks" customClass="bold">
         <div class="alert alert-info bottom-margin top-margin" *ngIf="msaapPlaylist.length === 0; else elseBlock">
-          <strong> Info! </strong> No song has been downloaded yet!
+          <strong> Info! </strong> No song has been downloaded yet! There are {{ streamsCount }} active streams.
         </div>
         <ng-template #elseBlock>
           <div class="top-margin">
