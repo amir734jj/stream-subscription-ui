@@ -69,7 +69,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.streamCountSubscription = timer(0, 10000)
+      this.streamCountSubscription = timer(0, 15000)
         .subscribe(async () => {
           const status = await this.manageStreamService.status();
           this.streamsCount = _.chain(status)
