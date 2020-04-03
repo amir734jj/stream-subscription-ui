@@ -1,5 +1,5 @@
 import * as memoize from 'memoizee';
-import {accessTokenDurationInMinutes, authStorageKey} from '../models/constants/BrowserConstants';
+import {authStorageKey} from '../models/constants/BrowserConstants';
 import {ProfileType} from '../types/profile.type';
 import * as moment from 'moment';
 import * as store from 'store';
@@ -14,8 +14,8 @@ export class CachedAuthenticationService {
    */
   resolveAuthInfo = memoize((): { authenticated: boolean, profile: ProfileType } => {
     const profile = store.get(authStorageKey, {}) as ProfileType;
-    const {token, timestamp} = profile;
-    const flag = !!token && moment.duration(moment().diff(moment(timestamp))).asMinutes() <= accessTokenDurationInMinutes;
+    const {token, expires} = profile;
+    const flag = !!token && moment(expires).isAfter(moment());
     return {
       authenticated: flag,
       profile
