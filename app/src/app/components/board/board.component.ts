@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public initialized = false;
   public streamsCount = 0;
   private streamCountSubscription: Subscription;
+  public status = 'Disconnected';
 
   constructor(private hubService: HubService,
               private manageStreamService: ManageStreamService,
@@ -78,7 +79,12 @@ export class BoardComponent implements OnInit, OnDestroy {
             .value();
         });
 
-      await this.hubService.connection.start();
+      this.hubService.connection.onreconnecting(this.setStatus('Reconnecting'));
+      this.hubService.connection.onreconnected(this.setStatus('Reconnected'));
+      this.hubService.connection.onclose(this.setStatus('Disconnected'));
+
+      await (this.hubService.connection.start())
+        .then(this.setStatus('Connected'));
 
       this.initialized = true;
     }
@@ -87,6 +93,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   appendLog(...arg: any) {
     this.log.unshift(arg.join('-'));
     this.log = this.log.slice(0, this.logLimit);
+  }
+
+  public setStatus(status: string) {
+    return () => this.status = status;
   }
 
 }
