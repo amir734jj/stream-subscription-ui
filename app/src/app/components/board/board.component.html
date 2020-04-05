@@ -20,21 +20,26 @@
           <div class="top-margin">
             <div class="tab-header">
               <p class="pull-right">
-                <span class="label label-primary margin-right"> {{status}} </span>
-                <span class="label label-primary margin-right"> {{streamsCount}} active streams </span>
+                <span class="label label-primary right-margin"> {{status}} </span>
+                <span class="label label-primary right-margin"> {{streamsCount}} active streams </span>
                 <span class="label label-primary"> {{msaapPlaylist.length}} tracks </span>
               </p>
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <mat-advanced-audio-player [playlist]="msaapPlaylist"
-                                           [displayTitle]="msaapDisplayTitle"
-                                           [autoPlay]="false"
-                                           [displayPlaylist]="msaapDisplayPlayList"
-                                           [pageSizeOptions]="msaapPageSizeOptions"
-                                           [expanded]="true"
-                                           [displayVolumeControls]="msaapDisplayVolumeControls">
+                <mat-advanced-audio-player #musicPlayer
+                  [playlist]="msaapPlaylist"
+                  [displayTitle]="msaapDisplayTitle"
+                  [autoPlay]="false"
+                  [displayPlaylist]="msaapDisplayPlayList"
+                  [pageSizeOptions]="msaapPageSizeOptions"
+                  [expanded]="true"
+                  [displayVolumeControls]="msaapDisplayVolumeControls">
                 </mat-advanced-audio-player>
+              </div>
+              <hr />
+              <div class="col-sm-12 top-margin">
+                <button class="btn btn-default pull-right" (click)="downloadCurrentSong()">Download Current Song</button>
               </div>
             </div>
           </div>

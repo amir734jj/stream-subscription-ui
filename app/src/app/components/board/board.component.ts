@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
@@ -7,6 +7,8 @@ import * as _ from 'lodash';
 import {Subscription, timer} from 'rxjs';
 import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
+import * as download from 'downloadjs';
+import {AudioPlayerService} from 'ngx-audio-player/lib/service/audio-player-service/audio-player.service';
 
 @Component({
   selector: 'app-board',
@@ -29,6 +31,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   public streamsCount = 0;
   private streamCountSubscription: Subscription;
   public status = 'Disconnected';
+
+  @ViewChild('musicPlayer') musicPlayerRef: AudioPlayerService;
 
   constructor(private hubService: HubService,
               private manageStreamService: ManageStreamService,
@@ -99,4 +103,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     return () => this.status = status;
   }
 
+  downloadCurrentSong() {
+    const refService = _.get(this.musicPlayerRef, 'playlistService') as AudioPlayerService;
+    const index = refService.getIndexSong();
+    download(this.msaapPlaylist[index].link, this.msaapPlaylist[index].title);
+  }
 }
