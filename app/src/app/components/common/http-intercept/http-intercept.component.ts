@@ -41,6 +41,9 @@ export class HttpInterceptComponent implements OnInit {
     else if (errorResponse.error instanceof Event) {
 	    errorMessage = `Event type: ${_.get(errorResponse, ['error', 'constructor', 'name']) || (typeof errorResponse.error).toString()}`;
     }
+    else if (_.get(errorResponse, ['errors']) && _.isArray(_.get(errorResponse, ['errors']))) {
+      errorMessage = _.get(errorResponse, ['errors']).join('\n');
+    }
     // Anything else
     else {
 	    errorMessage = _.toString(errorResponse.error);
