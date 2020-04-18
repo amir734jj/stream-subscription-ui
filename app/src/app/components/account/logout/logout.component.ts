@@ -12,14 +12,14 @@ export class LogoutComponent implements AfterViewChecked {
   constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
   ngAfterViewChecked() {
-    this.logOut();
+    this.logout().then();
   }
 
-  async logOut() {
+  async logout() {
     const response = await this.authenticationService.logout();
 
     if (!!response) {
-      this.router.navigate(['./']).then();
+      this.router.navigate(['./login']).then();
     }
   }
 }

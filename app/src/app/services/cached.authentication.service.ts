@@ -53,6 +53,9 @@ export class CachedAuthenticationService {
    */
   clearAuthInfo() {
     store.remove(authStorageKey);
+
+    // Clear cache
+    this.resolveAuthInfo.clear();
   }
 
   /**

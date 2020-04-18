@@ -15,7 +15,7 @@ export class HttpInterceptComponent implements OnInit {
   exceptionMessage = '';
   errorMessage = '';
 
-  @ViewChild('templateRef', { static: true, read: false }) public templateRef: BsModalRef;
+  @ViewChild('templateRef', {static: true, read: false}) public templateRef: BsModalRef;
   private modalRef: BsModalRef;
 
   constructor(private modalService: BsModalService, private requestInterceptor: RequestInterceptor,
@@ -31,22 +31,17 @@ export class HttpInterceptComponent implements OnInit {
 
   onErrorHandler(errorResponse: HttpErrorResponse) {
     this.exceptionMessage = errorResponse.message;
-    let errorMessage: string = _.get(errorResponse, ['error', 'error_description']);
+    let errorMessage: string = this.exceptionMessage || _.get(errorResponse, ['error', 'error_description']);
 
     // If error has a message
     if (errorMessage) {
-    	errorMessage = _.head(((errorMessage.toString()) || '\n').split('\n', 1));
-    }
-    // If error is an event
-    else if (errorResponse.error instanceof Event) {
-	    errorMessage = `Event type: ${_.get(errorResponse, ['error', 'constructor', 'name']) || (typeof errorResponse.error).toString()}`;
-    }
-    else if (_.get(errorResponse, ['errors']) && _.isArray(_.get(errorResponse, ['errors']))) {
+      errorMessage = _.head(((errorMessage.toString()) || '\n').split('\n', 1));
+    } else if (errorResponse.error instanceof Event) {
+      errorMessage = `Event type: ${_.get(errorResponse, ['error', 'constructor', 'name']) || (typeof errorResponse.error).toString()}`;
+    } else if (_.get(errorResponse, ['errors']) && _.isArray(_.get(errorResponse, ['errors']))) {
       errorMessage = _.get(errorResponse, ['errors']).join('\n');
-    }
-    // Anything else
-    else {
-	    errorMessage = _.toString(errorResponse.error);
+    } else {
+      errorMessage = _.toString(errorResponse.error);
     }
 
     this.errorMessage = errorMessage;

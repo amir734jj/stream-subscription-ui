@@ -29,7 +29,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public isAuthenticated = false;
   public initialized = false;
   public streamsCount = 0;
-  private streamCountSubscription: Subscription;
+  private streamCountSubscription: Subscription = null;
   public status = 'Disconnected';
 
   @ViewChild('musicPlayer') musicPlayerRef: AudioPlayerService;
@@ -76,11 +76,13 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.streamCountSubscription = timer(0, 15000)
         .subscribe(async () => {
-          const status = await this.manageStreamService.status();
-          this.streamsCount = _.chain(status)
-            .filter((value) => value === StreamStatus.Started)
-            .size()
-            .value();
+          if (await this.cachedAuthenticationService.isAuthenticated()) {
+            const status = await this.manageStreamService.status();
+            this.streamsCount = _.chain(status)
+              .filter((value) => value === StreamStatus.Started)
+              .size()
+              .value();
+          }
         });
 
       this.hubService.connection.onreconnecting(this.setStatus('Reconnecting'));
@@ -91,6 +93,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         .then(this.setStatus('Connected'));
 
       this.initialized = true;
+    } else if (!!this.streamCountSubscription) {
+      this.streamCountSubscription.unsubscribe();
     }
   }
 
