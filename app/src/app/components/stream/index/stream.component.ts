@@ -45,12 +45,22 @@ export class StreamComponent implements OnInit {
   }
 
   async startAll() {
-    await Promise.all(this.streams.map(x => this.manageStreamService.start(x.id)));
+    await Promise.all(_.chain(this.statusTable)
+      .map((status, id) => ({id, status}))
+      .filter(({status}) => status !== StreamStatus.Started)
+      .map(({id}) => this.manageStreamService.start(id))
+      .value());
+
     await this.fetchStreams();
   }
 
   async stopAll() {
-    await Promise.all(this.streams.map(x => this.manageStreamService.stop(x.id)));
+    await Promise.all(_.chain(this.statusTable)
+      .map((status, id) => ({id, status}))
+      .filter(({status}) => status !== StreamStatus.Stopped)
+      .map(({id}) => this.manageStreamService.stop(id))
+      .value());
+
     await this.fetchStreams();
   }
 
