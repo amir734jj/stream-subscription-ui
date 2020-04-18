@@ -2,40 +2,52 @@
   <h2>Streams</h2>
 
   <div class="row bottom-margin">
-    <div class="col-sm-10">
+    <div class="col-sm-8">
       <p>This is the list of streams</p>
     </div>
 
-    <div class="col-sm-2">
-      <button class="btn btn-default pull-right" (click)="addStream()">
-        <strong>
-          Add Stream
-        </strong>
-      </button>
+    <div class="col-sm-4">
+      <div class="pull-right btn-group">
+        <button class="btn btn-success" (click)="startAll()" *ngIf="!all(StreamStatus.Started)">
+          <strong>
+            Start All
+          </strong>
+        </button>
+        <button class="btn btn-danger" (click)="stopAll()" *ngIf="!all(StreamStatus.Stopped)">
+          <strong>
+            Stop All
+          </strong>
+        </button>
+        <button class="btn btn-default" (click)="addStream()">
+          <strong>
+            Add Stream
+          </strong>
+        </button>
+      </div>
     </div>
   </div>
 
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th> Id</th>
+      <th class="hidden-sm hidden-xs"> Id</th>
       <th> Name </th>
-      <th> Url</th>
-      <th> Sinks</th>
+      <th class="hidden-sm hidden-xs"> Url</th>
+      <th class="hidden-xs"> Sinks</th>
       <th> Status </th>
       <th> Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let stream of streams">
-      <td> {{ stream.id }} </td>
+      <td class="hidden-sm hidden-xs"> {{ stream.id }} </td>
       <td> {{ stream.name }} </td>
-      <td>
+      <td class="hidden-sm hidden-xs">
         <a [href]="stream.url">
           {{ stream.url }}
         </a>
       </td>
-      <td>
+      <td class="hidden-xs">
         <ul *ngIf="stream.ftpSinkRelationships.length">
           <li *ngFor="let sink of stream.ftpSinkRelationships">
             {{ sink.ftpSink.name }}
@@ -59,7 +71,7 @@
           <a class="btn btn-default" [routerLink] = "['/stream', stream.id, 'edit']">
             Edit
           </a>
-          <button class="btn btn-danger" (click)="deleteStream($event, stream.id)">
+          <button class="btn btn-danger" (click)="deleteStream(stream.id)">
             Delete
           </button>
         </div>

@@ -18,32 +18,32 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th> Id </th>
-      <th> Name </th>
-      <th> Host </th>
-      <th> Authorization </th>
-      <th> Path </th>
-      <th> Port </th>
-      <th> Streams </th>
+      <th class="hidden-sm hidden-xs"> Id</th>
+      <th> Name</th>
+      <th class="hidden-sm hidden-xs"> Host</th>
+      <th> Authorization</th>
+      <th class="hidden-sm hidden-xs"> Path</th>
+      <th class="hidden-sm hidden-xs"> Port</th>
+      <th> Streams</th>
       <th> Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let ftpSink of ftpSinks">
-      <td> {{ ftpSink.id }} </td>
+      <td class="hidden-sm hidden-xs"> {{ ftpSink.id }} </td>
       <td> {{ ftpSink.name }} </td>
-      <td> {{ ftpSink.host }} </td>
+      <td class="hidden-sm hidden-xs"> {{ ftpSink.host }} </td>
       <td>
         <div class="pre-formatted">
-           {{ ftpSink.username }}:{{ ftpSink.password }}
+          {{ ftpSink.username }}:{{ ftpSink.password }}
         </div>
       </td>
-      <td>
+      <td class="hidden-sm hidden-xs">
         <div class="pre-formatted">
           {{ ftpSink.path }}
         </div>
       </td>
-      <td> {{ ftpSink.port }} </td>
+      <td class="hidden-sm hidden-xs"> {{ ftpSink.port }} </td>
       <td>
         <ul *ngIf="ftpSink.ftpSinkRelationships.length">
           <li *ngFor="let relationship of ftpSink.ftpSinkRelationships">
@@ -57,10 +57,10 @@
       </td>
       <td>
         <div class="btn-group">
-          <a class="btn btn-default" [routerLink] = "['/ftpSink', ftpSink.id]">
+          <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id]">
             Manage
           </a>
-          <a class="btn btn-default" [routerLink] = "['/ftpSink', ftpSink.id, 'edit']">
+          <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id, 'edit']">
             Edit
           </a>
           <button class="btn btn-danger" (click)="deleteFtpSink($event, ftpSink.id)">

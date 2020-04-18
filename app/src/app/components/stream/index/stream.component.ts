@@ -39,9 +39,26 @@ export class StreamComponent implements OnInit {
     this.statusTable = _.fromPairs(this.streams.map(x => [x.id, _.get(status, x.id, StreamStatus.Stopped)]));
   }
 
-  async deleteStream($event: MouseEvent, id: string) {
-    $event.preventDefault();
+  async deleteStream(id: string) {
     await this.streamService.delete(id).toPromise();
     await this.fetchStreams();
+  }
+
+  async startAll() {
+    await Promise.all(this.streams.map(x => this.manageStreamService.start(x.id)));
+    await this.fetchStreams();
+  }
+
+  async stopAll() {
+    await Promise.all(this.streams.map(x => this.manageStreamService.stop(x.id)));
+    await this.fetchStreams();
+  }
+
+  all(status: StreamStatus) {
+    return _.chain(this.statusTable)
+      .values()
+      .map(x => x === status)
+      .every()
+      .value();
   }
 }
