@@ -46,9 +46,13 @@ export class HttpInterceptComponent implements OnInit {
     this.exceptionMessage = errorResponse.message;
     let errorMessage: string;
 
-    // If error has a message
     if (this.isJSON(errorResponse.error)) {
-      errorMessage = _.get(JSON.parse(errorResponse.error), ['errors']).join('\n');
+      errorResponse = {...errorResponse, error: JSON.parse(errorResponse.error)};
+    }
+
+    // If error has a message
+    if (_.get(errorResponse.error, ['errors'])) {
+      errorMessage = _.get(errorResponse.error, ['errors']).join('\n');
     } else if (errorResponse.error instanceof Event) {
       errorMessage = `Event type: ${(typeof errorResponse.error).toString()}`;
     } else {
