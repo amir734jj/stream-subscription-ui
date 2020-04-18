@@ -17,6 +17,7 @@ export class HttpInterceptComponent implements OnInit {
 
   @ViewChild('templateRef', {static: true, read: false}) public templateRef: BsModalRef;
   private modalRef: BsModalRef;
+  private readonly isJSON: (str) => boolean;
 
   constructor(private modalService: BsModalService, private requestInterceptor: RequestInterceptor,
               private alertConfig: AlertConfig) {
@@ -24,6 +25,18 @@ export class HttpInterceptComponent implements OnInit {
     alertConfig.dismissible = false;
     this.onErrorHandler = _.throttle(this.onErrorHandler);
     requestInterceptor.addOnErrorHandler(error => this.onErrorHandler(error));
+
+    this.isJSON = str => {
+      if (!str) {
+        return false;
+      }
+      try {
+        JSON.parse(str);
+      } catch (e) {
+        return false;
+      }
+      return true;
+    };
   }
 
   ngOnInit() {
@@ -31,15 +44,13 @@ export class HttpInterceptComponent implements OnInit {
 
   onErrorHandler(errorResponse: HttpErrorResponse) {
     this.exceptionMessage = errorResponse.message;
-    let errorMessage: string = this.exceptionMessage || _.get(errorResponse, ['error', 'error_description']);
+    let errorMessage: string;
 
     // If error has a message
-    if (errorMessage) {
-      errorMessage = _.head(((errorMessage.toString()) || '\n').split('\n', 1));
+    if (this.isJSON(errorResponse.error)) {
+      errorMessage = _.get(JSON.parse(errorResponse.error), ['errors']).join('\n');
     } else if (errorResponse.error instanceof Event) {
-      errorMessage = `Event type: ${_.get(errorResponse, ['error', 'constructor', 'name']) || (typeof errorResponse.error).toString()}`;
-    } else if (_.get(errorResponse, ['errors']) && _.isArray(_.get(errorResponse, ['errors']))) {
-      errorMessage = _.get(errorResponse, ['errors']).join('\n');
+      errorMessage = `Event type: ${(typeof errorResponse.error).toString()}`;
     } else {
       errorMessage = _.toString(errorResponse.error);
     }
