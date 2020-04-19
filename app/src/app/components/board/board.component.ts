@@ -9,6 +9,7 @@ import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
 import {AudioPlayerService} from 'ngx-audio-player/lib/service/audio-player-service/audio-player.service';
+import {Stream} from '../../models/entities/Stream';
 
 @Component({
   selector: 'app-board',
@@ -63,10 +64,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.hubService.connection.on('count', userCount => this.userCount = userCount);
 
-      this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string) => {
+      this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
           this.msaapPlaylist.push({
-            title: `${artist}-${title}`,
+            title: `${artist}-${title} (${stream.name})`,
             link: `data:audio/mp3;base64,${base64}`
           });
 
