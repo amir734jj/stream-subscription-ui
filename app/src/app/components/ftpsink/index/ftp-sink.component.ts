@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
 import {statusToString as StatusToString, StreamStatus} from '../../../models/enums/Status';
 import {resolveBootstrapClass as ResolveBootstrapClass} from '../../../utilities/bootstrap.class.utility';
-import {Stream} from '../../../models/entities/Stream';
 import {StreamService} from '../../../services/stream.service';
 import {Router} from '@angular/router';
 import {FtpSink} from '../../../models/entities/FtpSink';
 import {FtpSinkService} from '../../../services/ftp.sink.service';
+import {urlHost} from '../../../utilities/url.utility';
 
 @Component({
   selector: 'app-ftp-sink',
@@ -15,7 +14,7 @@ import {FtpSinkService} from '../../../services/ftp.sink.service';
 })
 export class FtpSinkComponent implements OnInit {
 
-
+  public urlHost = urlHost;
   public ftpSinks: FtpSink[] = [];
   public statusTable: {[index: string]: StreamStatus} = {};
   public statusToString = StatusToString;

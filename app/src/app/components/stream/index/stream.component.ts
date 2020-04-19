@@ -6,6 +6,7 @@ import {ManageStreamService} from '../../../services/manage.stream.service';
 import * as _ from 'lodash';
 import {statusToString as StatusToString, StreamStatus} from '../../../models/enums/Status';
 import {resolveBootstrapClass as ResolveBootstrapClass} from '../../../utilities/bootstrap.class.utility';
+import {urlHost} from '../../../utilities/url.utility';
 
 @Component({
   selector: 'app-stream',
@@ -14,6 +15,7 @@ import {resolveBootstrapClass as ResolveBootstrapClass} from '../../../utilities
 })
 export class StreamComponent implements OnInit {
 
+  public urlHost = urlHost;
   public streams: Stream[] = [];
   public statusTable: {[index: string]: StreamStatus} = {};
   public statusToString = StatusToString;
