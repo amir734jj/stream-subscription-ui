@@ -24,7 +24,7 @@
       <th> Authorization</th>
       <th class="hidden-sm hidden-xs"> Path</th>
       <th class="hidden-sm hidden-xs"> Port</th>
-      <th> Streams</th>
+      <th class="hidden-sm hidden-xs"> Streams</th>
       <th> Action</th>
     </tr>
     </thead>
@@ -44,7 +44,7 @@
         </div>
       </td>
       <td class="hidden-sm hidden-xs"> {{ ftpSink.port }} </td>
-      <td>
+      <td class="hidden-sm hidden-xs">
         <ul *ngIf="ftpSink.ftpSinkRelationships.length">
           <li *ngFor="let relationship of ftpSink.ftpSinkRelationships">
             {{ relationship.stream.name }}
