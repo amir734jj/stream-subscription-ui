@@ -68,10 +68,10 @@
           <a class="btn btn-default" [routerLink] = "['/stream', stream.id]">
             Manage
           </a>
-          <a class="btn btn-default" [routerLink] = "['/stream', stream.id, 'edit']">
+          <a class="btn btn-default hidden-xs" [routerLink] = "['/stream', stream.id, 'edit']">
             Edit
           </a>
-          <button class="btn btn-danger" (click)="deleteStream(stream.id)">
+          <button class="btn btn-danger hidden-xs" (click)="deleteStream(stream.id)">
             Delete
           </button>
         </div>

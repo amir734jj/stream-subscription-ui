@@ -60,10 +60,10 @@
           <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id]">
             Manage
           </a>
-          <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id, 'edit']">
+          <a class="btn btn-default hidden-xs" [routerLink]="['/ftpSink', ftpSink.id, 'edit']">
             Edit
           </a>
-          <button class="btn btn-danger" (click)="deleteFtpSink($event, ftpSink.id)">
+          <button class="btn btn-danger hidden-xs" (click)="deleteFtpSink($event, ftpSink.id)">
             Delete
           </button>
         </div>
