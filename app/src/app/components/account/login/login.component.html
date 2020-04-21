@@ -1,7 +1,7 @@
 <div class="container">
   <app-form-validation-error [error-table]="errorTable"></app-form-validation-error>
 
-  <form (submit)="handleLogIn($event)" [formGroup]="form">
+  <form (submit)="handleLogIn($event)" [formGroup]="form" autocomplete="on">
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control" id="username" formControlName="username" name="username"
