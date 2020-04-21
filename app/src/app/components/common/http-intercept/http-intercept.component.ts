@@ -14,6 +14,7 @@ export class HttpInterceptComponent implements OnInit {
 
   exceptionMessage = '';
   errorMessage = '';
+  private isOpen = false;
 
   @ViewChild('templateRef', {static: true, read: false}) public templateRef: BsModalRef;
   private modalRef: BsModalRef;
@@ -60,16 +61,27 @@ export class HttpInterceptComponent implements OnInit {
     }
 
     this.errorMessage = errorMessage;
-    this.showModal();
+
+    if (!this.isOpen) {
+      this.showModal();
+    }
   }
 
   showModal() {
     this.modalRef = this.modalService.show(this.templateRef, {
       class: 'modal-lg'
     });
+
+    this.modalRef.content.onClose.subscribe(() => {
+      this.isOpen = false;
+    });
+
+    this.isOpen = true;
   }
 
   hideModal() {
     this.modalService.hide(1);
+
+    this.isOpen = false;
   }
 }
