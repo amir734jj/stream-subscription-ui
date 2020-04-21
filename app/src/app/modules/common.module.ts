@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AlertModule, BsModalService, ModalModule} from 'ngx-bootstrap';
+import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
 import {RequestInterceptor} from '../utilities/injectables/custom.error.handler.utility';
 import {HttpInterceptComponent} from '../components/common/http-intercept/http-intercept.component';
 import {ProgressBarComponent} from '../components/common/progress-bar/progress-bar.component';
@@ -20,7 +20,6 @@ import {FormValidationErrorComponent} from '../components/helpers/form-validatio
 @NgModule({
   imports: [
     CommonModule,
-    AlertModule.forRoot(),
     ModalModule.forRoot(),
     // for HttpClient use:
     LoadingBarHttpClientModule,

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AlertConfig, BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RequestInterceptor} from '../../../utilities/injectables/custom.error.handler.utility';
 import * as _ from 'lodash';
@@ -7,8 +7,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-http-intercept',
   templateUrl: './http-intercept.component.html',
-  styleUrls: ['./http-intercept.component.sass'],
-  providers: [AlertConfig]
+  styleUrls: ['./http-intercept.component.sass']
 })
 export class HttpInterceptComponent implements OnInit {
 
@@ -20,10 +19,7 @@ export class HttpInterceptComponent implements OnInit {
   private modalRef: BsModalRef;
   private readonly isJSON: (str) => boolean;
 
-  constructor(private modalService: BsModalService, private requestInterceptor: RequestInterceptor,
-              private alertConfig: AlertConfig) {
-    alertConfig.type = 'warning';
-    alertConfig.dismissible = false;
+  constructor(private modalService: BsModalService, private requestInterceptor: RequestInterceptor) {
     this.onErrorHandler = _.throttle(this.onErrorHandler);
     requestInterceptor.addOnErrorHandler(error => this.onErrorHandler(error));
 
@@ -70,6 +66,10 @@ export class HttpInterceptComponent implements OnInit {
   showModal() {
     this.modalRef = this.modalService.show(this.templateRef, {
       class: 'modal-lg'
+    });
+
+    this.modalService.onHide.subscribe(() => {
+      this.isOpen = false;
     });
 
     this.isOpen = true;
