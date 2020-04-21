@@ -22,7 +22,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public msaapPlaylist: Track[] = [];
   public msaapDisplayTitle = true;
   public msaapDisplayPlayList = true;
-  public msaapPageSizeOptions = [2, 4, 6, 8];
+  public msaapPageSizeOptions = [4, 6, 8];
   public msaapDisplayVolumeControls = true;
 
   public userCount = 0;
