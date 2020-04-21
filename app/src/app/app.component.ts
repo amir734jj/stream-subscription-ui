@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {setTheme} from 'ngx-bootstrap';
+import {setTheme} from 'ngx-bootstrap/utils';
 import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
 import {ProfileType} from './types/profile.type';
