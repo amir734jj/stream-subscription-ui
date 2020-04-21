@@ -72,10 +72,6 @@ export class HttpInterceptComponent implements OnInit {
       class: 'modal-lg'
     });
 
-    this.modalRef.content.onClose.subscribe(() => {
-      this.isOpen = false;
-    });
-
     this.isOpen = true;
   }
 
