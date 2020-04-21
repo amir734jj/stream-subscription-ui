@@ -12,7 +12,7 @@ import {CommonComponentModule} from './modules/common.module';
 import {JwtInterceptor} from './intercepters/jwt.intercepter';
 import {AboutComponent} from './components/about/about.component';
 import {NgxFileDropModule} from 'ngx-file-drop';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './modules/profile.module';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
