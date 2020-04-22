@@ -15,10 +15,9 @@
     </div>
   </div>
 
-  <table class="table table-bordered">
+  <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th class="hidden-sm hidden-xs"> Id</th>
       <th> Name</th>
       <th class="hidden-sm hidden-xs"> Host</th>
       <th> Authorization</th>
@@ -30,7 +29,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let ftpSink of ftpSinks">
-      <td class="hidden-sm hidden-xs"> {{ ftpSink.id }} </td>
       <td> {{ ftpSink.name }} </td>
       <td class="hidden-sm hidden-xs"> {{ urlHost(ftpSink.host) }} </td>
       <td>

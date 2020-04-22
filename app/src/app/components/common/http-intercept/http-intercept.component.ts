@@ -15,7 +15,7 @@ export class HttpInterceptComponent implements OnInit {
   errorMessage = '';
   private isOpen = false;
 
-  @ViewChild('templateRef', { static: true, read: false }) public templateRef: BsModalRef;
+  @ViewChild('templateRef') public templateRef: BsModalRef;
   private modalRef: BsModalRef;
   private readonly isJSON: (str) => boolean;
 

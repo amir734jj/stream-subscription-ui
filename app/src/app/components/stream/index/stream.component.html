@@ -30,7 +30,6 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th class="hidden-sm hidden-xs"> Id</th>
       <th> Name </th>
       <th class="hidden-sm hidden-xs"> Url</th>
       <th class="hidden-xs"> Sinks</th>
@@ -40,7 +39,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let stream of streams">
-      <td class="hidden-sm hidden-xs"> {{ stream.id }} </td>
       <td> {{ stream.name }} </td>
       <td class="hidden-sm hidden-xs">
         <a [href]="stream.url">
