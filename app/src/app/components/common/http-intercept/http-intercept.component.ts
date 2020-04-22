@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
-import {HttpErrorResponse} from '@angular/common/http';
-import {RequestInterceptor} from '../../../utilities/injectables/custom.error.handler.utility';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RequestInterceptor } from '../../../utilities/injectables/custom.error.handler.utility';
 import * as _ from 'lodash';
 
 @Component({
@@ -15,7 +15,7 @@ export class HttpInterceptComponent implements OnInit {
   errorMessage = '';
   private isOpen = false;
 
-  @ViewChild('templateRef', {static: true, read: false}) public templateRef: BsModalRef;
+  @ViewChild('templateRef', { static: true, read: false }) public templateRef: BsModalRef;
   private modalRef: BsModalRef;
   private readonly isJSON: (str) => boolean;
 
@@ -44,7 +44,7 @@ export class HttpInterceptComponent implements OnInit {
     let errorMessage: string;
 
     if (this.isJSON(errorResponse.error)) {
-      errorResponse = {...errorResponse, error: JSON.parse(errorResponse.error)};
+      errorResponse = { ...errorResponse, error: JSON.parse(errorResponse.error) };
     }
 
     // If error has a message
