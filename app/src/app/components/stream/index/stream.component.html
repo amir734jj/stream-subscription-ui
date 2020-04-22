@@ -13,7 +13,7 @@
             Start All
           </strong>
         </button>
-        <button class="btn btn-danger" (click)="stopAll()" *ngIf="!all(StreamStatus.Stopped)">
+        <button class="btn btn-danger" (click)="stopAll()" *ngIf="!all(StreamStatus.Stopped, StreamStatus.Fail)">
           <strong>
             Stop All
           </strong>

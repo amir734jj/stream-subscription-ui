@@ -59,17 +59,17 @@ export class StreamComponent implements OnInit {
   async stopAll() {
     await Promise.all(_.chain(this.statusTable)
       .map((status, id) => ({id, status}))
-      .filter(({status}) => status !== StreamStatus.Stopped)
+      .filter(({status}) => status === StreamStatus.Started)
       .map(({id}) => this.manageStreamService.stop(id))
       .value());
 
     await this.fetchStreams();
   }
 
-  all(status: StreamStatus) {
+  all(...status: StreamStatus[]) {
     return _.chain(this.statusTable)
       .values()
-      .map(x => x === status)
+      .map(x => _.some(status, y => x === y))
       .every()
       .value();
   }
