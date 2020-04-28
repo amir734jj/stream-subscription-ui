@@ -66,10 +66,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
-          this.msaapPlaylist.push({
+          this.msaapPlaylist = this.msaapPlaylist.concat([{
             title: `${artist}-${title} (${stream.name})`,
             link: `data:audio/mp3;base64,${base64}`
-          });
+          }]);
 
           this.appendLog(`downloaded ${filename}`);
         }
