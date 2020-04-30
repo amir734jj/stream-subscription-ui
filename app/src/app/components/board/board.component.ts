@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
@@ -11,6 +11,7 @@ import {Stream} from '../../models/entities/Stream';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MediaType} from '../../types/media.type';
+import {Howl} from 'howler';
 
 @Component({
   selector: 'app-board',
@@ -19,8 +20,7 @@ import {MediaType} from '../../types/media.type';
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  @ViewChild('audioOption') audioPlayerRef: ElementRef;
-
+  private player: Howl = null;
   public playing = false;
   public index = -1;
   public log: string[] = [];
@@ -32,7 +32,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   private streamCountSubscription: Subscription = null;
   public status = 'Disconnected';
   public displayedColumns: string[] = ['name', 'source', 'actions'];
-  public dataSource = new MatTableDataSource<MediaType>([]);
+  public tableDataSource = new MatTableDataSource<MediaType>([]);
+  public dataSource: MediaType[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -46,19 +47,19 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.initialized) {
       await this.hubService.connection.stop();
       this.streamCountSubscription.unsubscribe();
+
+      if (this.player !== null) {
+        this.player.off();
+      }
     }
   }
 
   async ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.tableDataSource.paginator = this.paginator;
 
     if (this.initialized) {
       return;
     }
-
-    this.audioPlayerRef.nativeElement.addEventListener('ended', () => {
-      this.nextTrack();
-    }, false);
 
     this.isAuthenticated = await this.cachedAuthenticationService.isAuthenticated();
 
@@ -73,12 +74,19 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
-          this.dataSource.data.push({
+          const item = {
             name: `${artist}-${title}`,
             source: stream.name,
             filename: `${artist}-${title} (${stream.name}).mp3`,
             audio: `data:audio/mp3;base64,${base64}`
-          });
+          };
+
+          this.dataSource.push(item);
+          this.tableDataSource = new MatTableDataSource<MediaType>(this.dataSource);
+
+          if (this.index === -1) {
+            this.index = 0;
+          }
 
           this.appendLog(`downloaded ${filename}`);
         }
@@ -117,22 +125,38 @@ export class BoardComponent implements OnInit, OnDestroy {
     return () => this.status = status;
   }
 
-  downloadCurrentSong() {
-    download(this.dataSource.data[this.index].audio, this.dataSource.data[this.index].name);
+  downloadSongAtIndex(i: number) {
+    download(this.dataSource[i].audio, this.dataSource[i].name);
   }
 
-  loadTrack(): void {
-    this.audioPlayerRef.nativeElement.load();
+  loadPlayer() {
+    this.unloadPlayer();
+
+    this.player = new Howl({
+      src: [this.dataSource[this.index].audio],
+      onfade: () => {
+        this.nextTrack();
+      }
+    });
   }
 
-  playTrack(): void {
+  unloadPlayer() {
+    if (this.player !== null) {
+      this.player.stop();
+      this.player.off();
+      this.player.unload();
+    }
+  }
+
+  playTrack() {
     this.playing = true;
-    this.audioPlayerRef.nativeElement.play();
+    this.loadPlayer();
+    this.player.play();
   }
 
-  stopTrack(): void {
+  stopTrack() {
     this.playing = false;
-    this.audioPlayerRef.nativeElement.pause();
+    this.player.stop();
   }
 
   toggleTrack() {
@@ -144,23 +168,31 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   nextTrack() {
-    if (this.index  === this.dataSource.data.length || this.index + 1 === this.dataSource.data.length) {
+    if (this.index + 1 < this.dataSource.length) {
       this.index++;
-    } else if (this.index + 1 < this.dataSource.data.length) {
-      this.index++;
-    }
 
-    this.stopTrack();
-    this.loadTrack();
-    this.playTrack();
+      this.loadPlayer();
+      this.playTrackIfWasPlaying();
+    }
   }
 
   previousTrack() {
     if (this.index - 1 >= 0) {
       this.index--;
-      this.stopTrack();
-      this.loadTrack();
+
+      this.loadPlayer();
+      this.playTrackIfWasPlaying();
+    }
+  }
+
+  playTrackIfWasPlaying() {
+    if (this.playing) {
       this.playTrack();
     }
+  }
+
+  playTrackAtIndex(i: number) {
+    this.index = i;
+    this.playTrack();
   }
 }
