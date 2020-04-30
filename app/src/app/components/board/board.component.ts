@@ -1,18 +1,16 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
-import {Track} from 'ngx-audio-player';
 import * as _ from 'lodash';
 import {Subscription, timer} from 'rxjs';
 import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
-import {AudioPlayerService} from 'ngx-audio-player/lib/service/audio-player-service/audio-player.service';
 import {Stream} from '../../models/entities/Stream';
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MediaType} from "../../types/media.type";
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MediaType} from '../../types/media.type';
 
 @Component({
   selector: 'app-board',
@@ -21,13 +19,11 @@ import {MediaType} from "../../types/media.type";
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  public log: string[] = [];
-  public msaapPlaylist: Track[] = [];
-  public msaapDisplayTitle = true;
-  public msaapDisplayPlayList = true;
-  public msaapPageSizeOptions = [4, 6, 8, 12];
-  public msaapDisplayVolumeControls = true;
+  @ViewChild('audioOption') audioPlayerRef: ElementRef;
 
+  public playing = false;
+  public index = -1;
+  public log: string[] = [];
   public userCount = 0;
   private logLimit = 30;
   public isAuthenticated = false;
@@ -35,12 +31,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   public streamsCount = 0;
   private streamCountSubscription: Subscription = null;
   public status = 'Disconnected';
-  public displayedColumns: string[] = ['name', 'source'];
-  dataSource = new MatTableDataSource<MediaType>([]);
+  public displayedColumns: string[] = ['name', 'source', 'actions'];
+  public dataSource = new MatTableDataSource<MediaType>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  @ViewChild('musicPlayer') musicPlayerRef: AudioPlayerService;
 
   constructor(private hubService: HubService,
               private manageStreamService: ManageStreamService,
@@ -62,6 +56,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.audioPlayerRef.nativeElement.addEventListener('ended', () => {
+      this.nextTrack();
+    }, false);
+
     this.isAuthenticated = await this.cachedAuthenticationService.isAuthenticated();
 
     if (this.isAuthenticated) {
@@ -78,7 +76,8 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.dataSource.data.push({
             name: `${artist}-${title}`,
             source: stream.name,
-	          audio: `data:audio/mp3;base64,${base64}`
+            filename: `${artist}-${title} (${stream.name}).mp3`,
+            audio: `data:audio/mp3;base64,${base64}`
           });
 
           this.appendLog(`downloaded ${filename}`);
@@ -119,8 +118,49 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   downloadCurrentSong() {
-    const refService = _.get(this.musicPlayerRef, 'playlistService') as AudioPlayerService;
-    const index = refService.getIndexSong();
-    download(this.msaapPlaylist[index].link, this.msaapPlaylist[index].title);
+    download(this.dataSource.data[this.index].audio, this.dataSource.data[this.index].name);
+  }
+
+  loadTrack(): void {
+    this.audioPlayerRef.nativeElement.load();
+  }
+
+  playTrack(): void {
+    this.playing = true;
+    this.audioPlayerRef.nativeElement.play();
+  }
+
+  stopTrack(): void {
+    this.playing = false;
+    this.audioPlayerRef.nativeElement.pause();
+  }
+
+  toggleTrack() {
+    if (this.playing) {
+      this.stopTrack();
+    } else {
+      this.playTrack();
+    }
+  }
+
+  nextTrack() {
+    if (this.index  === this.dataSource.data.length || this.index + 1 === this.dataSource.data.length) {
+      this.index++;
+    } else if (this.index + 1 < this.dataSource.data.length) {
+      this.index++;
+    }
+
+    this.stopTrack();
+    this.loadTrack();
+    this.playTrack();
+  }
+
+  previousTrack() {
+    if (this.index - 1 >= 0) {
+      this.index--;
+      this.stopTrack();
+      this.loadTrack();
+      this.playTrack();
+    }
   }
 }

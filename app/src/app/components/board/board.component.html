@@ -22,46 +22,78 @@
               <p class="pull-right">
                 <span class="label label-primary right-margin"> {{status}} </span>
                 <span class="label label-primary right-margin"> {{streamsCount}} active streams </span>
-                <span class="label label-primary"> {{msaapPlaylist.length}} tracks </span>
+                <span class="label label-primary"> {{dataSource.data.length}} tracks </span>
               </p>
             </div>
+
             <div class="row">
+              <div class="col-sm-12" #elseBlock>
+                <audio class="full-width" controls #audioOption>
+                  <source [src]="dataSource.data[index].audio" type="audio/mpeg">
+                </audio>
+              </div>
+
               <div class="col-sm-12">
+                <div class="text-center">
+                  <div class="btn-group normalized-btn-group">
+                    <button type="button" class="btn btn-default btn-lg" title="Play Previous Track"
+                            (click)="previousTrack()" [disabled]="index === 0">
+                      <i class="icon-fast-backward icon-2x"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg" title="Pause Playing"
+                            (click)="toggleTrack()">
+                      <i class="{{playing ? 'icon-pause' : 'icon-play'}} icon-2x"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg" title="Play Forwarding Track"
+                            (click)="nextTrack()">
+                      <i class="icon-fast-forward icon-2x"></i>
+                    </button>
+
+                    <button class="btn btn-default btn-lg" title="Download Track" (click)="downloadCurrentSong()">
+                      <i class="icon-download-alt icon-2x"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" #playlist>
 
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                  </ng-container>
+              <div class="col-sm-12">
+                <div class="mat-elevation-z8">
+                  <table mat-table [dataSource]="dataSource" #playlist>
 
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="source">
-                    <th mat-header-cell *matHeaderCellDef> Source </th>
-                    <td mat-cell *matCellDef="let element"> {{element.source}} </td>
-                  </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Name</th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
 
-                  <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef> Actions </th>
-                    <td mat-cell *matCellDef="let element">
-                      <section layout="row">
-                        <button mat-stroked-button color="primary">play</button>
-                        <button mat-stroked-button>download</button>
-                      </section>
-                    </td>
-                  </ng-container>
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="source">
+                      <th mat-header-cell *matHeaderCellDef> Source</th>
+                      <td mat-cell *matCellDef="let element"> {{element.source}} </td>
+                    </ng-container>
 
-                  <tr mat-header-row></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef> Actions</th>
+                      <td mat-cell *matCellDef="let element">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">play</button>
+                          <button type="button" class="btn btn-default">download</button>
+                        </div>
+                      </td>
+                    </ng-container>
 
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    <tr mat-header-row></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
               </div>
-              <hr />
+
+              <hr/>
               <div class="col-sm-12 top-margin">
-                <button class="btn btn-default pull-right" (click)="downloadCurrentSong()">Download Current Song</button>
+                <button class="btn btn-default pull-right" (click)="downloadCurrentSong()">Download Current Song
+                </button>
               </div>
             </div>
           </div>
