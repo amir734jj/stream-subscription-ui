@@ -13,7 +13,7 @@
         </div>
       </tab>
       <tab heading="Tracks" customClass="bold">
-        <div class="alert alert-info bottom-margin top-margin" *ngIf="msaapPlaylist.length === 0; else elseBlock">
+        <div class="alert alert-info bottom-margin top-margin" *ngIf="dataSource.data.length === 0; else elseBlock">
           <strong> Info! </strong> No song has been downloaded yet! There are {{ streamsCount }} active streams.
         </div>
         <ng-template #elseBlock>
@@ -27,15 +27,37 @@
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <mat-advanced-audio-player #musicPlayer
-                  [playlist]="msaapPlaylist"
-                  [displayTitle]="msaapDisplayTitle"
-                  [autoPlay]="false"
-                  [displayPlaylist]="msaapDisplayPlayList"
-                  [pageSizeOptions]="msaapPageSizeOptions"
-                  [expanded]="true"
-                  [displayVolumeControls]="msaapDisplayVolumeControls">
-                </mat-advanced-audio-player>
+              </div>
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" #playlist>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="source">
+                    <th mat-header-cell *matHeaderCellDef> Source </th>
+                    <td mat-cell *matCellDef="let element"> {{element.source}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                      <section layout="row">
+                        <button mat-stroked-button color="primary">play</button>
+                        <button mat-stroked-button>download</button>
+                      </section>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
               </div>
               <hr />
               <div class="col-sm-12 top-margin">

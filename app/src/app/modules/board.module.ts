@@ -6,17 +6,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {BoardComponent} from '../components/board/board.component';
 import {NgxAudioPlayerModule} from 'ngx-audio-player';
 import {TabsModule} from 'ngx-bootstrap/tabs';
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    AppRoutingModule,
-    NgxAudioPlayerModule,
-    TabsModule
-  ],
+	imports: [
+		BrowserAnimationsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		CommonModule,
+		AppRoutingModule,
+		NgxAudioPlayerModule,
+		TabsModule,
+		MatTableModule,
+		MatPaginatorModule,
+		MatButtonModule
+	],
   providers: [],
   declarations: [BoardComponent],
   exports: [BoardComponent]

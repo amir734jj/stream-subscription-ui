@@ -10,6 +10,9 @@ import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
 import {AudioPlayerService} from 'ngx-audio-player/lib/service/audio-player-service/audio-player.service';
 import {Stream} from '../../models/entities/Stream';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MediaType} from "../../types/media.type";
 
 @Component({
   selector: 'app-board',
@@ -32,6 +35,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   public streamsCount = 0;
   private streamCountSubscription: Subscription = null;
   public status = 'Disconnected';
+  public displayedColumns: string[] = ['name', 'source'];
+  dataSource = new MatTableDataSource<MediaType>([]);
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   @ViewChild('musicPlayer') musicPlayerRef: AudioPlayerService;
 
@@ -49,6 +56,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+
     if (this.initialized) {
       return;
     }
@@ -66,10 +75,11 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
-          this.msaapPlaylist = this.msaapPlaylist.concat([{
-            title: `${artist}-${title} (${stream.name})`,
-            link: `data:audio/mp3;base64,${base64}`
-          }]);
+          this.dataSource.data.push({
+            name: `${artist}-${title}`,
+            source: stream.name,
+	          audio: `data:audio/mp3;base64,${base64}`
+          });
 
           this.appendLog(`downloaded ${filename}`);
         }
