@@ -85,7 +85,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
           const item = {
-            name: `${artist}-${title} (${stream.name})`,
+            name: `${artist}-${title}`,
+            fullName: `${artist}-${title} (${stream.name})`,
             source: stream.name,
             filename: `${artist}-${title} (${stream.name}).mp3`,
             audio: base64
@@ -135,7 +136,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   downloadSongAtIndex(i: number) {
-    download(toAudioUrl(this.dataSource[i].audio), this.dataSource[i].name);
+    download(toAudioUrl(this.dataSource[i].audio), this.dataSource[i].filename);
   }
 
   loadPlayer() {
