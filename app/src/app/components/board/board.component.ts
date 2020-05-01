@@ -12,6 +12,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MediaType} from '../../types/media.type';
 import {Howl} from 'howler';
+import {FavoriteService} from '../../services/favorite.service';
+import {toAudioUrl} from '../../utilities/file.utility';
 
 @Component({
   selector: 'app-board',
@@ -19,6 +21,19 @@ import {Howl} from 'howler';
   styleUrls: ['./board.component.sass']
 })
 export class BoardComponent implements OnInit, OnDestroy {
+
+  constructor(private hubService: HubService,
+              private favoriteService: FavoriteService,
+              private manageStreamService: ManageStreamService,
+              private cachedAuthenticationService: CachedAuthenticationService) {
+    this.progress = () => {
+      if (this.player === null) {
+        return 0;
+      } else {
+        return ((this.player.seek() as number || 0) / (this.player.duration() || 1)) * 100;
+      }
+    };
+  }
 
   public progress: () => number;
   public player: Howl = null;
@@ -37,18 +52,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   public dataSource: MediaType[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  constructor(private hubService: HubService,
-              private manageStreamService: ManageStreamService,
-              private cachedAuthenticationService: CachedAuthenticationService) {
-    this.progress = () => {
-      if (this.player === null) {
-        return 0;
-      } else {
-        return ((this.player.seek() as number || 0) / (this.player.duration() || 1)) * 100;
-      }
-    };
-  }
 
   async ngOnDestroy() {
     if (this.initialized) {
@@ -85,7 +88,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             name: `${artist}-${title} (${stream.name})`,
             source: stream.name,
             filename: `${artist}-${title} (${stream.name}).mp3`,
-            audio: `data:audio/mp3;base64,${base64}`
+            audio: base64
           };
 
           this.dataSource.push(item);
@@ -134,14 +137,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   downloadSongAtIndex(i: number) {
-    download(this.dataSource[i].audio, this.dataSource[i].name);
+    download(toAudioUrl(this.dataSource[i].audio), this.dataSource[i].name);
   }
 
   loadPlayer() {
     this.unloadPlayer();
 
     this.player = new Howl({
-      src: [this.dataSource[this.index].audio],
+      src: [toAudioUrl(this.dataSource[this.index].audio)],
       onend: () => {
         this.nextTrack();
       }
@@ -213,5 +216,12 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.index = i;
       this.playTrack();
     }
+  }
+
+  async sendToFavorite(i: number) {
+    await this.favoriteService.upload({
+      filename: this.dataSource[i].filename,
+      stream: this.dataSource[i].audio
+    });
   }
 }

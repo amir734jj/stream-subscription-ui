@@ -9,6 +9,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {FavoriteService} from '../services/favorite.service';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatButtonModule,
     MatProgressBarModule
   ],
-  providers: [],
+  providers: [FavoriteService],
   declarations: [BoardComponent],
   exports: [BoardComponent]
 })
