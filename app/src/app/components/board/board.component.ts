@@ -90,6 +90,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
           this.dataSource.push(item);
           this.tableDataSource = new MatTableDataSource<MediaType>(this.dataSource);
+          this.tableDataSource.paginator = this.paginator;
 
           if (this.index === -1) {
             this.index = 0;
