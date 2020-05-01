@@ -214,4 +214,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.playTrack();
     }
   }
+
+  sendToFavorite(i: number) { }
 }
