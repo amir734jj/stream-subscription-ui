@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {StreamComponent} from '../components/stream/index/stream.component';
 import {StreamService} from '../services/stream.service';
-import {FtpSinkComponent} from '../components/ftpsink/index/ftp-sink.component';
 import {AddStreamComponent} from '../components/stream/add/add-stream.component';
 import {EditStreamComponent} from '../components/stream/edit/edit-stream.component';
 import {CommonComponentModule} from './common.module';

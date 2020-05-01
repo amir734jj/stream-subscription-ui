@@ -10,7 +10,8 @@ import {FtpSinkService} from '../services/ftp.sink.service';
 import {AddFtpSinkComponent} from '../components/ftpsink/add/add-ftp-sink.component';
 import {EditFtpSinkComponent} from '../components/ftpsink/edit/edit-ftp-sink.component';
 import {MatSelectModule} from '@angular/material/select';
-import {ManageFtpSinkComponent} from '../components/ftpsink/manage/manage-ftp-sink.component'; // this is needed!
+import {ManageFtpSinkComponent} from '../components/ftpsink/manage/manage-ftp-sink.component';
+import {MatCheckboxModule} from '@angular/material/checkbox'; // this is needed!
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {ManageFtpSinkComponent} from '../components/ftpsink/manage/manage-ftp-si
     CommonModule,
     AppRoutingModule,
     CommonComponentModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [StreamService, FtpSinkService],
   declarations: [
