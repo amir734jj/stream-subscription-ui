@@ -82,7 +82,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
           const item = {
-            name: `${artist}-${title}`,
+            name: `${artist}-${title} (${stream.name})`,
             source: stream.name,
             filename: `${artist}-${title} (${stream.name}).mp3`,
             audio: `data:audio/mp3;base64,${base64}`
