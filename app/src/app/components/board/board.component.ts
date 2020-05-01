@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
@@ -20,7 +20,7 @@ import {Howl} from 'howler';
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  public progress: () => Promise<number>;
+  public progress: () => number;
   public player: Howl = null;
   public playing = false;
   public index = -1;
@@ -41,13 +41,13 @@ export class BoardComponent implements OnInit, OnDestroy {
   constructor(private hubService: HubService,
               private manageStreamService: ManageStreamService,
               private cachedAuthenticationService: CachedAuthenticationService) {
-    this.progress = _.throttle(async () => {
+    this.progress = () => {
       if (this.player === null) {
         return 0;
       } else {
-        return (this.player.seek() as number || 0) / (this.player.duration() || 1);
+        return ((this.player.seek() as number || 0) / (this.player.duration() || 1)) * 100;
       }
-    }, 1000, {leading: true, trailing: true});
+    };
   }
 
   async ngOnDestroy() {
