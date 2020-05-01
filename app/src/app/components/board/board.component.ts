@@ -12,6 +12,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MediaType} from '../../types/media.type';
 import {Howl} from 'howler';
+import {FavoriteService} from '../../services/favorite.service';
 
 @Component({
   selector: 'app-board',
@@ -39,6 +40,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private hubService: HubService,
+              private favoriteService: FavoriteService,
               private manageStreamService: ManageStreamService,
               private cachedAuthenticationService: CachedAuthenticationService) {
     this.progress = () => {
@@ -215,5 +217,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendToFavorite(i: number) { }
+  async sendToFavorite(i: number) {
+    await this.favoriteService.upload({
+      filename: this.dataSource[i].filename,
+      stream: this.dataSource[i].audio
+    });
+  }
 }
