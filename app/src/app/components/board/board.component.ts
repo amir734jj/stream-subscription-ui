@@ -21,7 +21,7 @@ import {Howl} from 'howler';
 export class BoardComponent implements OnInit, OnDestroy {
 
   public progress: () => Promise<number>;
-  private player: Howl = null;
+  public player: Howl = null;
   public playing = false;
   public index = -1;
   public log: string[] = [];
