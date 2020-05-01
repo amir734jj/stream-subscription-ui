@@ -1,3 +1,9 @@
+<mat-progress-bar
+  mode="determinate"
+  [value]="progress() | async"
+  *ngIf="index >= 0">
+</mat-progress-bar>
+
 <div class="container">
   <div class="row bottom-margin" [style.display]="dataSource.length ? '' : 'none'">
     <div class="col-sm-12">
@@ -25,23 +31,16 @@
       </div>
     </div>
 
+    <div class="col-sm-12" *ngIf="index >= 0">
+      {{ dataSource[index].name }}
+    </div>
+
     <hr/>
   </div>
 
   <div *ngIf="isAuthenticated">
-
     <tabset [justified]="true">
-      <tab heading="Live log" [active]="true" customClass="bold">
-        <div class="top-margin">
-          <p class="tab-header">
-            <span class="label label-primary pull-right"> {{ userCount }} active users </span>
-          </p>
-          <pre>
-{{ log.join('\n') }}
-            </pre>
-        </div>
-      </tab>
-      <tab heading="Tracks" customClass="bold">
+      <tab heading="Tracks" [active]="true" customClass="bold">
         <div class="alert alert-info bottom-margin top-margin" *ngIf="dataSource.length === 0">
           <strong> Info! </strong> No song has been downloaded yet! There are {{ streamsCount }} active streams.
         </div>
@@ -60,15 +59,13 @@
                 <div class="mat-elevation-z8">
                   <table mat-table [dataSource]="tableDataSource">
 
-                    <!-- Name Column -->
                     <ng-container matColumnDef="name">
                       <th mat-header-cell *matHeaderCellDef> Name</th>
                       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                     </ng-container>
 
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="source">
-                      <th mat-header-cell *matHeaderCellDef> Source</th>
+                    <ng-container matColumnDef="source" [ngClass]="'hidden-sm'">
+                      <th mat-header-cell *matHeaderCellDef> Source </th>
                       <td mat-cell *matCellDef="let element"> {{element.source}} </td>
                     </ng-container>
 
@@ -77,14 +74,14 @@
                       <td mat-cell *matCellDef="let element; let i = index">
                         <div class="btn-group">
                           <button type="button" class="btn btn-default" (click)="playTrackAtIndex(i)">play</button>
-                          <button type="button" class="btn btn-default" (click)="downloadSongAtIndex(i)">download
+                          <button type="button" class="btn btn-default hidden-sm" (click)="downloadSongAtIndex(i)">download
                           </button>
                         </div>
                       </td>
                     </ng-container>
 
                     <tr mat-header-row></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
                   </table>
 
                   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
@@ -92,6 +89,17 @@
               </div>
             </div>
           </div>
+        </div>
+      </tab>
+
+      <tab heading="Live log" customClass="bold">
+        <div class="top-margin">
+          <p class="tab-header">
+            <span class="label label-primary pull-right"> {{ userCount }} active users </span>
+          </p>
+          <pre>
+{{ log.join('\n') }}
+            </pre>
         </div>
       </tab>
     </tabset>

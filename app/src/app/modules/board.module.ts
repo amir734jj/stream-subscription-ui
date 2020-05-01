@@ -8,6 +8,7 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {MatButtonModule} from '@angular/material/button';
     TabsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressBarModule
   ],
   providers: [],
   declarations: [BoardComponent],
