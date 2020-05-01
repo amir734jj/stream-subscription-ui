@@ -33,12 +33,12 @@ export class ManageFtpSinkComponent implements OnInit {
     this.route.params.subscribe(async params => {
       this.ftpSink = await this.ftpSinkService.get(params.id).toPromise();
       this.streams = await this.streamService.getAll().toPromise();
-      this.streamsFormControl = new FormControl(this.ftpSink.ftpSinkRelationships.map(x => x.streamId));
+      this.streamsFormControl = new FormControl(this.ftpSink.streamFtpSinkRelationships.map(x => x.streamId));
     });
   }
 
   async update() {
-    this.ftpSink.ftpSinkRelationships = _.chain(this.streamsFormControl.value)
+    this.ftpSink.streamFtpSinkRelationships = _.chain(this.streamsFormControl.value)
       .map(x => x as string)
       .map(id => this.streams.find(stream => stream.id === id))
       .map(stream => {

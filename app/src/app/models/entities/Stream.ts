@@ -7,5 +7,5 @@ export class Stream {
   filter = 'advertisement';
   url: string;
   user: User;
-  ftpSinkRelationships: StreamFtpSinkRelationship[] = [];
+  streamFtpSinkRelationships: StreamFtpSinkRelationship[] = [];
 }

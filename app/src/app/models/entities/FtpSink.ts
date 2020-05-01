@@ -10,6 +10,6 @@ export class FtpSink {
   port = 21;
   path = '';
   user: User;
-  favorite: boolean;
-  ftpSinkRelationships: StreamFtpSinkRelationship[] = [];
+  favorite = false;
+  streamFtpSinkRelationships: StreamFtpSinkRelationship[] = [];
 }

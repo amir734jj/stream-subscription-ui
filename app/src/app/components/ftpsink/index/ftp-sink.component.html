@@ -44,13 +44,13 @@
       </td>
       <td class="hidden-sm hidden-xs"> {{ ftpSink.port }} </td>
       <td class="hidden-sm hidden-xs">
-        <ul *ngIf="ftpSink.ftpSinkRelationships.length">
-          <li *ngFor="let relationship of ftpSink.ftpSinkRelationships">
+        <ul *ngIf="ftpSink.streamFtpSinkRelationships.length">
+          <li *ngFor="let relationship of ftpSink.streamFtpSinkRelationships">
             {{ relationship.stream.name }}
           </li>
         </ul>
 
-        <ng-template [ngIf]="!ftpSink.ftpSinkRelationships.length">
+        <ng-template [ngIf]="!ftpSink.streamFtpSinkRelationships.length">
           None
         </ng-template>
       </td>
