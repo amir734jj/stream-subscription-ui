@@ -45,7 +45,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       if (this.player === null) {
         return 0;
       } else {
-        return this.player.seek() as number || 0;
+        return (this.player.seek() as number || 0) / (this.player.duration() || 1);
       }
     }, 1000, {leading: true, trailing: true});
   }
