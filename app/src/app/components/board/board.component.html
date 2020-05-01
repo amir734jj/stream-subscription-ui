@@ -60,7 +60,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="mat-elevation-z8">
-                  <table mat-table [dataSource]="tableDataSource" [ngClass]="'table'">
+                  <table mat-table [dataSource]="tableDataSource" [ngClass]="'table'" [ngStyle]="{'width': '100% important'}">
 
                     <ng-container matColumnDef="name">
                       <th mat-header-cell *matHeaderCellDef> Name</th>
