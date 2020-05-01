@@ -141,7 +141,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.player = new Howl({
       src: [this.dataSource[this.index].audio],
-      onfade: () => {
+      onend: () => {
         this.nextTrack();
       }
     });
