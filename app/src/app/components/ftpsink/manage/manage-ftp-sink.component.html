@@ -10,7 +10,7 @@
       <mat-form-field>
         <mat-label>Streams</mat-label>
         <mat-select [formControl]="streamsFormControl" multiple>
-          <mat-option *ngFor="let stream of streams" [value]="stream.id" >{{stream.name}}</mat-option>
+          <mat-option *ngFor="let stream of streams" [value]="stream.id">{{stream.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
