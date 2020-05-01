@@ -24,6 +24,7 @@
       <th class="hidden-sm hidden-xs"> Path</th>
       <th class="hidden-sm hidden-xs"> Port</th>
       <th class="hidden-sm hidden-xs"> Streams</th>
+      <th class="hidden-sm hidden-xs"> Favorite</th>
       <th> Action</th>
     </tr>
     </thead>
@@ -52,6 +53,9 @@
         <ng-template [ngIf]="!ftpSink.ftpSinkRelationships.length">
           None
         </ng-template>
+      </td>
+      <td class="hidden-sm hidden-xs">
+        <i class="{{ this.ftpSink.favorite ? 'icon-check' : 'icon-check-empty' }}"></i>
       </td>
       <td>
         <div class="btn-group">

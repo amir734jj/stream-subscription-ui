@@ -11,6 +11,8 @@ export class FavoriteService {
   }
 
   async upload(favorite: Favorite) {
-    await this.http.post(route('favorite'), favorite).toPromise();
+    await this.http.post(route('favorite'), favorite, {
+      responseType: 'text'
+    }).toPromise();
   }
 }

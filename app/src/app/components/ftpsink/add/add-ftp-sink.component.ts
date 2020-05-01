@@ -23,6 +23,7 @@ export class AddFtpSinkComponent implements OnInit {
       username: new FormControl(this.ftpSink.user, Validators.required),
       password: new FormControl(this.ftpSink.password, Validators.required),
       path: new FormControl(this.ftpSink.path),
+      favorite: new FormControl(this.ftpSink.favorite),
       port: new FormControl(this.ftpSink.port, [Validators.required, Validators.min(1)])
     });
   }
