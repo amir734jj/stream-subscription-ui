@@ -59,55 +59,41 @@
 
             <div class="row">
               <div class="col-sm-12">
-                <div class="mat-elevation-z8">
-                  <table mat-table [dataSource]="tableDataSource" [ngClass]="'table'" [ngStyle]="{'width': '100% !important'}">
-
-                    <ng-container matColumnDef="name">
-                      <th mat-header-cell *matHeaderCellDef> Name</th>
-                      <td mat-cell *matCellDef="let element">
-                        <div class="hidden-xs">
-                          {{element.name}}
-                        </div>
-                        <div class="visible-xm hidden-sm hidden-md hidden-lg">
-                          {{element.name.substring(0, 9)}} ..
-                        </div>
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="source">
-                      <th mat-header-cell *matHeaderCellDef [ngClass]="'hidden-xs'"> Source</th>
-                      <td mat-cell *matCellDef="let element" [ngClass]="'hidden-xs'"> {{element.source}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="actions">
-                      <th mat-header-cell *matHeaderCellDef> Actions</th>
-                      <td mat-cell *matCellDef="let element; let i = index">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default" (click)="toggleTrack()" *ngIf="index === i && playing; else elseBlock">
-                            <i class="icon-pause"></i>
+                <table class="table table-hover table-bordered">
+                  <tbody>
+                  <tr *ngFor="let item of dataSource; let i = index" [ngClass]="{'success': i === index && player !== null}" [ngStyle]="{'width': '100% !important'}">
+                    <td>
+                      <div class="hidden-xs">
+                        {{item.name}}
+                      </div>
+                      <div class="visible-xm hidden-sm hidden-md hidden-lg">
+                        {{item.name.substring(0, 9)}} ..
+                      </div>
+                    </td>
+                    <td class="hidden-xs">
+                      {{item.source}}
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-default" (click)="toggleTrack()" *ngIf="index === i && playing; else elseBlock">
+                          <i class="icon-pause"></i>
+                        </button>
+                        <ng-template #elseBlock>
+                          <button type="button" class="btn btn-default" (click)="playTrackAtIndex(i)">
+                            <i class="icon-play"></i>
                           </button>
-                          <ng-template #elseBlock>
-                            <button type="button" class="btn btn-default" (click)="playTrackAtIndex(i)">
-                              <i class="icon-play"></i>
-                            </button>
-                          </ng-template>
-                          <button type="button" class="btn btn-default hidden-xs" (click)="downloadSongAtIndex(i)">
-                            <i class="icon-download-alt"></i>
-                          </button>
-                          <button type="button" class="btn btn-default hidden-xm" (click)="sendToFavorite(i)">
-                            <i class="icon-cloud-upload"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </ng-container>
-
-                    <tr mat-header-row></tr>
-                    <tr mat-row
-                        *matRowDef="let row; columns: displayedColumns; let i = index"
-                        [ngClass]="{'success': i === index && player !== null}">
-                    </tr>
-                  </table>
-                </div>
+                        </ng-template>
+                        <button type="button" class="btn btn-default hidden-xs" (click)="downloadSongAtIndex(i)">
+                          <i class="icon-download-alt"></i>
+                        </button>
+                        <button type="button" class="btn btn-default hidden-xm" (click)="sendToFavorite(i)">
+                          <i class="icon-cloud-upload"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

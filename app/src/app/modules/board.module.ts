@@ -5,8 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BoardComponent} from '../components/board/board.component';
 import {TabsModule} from 'ngx-bootstrap/tabs';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FavoriteService} from '../services/favorite.service';
@@ -19,8 +17,6 @@ import {FavoriteService} from '../services/favorite.service';
     CommonModule,
     AppRoutingModule,
     TabsModule,
-    MatTableModule,
-    MatPaginatorModule,
     MatButtonModule,
     MatProgressBarModule
   ],
