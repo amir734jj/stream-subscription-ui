@@ -8,7 +8,7 @@ import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
 import {Stream} from '../../models/entities/Stream';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MediaType} from '../../types/media.type';
 import {Howl} from 'howler';
@@ -49,9 +49,12 @@ export class BoardComponent implements OnInit, OnDestroy {
   public status = 'Disconnected';
   public displayedColumns: string[] = ['name', 'source', 'actions'];
   public tableDataSource = new MatTableDataSource<MediaType>([]);
-  public dataSource: MediaType[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  get dataSource() {
+    return this.tableDataSource.data;
+  }
 
   async ngOnDestroy() {
     if (this.initialized) {
