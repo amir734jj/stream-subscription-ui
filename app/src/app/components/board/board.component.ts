@@ -207,7 +207,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   playTrackAtIndex(i: number) {
-    if (i === this.index && !this.playing) {
+    if (i === this.index && !this.playing && this.player !== null) {
       this.resumeTrack();
     } else {
       this.index = i;
