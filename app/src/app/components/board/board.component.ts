@@ -8,7 +8,7 @@ import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
 import {Stream} from '../../models/entities/Stream';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MediaType} from '../../types/media.type';
 import {Howl} from 'howler';
@@ -48,13 +48,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   private streamCountSubscription: Subscription = null;
   public status = 'Disconnected';
   public displayedColumns: string[] = ['name', 'source', 'actions'];
+  public dataSource: MediaType[] = [];
   public tableDataSource = new MatTableDataSource<MediaType>([]);
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  get dataSource() {
-    return this.tableDataSource.data;
-  }
 
   async ngOnDestroy() {
     if (this.initialized) {
@@ -95,7 +92,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             audio: base64
           };
 
-          this.dataSource.push(item);
+          this.dataSource = [...this.dataSource, item];
           this.tableDataSource = new MatTableDataSource<MediaType>(this.dataSource);
 
           if (this.index === -1) { this.index = 0; }
