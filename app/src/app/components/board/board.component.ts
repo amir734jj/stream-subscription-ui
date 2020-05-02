@@ -93,7 +93,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           };
 
           this.dataSource.push(item);
-          this.paginator._changePageSize(this.dataSource.length);
+          this.tableDataSource = new MatTableDataSource<MediaType>(this.dataSource);
 
           if (this.index === -1) { this.index = 0; }
 
