@@ -168,12 +168,16 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   stopTrack() {
     this.playing = false;
-    this.player.pause();
+    if (this.player !== null) {
+      this.player.pause();
+    }
   }
 
   resumeTrack() {
     this.playing = true;
-    this.player.play();
+    if (this.player !== null) {
+      this.player.play();
+    }
   }
 
   toggleTrack() {
