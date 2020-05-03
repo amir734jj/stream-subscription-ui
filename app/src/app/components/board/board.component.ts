@@ -230,8 +230,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get pageScope() {
-    return [this.currentPage - 1, this.currentPage, this.currentPage + 1]
-      .filter(x => x > 0)
+    return _.range(1, this.pages + 1, 1)
       .filter(x => x <= this.pages);
   }
 
