@@ -120,7 +120,7 @@
                   </tbody>
                 </table>
 
-                <div class="col-md-12 text-center" *ngIf="pageScope > 1">
+                <div class="col-md-12 text-center" *ngIf="pageScope.length > 1">
                   <ul class="pagination">
                     <li *ngFor="let page of pageScope" [ngClass]="{active: page === currentPage}">
                       <a href="#" (click)="currentPage = page">
