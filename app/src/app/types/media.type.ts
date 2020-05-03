@@ -4,4 +4,5 @@ export interface MediaType {
   source: string;
   audio: string;
   filename: string;
+  index: number;
 }

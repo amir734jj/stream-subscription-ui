@@ -34,6 +34,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     };
   }
 
+  public pageSize = 5;
+  public currentPage = 1;
   public progress: () => number;
   public player: Howl = null;
   public playing = false;
@@ -85,7 +87,8 @@ export class BoardComponent implements OnInit, OnDestroy {
             fullName: `${artist}-${title} (${stream.name})`,
             source: stream.name,
             filename: `${artist}-${title} (${stream.name}).mp3`,
-            audio: base64
+            audio: base64,
+            index: this.dataSource.length
           };
 
           this.dataSource = [...this.dataSource, item];
@@ -220,5 +223,21 @@ export class BoardComponent implements OnInit, OnDestroy {
       filename: this.dataSource[i].filename,
       stream: this.dataSource[i].audio
     });
+  }
+
+  get pages() {
+    return Math.ceil(this.dataSource.length / this.pageSize);
+  }
+
+  get pageScope() {
+    return [this.currentPage - 1, this.currentPage, this.currentPage + 1]
+      .filter(x => x > 0)
+      .filter(x => x <= this.pages);
+  }
+
+  get currentWindow(): MediaType[] {
+    const startAt = (this.currentPage - 1) * this.pageSize;
+    const endOn = startAt + this.pageSize;
+    return this.dataSource.slice(startAt, endOn);
   }
 }
