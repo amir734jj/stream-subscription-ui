@@ -230,8 +230,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get pageScope() {
-    return _.range(1, this.pages + 1, 1)
-      .filter(x => x <= this.pages);
+    return _.range(1, this.pages + 1, 1);
   }
 
   get currentWindow(): MediaType[] {
