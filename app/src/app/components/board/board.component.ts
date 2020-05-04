@@ -45,7 +45,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public index = -1;
   public log: string[] = [];
   public userCount = 0;
-  private logLimit = 30;
+  private logLimit = 25;
   public isAuthenticated = false;
   public initialized = false;
   public streamsCount = 0;
