@@ -3,7 +3,7 @@ import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
 import * as _ from 'lodash';
-import {Subscription, timer} from 'rxjs';
+import {from, Observable, pipe, Subscription, timer} from 'rxjs';
 import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
@@ -14,6 +14,7 @@ import {Howl} from 'howler';
 import {FavoriteService} from '../../services/favorite.service';
 import {toAudioUrl} from '../../utilities/file.utility';
 import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
+import {retry} from 'rxjs/operators';
 
 @Component({
   selector: 'app-board',
@@ -219,7 +220,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async reconnect() {
     this.reconnecting = true;
-    await this.hubService.connection.start()
+    from(() => this.hubService.connection.start())
+      .pipe(retry(5))
+      .toPromise()
       .finally(() => this.reconnecting = false);
   }
 
@@ -242,10 +245,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get status(): string {
-    if (!this.hubService || !this.hubService.connection) {
-      return 'Disconnected';
-    } else {
+    try {
       return this.hubService.status();
+    } catch (e) {
+      return 'Disconnected';
     }
   }
 }

@@ -25,23 +25,27 @@ export class HubService {
   }
 
   public status() {
-    if (!this.connection) {
-      return 'Disconnected';
-    } else {
-      switch (this.connection.state) {
-        case HubConnectionState.Connected:
-          return 'Connected';
-        case HubConnectionState.Connecting:
-          return 'Connecting';
-        case HubConnectionState.Disconnected:
-          return 'Disconnected';
-        case HubConnectionState.Disconnecting:
-          return 'Disconnecting';
-        case HubConnectionState.Reconnecting:
-          return 'Reconnecting';
-        default:
-          return 'Disconnected';
+    try {
+      if (!this.connection) {
+        return 'Disconnected';
+      } else {
+        switch (this.connection.state) {
+          case HubConnectionState.Connected:
+            return 'Connected';
+          case HubConnectionState.Connecting:
+            return 'Connecting';
+          case HubConnectionState.Disconnected:
+            return 'Disconnected';
+          case HubConnectionState.Disconnecting:
+            return 'Disconnecting';
+          case HubConnectionState.Reconnecting:
+            return 'Reconnecting';
+          default:
+            return 'Disconnected';
+        }
       }
+    } catch (e) {
+      return 'Disconnected';
     }
   }
 }
