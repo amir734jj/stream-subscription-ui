@@ -3,7 +3,7 @@ import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
 import * as _ from 'lodash';
-import {from, Observable, pipe, Subscription, timer} from 'rxjs';
+import {Subscription, timer} from 'rxjs';
 import {ManageStreamService} from '../../services/manage.stream.service';
 import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
@@ -14,7 +14,7 @@ import {Howl} from 'howler';
 import {FavoriteService} from '../../services/favorite.service';
 import {toAudioUrl} from '../../utilities/file.utility';
 import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
-import {retry} from 'rxjs/operators';
+import {retry} from '../../utilities/monad.utility';
 
 @Component({
   selector: 'app-board',
@@ -220,9 +220,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async reconnect() {
     this.reconnecting = true;
-    from(() => this.hubService.connection.start())
-      .pipe(retry(5))
-      .toPromise()
+    await retry(() => this.hubService.connection.start())(5)
       .finally(() => this.reconnecting = false);
   }
 
@@ -241,14 +239,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get reconnectingMode(): boolean {
-    return this.hubService.connection.state !== HubConnectionState.Connected && !!this.dataSource.length;
+    return this.hubService.connection && this.hubService.connection.state !== HubConnectionState.Connected && !!this.dataSource.length;
   }
 
   get status(): string {
-    try {
-      return this.hubService.status();
-    } catch (e) {
-      return 'Disconnected';
-    }
+    return this.hubService.status();
   }
 }
