@@ -224,6 +224,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   clearCache() {
+    this.index = 0;
     this.dataSource = [this.dataSource[this.index]];
   }
 
