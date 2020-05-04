@@ -13,6 +13,7 @@ import {MediaType} from '../../types/media.type';
 import {Howl} from 'howler';
 import {FavoriteService} from '../../services/favorite.service';
 import {toAudioUrl} from '../../utilities/file.utility';
+import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 
 @Component({
   selector: 'app-board',
@@ -225,6 +226,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
   }
 
+  async reconnect() {
+    await this.hubService.connection.start();
+  }
+
   get pages() {
     return Math.ceil(this.dataSource.length / this.pageSize);
   }
@@ -237,5 +242,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     const startAt = (this.currentPage - 1) * this.pageSize;
     const endOn = startAt + this.pageSize;
     return this.dataSource.slice(startAt, endOn);
+  }
+
+  get reconnectingMode(): boolean {
+    return this.hubService.connection.state === HubConnectionState.Disconnected && !!this.dataSource.length;
   }
 }
