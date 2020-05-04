@@ -183,6 +183,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.loadPlayer();
       this.playTrackIfWasPlaying();
+    } else {
+      this.stopTrack();
     }
   }
 
