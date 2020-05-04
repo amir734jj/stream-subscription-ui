@@ -35,6 +35,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     };
   }
 
+  public reconnecting = false;
   public pageSize = 5;
   public currentPage = 1;
   public progress: () => number;
@@ -217,7 +218,9 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async reconnect() {
-    await this.hubService.connection.start();
+    this.reconnecting = true;
+    await this.hubService.connection.start()
+      .finally(() => this.reconnecting = false);
   }
 
   get pages() {
@@ -239,6 +242,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get status(): string {
-    return this.hubService.status();
+    if (!this.hubService) {
+      return 'Disconnected';
+    } else {
+      return this.hubService.status();
+    }
   }
 }
