@@ -50,7 +50,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   public initialized = false;
   public streamsCount = 0;
   private streamCountSubscription: Subscription = null;
-  public displayedColumns: string[] = ['name', 'source', 'actions'];
   public dataSource: MediaType[] = [];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -222,6 +221,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.reconnecting = true;
     await retry(() => this.hubService.connection.start())(5)
       .finally(() => this.reconnecting = false);
+  }
+
+  clearCache() {
+    this.dataSource = [this.dataSource[this.index]];
   }
 
   get pages() {

@@ -32,6 +32,10 @@
                   *ngIf="index >= 0 && player !== null">
             <i class="icon-cloud-upload"></i>
           </button>
+          <button class="btn btn-default btn-lg" title="Clear Cache" (click)="clearCache()"
+                  *ngIf="this.dataSource.length > 10">
+            <i class="icon-trash"></i>
+          </button>
           <button class="btn btn-danger btn-lg {{ reconnecting ? 'disabled' : '' }}" title="Try Reconnecting"
                   (click)="reconnect()"
                   [disabled]="reconnecting"
