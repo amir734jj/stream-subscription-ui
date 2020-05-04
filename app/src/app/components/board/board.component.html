@@ -32,7 +32,8 @@
                   *ngIf="index >= 0 && player !== null">
             <i class="icon-cloud-upload"></i>
           </button>
-          <button [ngClass]="['btn', 'btn-danger', 'btn-lg', { disabled: reconnecting }]" title="Try Reconnecting" (click)="reconnect()"
+          <button class="btn btn-danger btn-lg {{ reconnecting ? 'disabled' : '' }}" title="Try Reconnecting"
+                  (click)="reconnect()"
                   [disabled]="reconnecting"
                   *ngIf="reconnectingMode">
             <i class="icon-refresh"></i>
