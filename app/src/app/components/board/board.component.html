@@ -6,7 +6,6 @@
 
 <div class="container">
   <div class="row bottom-margin" [style.display]="dataSource.length ? '' : 'none'">
-
     <div class="col-sm-12">
       <div class="text-center container-fluid">
         <div class="btn-group normalized-btn-group">
@@ -24,7 +23,7 @@
                   (click)="nextTrack()">
             <i class="icon-fast-forward"></i>
           </button>
-          <button class="btn btn-default btn-lg" title="Download Track" (click)="downloadSongAtIndex(index)"
+          <button class="btn btn-default btn-lg hidden-xs" title="Download Track" (click)="downloadSongAtIndex(index)"
                   *ngIf="index >= 0 && player !== null">
             <i class="icon-download-alt"></i>
           </button>
@@ -85,18 +84,23 @@
                       [ngClass]="{'success': item.index === index && player !== null}"
                       [ngStyle]="{'width': '100% !important'}">
                     <td>
-                      <div class="hidden-xs">
-                        {{item.name}}
-                      </div>
-                      <div class="visible-xm hidden-sm hidden-md hidden-lg">
-                        {{item.name.substring(0, 12)}} ..
+                      <div class="pull-left">
+                        <div class="hidden-xs">
+                          {{item.name}}
+                        </div>
+                        <div class="visible-xm hidden-sm hidden-md hidden-lg">
+                          {{item.name.substring(0, 12)}} ..
+                        </div>
                       </div>
                     </td>
                     <td class="hidden-xs">
-                      {{item.source}}
+                      <div class="text-center">
+                        {{item.source}}
+                      </div>
                     </td>
                     <td>
-                      <div class="btn-group">
+                      <div class="pull-right">
+                        <div class="btn-group">
                         <button type="button"
                                 class="btn btn-default"
                                 (click)="toggleTrack()"
@@ -124,6 +128,7 @@
                                 (click)="sendToFavorite(item.index)">
                           <i class="icon-cloud-upload"></i>
                         </button>
+                      </div>
                       </div>
                     </td>
                   </tr>
