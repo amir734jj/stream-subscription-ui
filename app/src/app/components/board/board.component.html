@@ -34,6 +34,9 @@
           <button class="btn btn-default btn-lg" title="Clear Cache" (click)="clearCache()"
                   *ngIf="this.dataSource.length > 10">
             <i class="icon-trash"></i>
+            <sub>
+              {{ memorySize }}
+            </sub>
           </button>
           <button class="btn btn-danger btn-lg {{ reconnecting ? 'disabled' : '' }}" title="Try Reconnecting"
                   (click)="reconnect()"
@@ -51,7 +54,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="ticker monospace text-center">
-            {{ dataSource[index].fullName }}
+            {{ dataSource[index].fullName }} {{duration}}
           </div>
         </div>
       </div>

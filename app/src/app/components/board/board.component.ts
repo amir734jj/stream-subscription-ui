@@ -15,6 +15,8 @@ import {FavoriteService} from '../../services/favorite.service';
 import {toAudioUrl} from '../../utilities/file.utility';
 import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 import {retry} from '../../utilities/monad.utility';
+import {roughSizeOfObject} from '../../utilities/memory.utility';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-board',
@@ -254,5 +256,15 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   get status(): string {
     return this.hubService.status();
+  }
+
+  get memorySize(): string {
+    return `${Math.round(roughSizeOfObject(this.dataSource) / 1000000)}mb`;
+  }
+
+  get duration(): string {
+    return moment().startOf('day')
+      .seconds(this.player.duration())
+      .format('mm:ss');
   }
 }
