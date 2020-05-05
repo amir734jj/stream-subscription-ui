@@ -1,6 +1,6 @@
 <mat-progress-bar
   mode="determinate"
-  [value]="progress()"
+  [value]="progress"
   *ngIf="index >= 0">
 </mat-progress-bar>
 
@@ -54,7 +54,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="ticker monospace text-center">
-            {{ dataSource[index].fullName }} {{duration}}
+            {{ dataSource[index].fullName }} {{ duration() }}
           </div>
         </div>
       </div>
