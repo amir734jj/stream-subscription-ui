@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HubService} from '../../services/hub.service';
 import {CachedAuthenticationService} from '../../services/cached.authentication.service';
 import {SongMetadata} from '../../types/song.metadata.type';
@@ -22,6 +22,7 @@ import {retry} from '../../utilities/monad.utility';
   styleUrls: ['./board.component.sass']
 })
 export class BoardComponent implements OnInit, OnDestroy {
+  private innerWidth = 0;
 
   constructor(private hubService: HubService,
               private favoriteService: FavoriteService,
@@ -66,6 +67,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.innerWidth = window.innerWidth;
+
     if (this.initialized) {
       return;
     }
@@ -117,6 +120,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     } else if (!!this.streamCountSubscription) {
       this.streamCountSubscription.unsubscribe();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   appendLog(...arg: any) {
@@ -254,5 +262,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   get status(): string {
     return this.hubService.status();
+  }
+
+  get isMobile(): boolean {
+    return this.innerWidth < 768;
   }
 }
