@@ -12,11 +12,13 @@ export class HubService {
   public connection: HubConnection;
 
   async init() {
-    const {token} = store.get(authStorageKey, {}) as ProfileType;
     const BASE_ADDRESS = environment.hubUrl;
     const options: IHttpConnectionOptions = {
       transport: HttpTransportType.LongPolling,
-      accessTokenFactory: () => token
+      accessTokenFactory: () => {
+        const {token} = store.get(authStorageKey, {}) as ProfileType;
+        return token;
+      }
     };
 
     this.connection = new signalR.HubConnectionBuilder()

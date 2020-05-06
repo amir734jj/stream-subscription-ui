@@ -15,6 +15,8 @@ import {FavoriteService} from '../../services/favorite.service';
 import {toAudioUrl} from '../../utilities/file.utility';
 import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 import {retry} from '../../utilities/monad.utility';
+import {roughSizeOfObject} from '../../utilities/memory.utility';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-board',
@@ -28,19 +30,22 @@ export class BoardComponent implements OnInit, OnDestroy {
               private favoriteService: FavoriteService,
               private manageStreamService: ManageStreamService,
               private cachedAuthenticationService: CachedAuthenticationService) {
-    this.progress = () => {
-      if (this.player === null) {
-        return 0;
-      } else {
-        return ((this.player.seek() as number || 0) / (this.player.duration() || 1)) * 100;
+    this.duration = _.throttle(() => {
+      switch (this.player) {
+        case null:
+          return '';
+        default:
+          return moment().startOf('day')
+            .seconds(this.player.duration())
+            .format('mm:ss');
       }
-    };
+    }, 1000, { trailing: true });
   }
 
+  public duration: () => string;
   public reconnecting = false;
   public pageSize = 5;
   public currentPage = 1;
-  public progress: () => number;
   public player: Howl = null;
   public playing = false;
   public index = -1;
@@ -264,7 +269,21 @@ export class BoardComponent implements OnInit, OnDestroy {
     return this.hubService.status();
   }
 
+
   get isMobile(): boolean {
     return this.innerWidth < 768;
+  }
+
+  get memorySize(): string {
+    return `${Math.round(roughSizeOfObject(this.dataSource) / 1000000)}mb`;
+  }
+
+  get progress(): number {
+    switch (this.player) {
+      case null:
+        return 0;
+      default:
+        return ((this.player.seek() as number || 0) / (this.player.duration() || 1)) * 100;
+    }
   }
 }
