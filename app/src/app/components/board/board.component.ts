@@ -17,6 +17,7 @@ import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 import {retry} from '../../utilities/monad.utility';
 import {roughSizeOfObject} from '../../utilities/memory.utility';
 import * as moment from 'moment';
+import { setPlaybackEvents, setMetadata } from 'src/app/utilities/mediaSession.utility';
 
 @Component({
   selector: 'app-board',
@@ -78,6 +79,11 @@ export class BoardComponent implements OnInit, OnDestroy {
       return;
     }
 
+    setPlaybackEvents({
+      onPrev: () => this.previousTrack(),
+      onNext: () => this.nextTrack()
+    });
+
     this.isAuthenticated = await this.cachedAuthenticationService.isAuthenticated();
 
     if (this.isAuthenticated) {
@@ -97,7 +103,9 @@ export class BoardComponent implements OnInit, OnDestroy {
             source: stream.name,
             filename: `${artist}-${title} (${stream.name}).mp3`,
             audio: base64,
-            index: this.dataSource.length
+            index: this.dataSource.length,
+            artist,
+            title
           };
 
           this.dataSource = [...this.dataSource, item];
@@ -143,6 +151,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   loadPlayer() {
     this.unloadPlayer();
+    setMetadata(this.dataSource[this.index]);
 
     this.player = new Howl({
       src: [toAudioUrl(this.dataSource[this.index].audio)],
