@@ -15,10 +15,10 @@ import {toAudioUrl, toAudioBlob} from '../../utilities/file.utility';
 import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 import {retry} from '../../utilities/monad.utility';
 import {roughSizeOfObject} from '../../utilities/memory.utility';
-import * as moment from 'moment';
 import {MediaSessionUtility} from 'src/app/utilities/injectables/mediaSession.utility';
 import {MediaSessionPlaybackState} from 'src/app/types/mediaSession.type';
 import * as WaveSurfer from 'wavesurfer.js';
+import {formatTimeSpan} from '../../utilities/timespan.utility';
 
 @Component({
   selector: 'app-board',
@@ -38,9 +38,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         case null:
           return '';
         default:
-          return moment().startOf('day')
-            .seconds(this.player.getDuration())
-            .format('mm:ss');
+          return formatTimeSpan(this.player.getDuration());
       }
     }, 1000, {trailing: true});
   }
@@ -93,17 +91,19 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.hubService.connection.on('count', userCount => this.userCount = userCount);
 
-    this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
+    this.hubService.connection.on('download', (filename: string, songMetadata: SongMetadata, base64: string, stream: Stream) => {
       if (base64 && base64.length) {
+        const {artist, title} = songMetadata;
         const item = {
+          ...songMetadata,
           name: `${artist}-${title}`,
           fullName: `${artist}-${title} (${stream.name})`,
           source: stream.name,
           filename: `${artist}-${title} (${stream.name}).mp3`,
           audio: base64,
           index: this.dataSource.length,
-          artist,
-          title
+          formattedDuration: formatTimeSpan(songMetadata.duration),
+          tags: _.take(songMetadata.tags, 3)
         };
 
         this.dataSource = [...this.dataSource, item];
@@ -184,10 +184,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     await this.player.play();
   }
 
-  stopTrack() {
+  async stopTrack() {
     this.playing = false;
     if (this.player !== null) {
-      this.player.pause();
+      await this.player.pause();
     }
   }
 
@@ -200,7 +200,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async toggleTrack() {
     if (this.playing) {
-      this.stopTrack();
+      await this.stopTrack();
     } else if (this.player !== null) {
       await this.resumeTrack();
     } else {
@@ -215,7 +215,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       await this.loadPlayer();
       await this.playTrackIfWasPlaying();
     } else {
-      this.stopTrack();
+      await this.stopTrack();
     }
   }
 
