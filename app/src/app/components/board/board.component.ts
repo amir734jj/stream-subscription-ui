@@ -162,7 +162,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       container: '#waveform',
       waveColor: 'violet',
       progressColor: 'purple',
-      responsive: true
+      responsive: true,
+      hideScrollbar: this.isMobile
     });
 
     this.player.loadBlob(toAudioBlob(item.audio));
