@@ -17,7 +17,8 @@ import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 import {retry} from '../../utilities/monad.utility';
 import {roughSizeOfObject} from '../../utilities/memory.utility';
 import * as moment from 'moment';
-import { setPlaybackEvents, setMetadata } from 'src/app/utilities/mediaSession.utility';
+import { setPlaybackEvents, setMetadata, setPlaybackState } from 'src/app/utilities/mediaSession.utility';
+import { MediaSessionPlaybackState } from 'src/app/types/mediaSession.type';
 
 @Component({
   selector: 'app-board',
@@ -159,7 +160,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       src: [toAudioUrl(this.dataSource[this.index].audio)],
       onend: () => {
         this.nextTrack();
-      }
+      },
+      onpause: () => setPlaybackState(MediaSessionPlaybackState.Paused),
+      onplay: () => setPlaybackState(MediaSessionPlaybackState.Playing),
+      onload: () => setPlaybackState(MediaSessionPlaybackState.None)
     });
   }
 

@@ -1,15 +1,18 @@
 import * as _ from 'lodash';
-import { MediaPlaybackHandlersT } from '../types/mediaSession.type';
+import { MediaPlaybackHandlersT, MediaSession, MediaSessionAction, MediaSessionPlaybackState } from '../types/mediaSession.type';
 
 export const isMediaSessionAvailable = () => _.has(navigator, ['mediaSession', 'setActionHandler']);
 
+export const resolveMediaSession = () => _.get(navigator, 'mediaSession') as MediaSession;
+
 export const setMetadata = (songMetadata: { artist: string, title: string }) => {
   if (isMediaSessionAvailable()) {
-    // @ts-ignore
-    navigator.mediaSession.metadata = new MediaMetadata({
+    resolveMediaSession().metadata = {
       title: songMetadata.title,
-      artist: songMetadata.artist
-    });
+      artist: songMetadata.artist,
+      album: '',
+      artwork: []
+    };
   }
 };
 
@@ -23,19 +26,14 @@ export const setPlaybackEvents = (options: MediaPlaybackHandlersT) => {
     onSeekForward: _.noop
   }, options);
 
-  // @ts-ignore
   if (isMediaSessionAvailable()) {
-    // @ts-ignore
-    navigator.mediaSession.setActionHandler('play', onPlay);
-    // @ts-ignore
-    navigator.mediaSession.setActionHandler('pause', onPause);
-    // @ts-ignore
-    navigator.mediaSession.setActionHandler('seekbackward', onSeekBackward);
-    // @ts-ignore
-    navigator.mediaSession.setActionHandler('seekforward', onSeekForward);
-    // @ts-ignore
-    navigator.mediaSession.setActionHandler('previoustrack', onPreviousTrack);
-    // @ts-ignore
-    navigator.mediaSession.setActionHandler('nexttrack', onNextTrack);
+    resolveMediaSession().setActionHandler(MediaSessionAction.Play, onPlay);
+    resolveMediaSession().setActionHandler(MediaSessionAction.Pause, onPause);
+    resolveMediaSession().setActionHandler(MediaSessionAction.SeekBackward, onSeekBackward);
+    resolveMediaSession().setActionHandler(MediaSessionAction.SeekForward, onSeekForward);
+    resolveMediaSession().setActionHandler(MediaSessionAction.PreviousTrack, onPreviousTrack);
+    resolveMediaSession().setActionHandler(MediaSessionAction.NextTrack, onNextTrack);
   }
 };
+
+export const setPlaybackState = (state: MediaSessionPlaybackState) => resolveMediaSession().playbackState = state;
