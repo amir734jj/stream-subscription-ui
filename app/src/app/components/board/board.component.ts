@@ -1,23 +1,23 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { HubService } from '../../services/hub.service';
-import { CachedAuthenticationService } from '../../services/cached.authentication.service';
-import { SongMetadata } from '../../types/song.metadata.type';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {HubService} from '../../services/hub.service';
+import {CachedAuthenticationService} from '../../services/cached.authentication.service';
+import {SongMetadata} from '../../types/song.metadata.type';
 import * as _ from 'lodash';
-import { Subscription, timer } from 'rxjs';
-import { ManageStreamService } from '../../services/manage.stream.service';
-import { StreamStatus } from '../../models/enums/Status';
+import {Subscription, timer} from 'rxjs';
+import {ManageStreamService} from '../../services/manage.stream.service';
+import {StreamStatus} from '../../models/enums/Status';
 import * as download from 'downloadjs';
-import { Stream } from '../../models/entities/Stream';
-import { MatPaginator } from '@angular/material/paginator';
-import { MediaType } from '../../types/media.type';
-import { FavoriteService } from '../../services/favorite.service';
-import { toAudioUrl, toAudioBlob } from '../../utilities/file.utility';
-import { HubConnectionState } from '@microsoft/signalr/dist/esm/HubConnection';
-import { retry } from '../../utilities/monad.utility';
-import { roughSizeOfObject } from '../../utilities/memory.utility';
+import {Stream} from '../../models/entities/Stream';
+import {MatPaginator} from '@angular/material/paginator';
+import {MediaType} from '../../types/media.type';
+import {FavoriteService} from '../../services/favorite.service';
+import {toAudioUrl, toAudioBlob} from '../../utilities/file.utility';
+import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
+import {retry} from '../../utilities/monad.utility';
+import {roughSizeOfObject} from '../../utilities/memory.utility';
 import * as moment from 'moment';
-import { setPlaybackEvents, setMetadata, setPlaybackState } from 'src/app/utilities/mediaSession.utility';
-import { MediaSessionPlaybackState } from 'src/app/types/mediaSession.type';
+import {MediaSessionUtility} from 'src/app/utilities/injectables/mediaSession.utility';
+import {MediaSessionPlaybackState} from 'src/app/types/mediaSession.type';
 import * as WaveSurfer from 'wavesurfer.js';
 
 @Component({
@@ -29,9 +29,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   private innerWidth = 0;
 
   constructor(private hubService: HubService,
-    private favoriteService: FavoriteService,
-    private manageStreamService: ManageStreamService,
-    private cachedAuthenticationService: CachedAuthenticationService) {
+              private favoriteService: FavoriteService,
+              private manageStreamService: ManageStreamService,
+              private mediaSessionUtility: MediaSessionUtility,
+              private cachedAuthenticationService: CachedAuthenticationService) {
     this.duration = _.throttle(() => {
       switch (this.player) {
         case null:
@@ -41,7 +42,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             .seconds(this.player.getDuration())
             .format('mm:ss');
       }
-    }, 1000, { trailing: true });
+    }, 1000, {trailing: true});
   }
 
   public duration: () => string;
@@ -59,7 +60,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   private streamCountSubscription: Subscription = null;
   public dataSource: MediaType[] = [];
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   async ngOnDestroy() {
     if (this) {
@@ -75,7 +76,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.innerWidth = window.innerWidth;
 
-    setPlaybackEvents({
+    this.mediaSessionUtility.setPlaybackEvents({
       onPreviousTrack: () => this.previousTrack(),
       onNextTrack: () => this.nextTrack(),
       onPause: () => this.stopTrack(),
@@ -86,13 +87,13 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     await this.hubService.init();
 
-    const logHandler = _.throttle((...data) => this.appendLog(data), 350, { trailing: true });
+    const logHandler = _.throttle((...data) => this.appendLog(data), 350, {trailing: true});
 
     this.hubService.connection.on('log', logHandler);
 
     this.hubService.connection.on('count', userCount => this.userCount = userCount);
 
-    this.hubService.connection.on('download', (filename: string, { artist, title }: SongMetadata, base64: string, stream: Stream) => {
+    this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
       if (base64 && base64.length) {
         const item = {
           name: `${artist}-${title}`,
@@ -107,7 +108,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         this.dataSource = [...this.dataSource, item];
 
-        if (this.index === -1) { this.index = 0; }
+        if (this.index === -1) {
+          this.index = 0;
+        }
 
         this.appendLog(`downloaded ${filename}`);
       }
@@ -145,7 +148,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.unloadPlayer();
     const item = this.dataSource[this.index];
 
-    setMetadata(item);
+    this.mediaSessionUtility.setMetadata(item);
 
     this.player = WaveSurfer.create({
       container: '#waveform',
@@ -156,11 +159,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
 
     this.player.loadBlob(toAudioBlob(item.audio));
-    this.player.on('play', () => setPlaybackState(MediaSessionPlaybackState.Playing));
-    this.player.on('pause', () => setPlaybackState(MediaSessionPlaybackState.Paused));
+    this.player.on('play', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing));
+    this.player.on('pause', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused));
     this.player.on('finish', () => this.nextTrack());
 
-    setPlaybackState(MediaSessionPlaybackState.None);
+    this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
 
     await new Promise((resolve, reject) => {
       this.player.on('ready', resolve);
@@ -178,7 +181,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   async playTrack() {
     this.playing = true;
     await this.loadPlayer();
-    this.player.play();
+    await this.player.play();
   }
 
   stopTrack() {
@@ -188,10 +191,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  resumeTrack() {
+  async resumeTrack() {
     this.playing = true;
     if (this.player !== null) {
-      this.player.play();
+      await this.player.play();
     }
   }
 
@@ -199,7 +202,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.playing) {
       this.stopTrack();
     } else if (this.player !== null) {
-      this.resumeTrack();
+      await this.resumeTrack();
     } else {
       await this.playTrack();
     }
@@ -220,7 +223,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.index - 1 >= 0) {
       this.index--;
 
-      this.loadPlayer();
+      await this.loadPlayer();
       await this.playTrackIfWasPlaying();
     }
   }
@@ -233,7 +236,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async playTrackAtIndex(i: number) {
     if (i === this.index && !this.playing && this.player !== null) {
-      this.resumeTrack();
+      await this.resumeTrack();
     } else {
       this.index = i;
       await this.playTrack();

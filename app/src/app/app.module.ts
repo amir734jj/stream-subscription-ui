@@ -26,6 +26,8 @@ import {LowerCaseUrlSerializer} from './utilities/injectables/custom.url.seriali
 import {HubService} from './services/hub.service';
 import {CachedAuthenticationService} from './services/cached.authentication.service';
 import {TabsModule} from 'ngx-bootstrap/tabs';
+import {ErrorHandlerStoreUtility} from './utilities/injectables/store/error.handler.store.utility';
+import {RouteStoreUtility} from './utilities/injectables/store/route.store.utility';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
     multi: true
   },
     {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
-    {provide: UrlSerializer, useClass: LowerCaseUrlSerializer}
+    {provide: UrlSerializer, useClass: LowerCaseUrlSerializer},
+    ErrorHandlerStoreUtility,
+    RouteStoreUtility
   ],
   exports: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import {TabsModule} from 'ngx-bootstrap/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FavoriteService} from '../services/favorite.service';
+import {MediaSessionUtility} from '../utilities/injectables/mediaSession.utility';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import {FavoriteService} from '../services/favorite.service';
     MatButtonModule,
     MatProgressBarModule
   ],
-  providers: [FavoriteService],
+  providers: [FavoriteService, MediaSessionUtility],
   declarations: [BoardComponent],
   exports: [BoardComponent]
 })

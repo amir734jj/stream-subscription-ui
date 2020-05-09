@@ -9,12 +9,13 @@ import * as _ from 'lodash';
 import {CachedAuthenticationService} from './cached.authentication.service';
 import {HubService} from './hub.service';
 import {HubConnectionState} from '@microsoft/signalr';
-import {routeStore} from '../models/constants/routeStore';
+import {RouteStoreUtility} from '../utilities/injectables/store/route.store.utility';
 
 @Injectable()
 export class AuthenticationService {
   constructor(private http: HttpClient,
               private hubService: HubService,
+              private routeStoreUtility: RouteStoreUtility,
               private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
@@ -46,7 +47,7 @@ export class AuthenticationService {
       await this.hubService.connection.stop();
     }
 
-    routeStore.clear();
+    this.routeStoreUtility.store = this.routeStoreUtility.store.clear();
 
     return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }
