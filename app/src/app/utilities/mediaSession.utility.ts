@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { MediaPlaybackHandlersT, MediaSession, MediaSessionAction, MediaSessionPlaybackState } from '../types/mediaSession.type';
 
-export const isMediaSessionAvailable = () => _.has(navigator, ['mediaSession', 'setActionHandler']);
+export const isMediaSessionAvailable = () => _.has(navigator, 'mediaSession');
 
 export const resolveMediaSession = () => _.get(navigator, 'mediaSession') as MediaSession;
 

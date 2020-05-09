@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import {HttpTransportType, HubConnection, HubConnectionState, IHttpConnectionOptions} from '@microsoft/signalr';
-import {environment} from '../../environments/environment';
+import { HttpTransportType, HubConnection, HubConnectionState, IHttpConnectionOptions } from '@microsoft/signalr';
+import { environment } from '../../environments/environment';
 import * as store from 'store';
-import {authStorageKey} from '../models/constants/BrowserConstants';
-import {ProfileType} from '../types/profile.type';
+import { authStorageKey } from '../models/constants/BrowserConstants';
+import { ProfileType } from '../types/profile.type';
+import { resolveEnumNameTable, enumToString } from '../utilities/enum.utility';
 
 @Injectable()
 export class HubService {
@@ -16,7 +17,7 @@ export class HubService {
     const options: IHttpConnectionOptions = {
       transport: HttpTransportType.LongPolling,
       accessTokenFactory: () => {
-        const {token} = store.get(authStorageKey, {}) as ProfileType;
+        const { token } = store.get(authStorageKey, {}) as ProfileType;
         return token;
       }
     };
@@ -27,24 +28,13 @@ export class HubService {
       .build();
   }
 
+  private statusNameTable = resolveEnumNameTable(HubConnectionState);
+
   public status() {
     if (!this.connection) {
       return 'Disconnected';
     } else {
-      switch (this.connection.state) {
-        case HubConnectionState.Connected:
-          return 'Connected';
-        case HubConnectionState.Connecting:
-          return 'Connecting';
-        case HubConnectionState.Disconnected:
-          return 'Disconnected';
-        case HubConnectionState.Disconnecting:
-          return 'Disconnecting';
-        case HubConnectionState.Reconnecting:
-          return 'Reconnecting';
-        default:
-          return 'Disconnected';
-      }
+      return enumToString(this.statusNameTable, this.connection.state);
     }
   }
 }
