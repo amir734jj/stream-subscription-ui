@@ -55,7 +55,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   public userCount = 0;
   private logLimit = 25;
   public isAuthenticated = false;
-  public initialized = false;
   public streamsCount = 0;
   private streamCountSubscription: Subscription = null;
   public dataSource: MediaType[] = [];
@@ -63,7 +62,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   async ngOnDestroy() {
-    if (this.initialized) {
+    if (this) {
       await this.hubService.connection.stop();
       this.streamCountSubscription.unsubscribe();
 
@@ -76,10 +75,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.innerWidth = window.innerWidth;
 
-    if (this.initialized) {
-      return;
-    }
-
     setPlaybackEvents({
       onPreviousTrack: () => this.previousTrack(),
       onNextTrack: () => this.nextTrack(),
@@ -89,53 +84,47 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.isAuthenticated = this.cachedAuthenticationService.isAuthenticated();
 
-    if (this.isAuthenticated) {
-      await this.hubService.init();
+    await this.hubService.init();
 
-      const logHandler = _.throttle((...data) => this.appendLog(data), 350, { trailing: true });
+    const logHandler = _.throttle((...data) => this.appendLog(data), 350, { trailing: true });
 
-      this.hubService.connection.on('log', logHandler);
+    this.hubService.connection.on('log', logHandler);
 
-      this.hubService.connection.on('count', userCount => this.userCount = userCount);
+    this.hubService.connection.on('count', userCount => this.userCount = userCount);
 
-      this.hubService.connection.on('download', (filename: string, { artist, title }: SongMetadata, base64: string, stream: Stream) => {
-        if (base64 && base64.length) {
-          const item = {
-            name: `${artist}-${title}`,
-            fullName: `${artist}-${title} (${stream.name})`,
-            source: stream.name,
-            filename: `${artist}-${title} (${stream.name}).mp3`,
-            audio: base64,
-            index: this.dataSource.length,
-            artist,
-            title
-          };
+    this.hubService.connection.on('download', (filename: string, { artist, title }: SongMetadata, base64: string, stream: Stream) => {
+      if (base64 && base64.length) {
+        const item = {
+          name: `${artist}-${title}`,
+          fullName: `${artist}-${title} (${stream.name})`,
+          source: stream.name,
+          filename: `${artist}-${title} (${stream.name}).mp3`,
+          audio: base64,
+          index: this.dataSource.length,
+          artist,
+          title
+        };
 
-          this.dataSource = [...this.dataSource, item];
+        this.dataSource = [...this.dataSource, item];
 
-          if (this.index === -1) { this.index = 0; }
+        if (this.index === -1) { this.index = 0; }
 
-          this.appendLog(`downloaded ${filename}`);
+        this.appendLog(`downloaded ${filename}`);
+      }
+    });
+
+    this.streamCountSubscription = timer(0, 15000)
+      .subscribe(async () => {
+        if (this.cachedAuthenticationService.isAuthenticated()) {
+          const status = await this.manageStreamService.status();
+          this.streamsCount = _.chain(status)
+            .filter((value) => value === StreamStatus.Started)
+            .size()
+            .value();
         }
       });
 
-      this.streamCountSubscription = timer(0, 15000)
-        .subscribe(async () => {
-          if (this.cachedAuthenticationService.isAuthenticated()) {
-            const status = await this.manageStreamService.status();
-            this.streamsCount = _.chain(status)
-              .filter((value) => value === StreamStatus.Started)
-              .size()
-              .value();
-          }
-        });
-
-      await (this.hubService.connection.start());
-
-      this.initialized = true;
-    } else if (!!this.streamCountSubscription) {
-      this.streamCountSubscription.unsubscribe();
-    }
+    await (this.hubService.connection.start());
   }
 
   @HostListener('window:resize', ['$event'])
