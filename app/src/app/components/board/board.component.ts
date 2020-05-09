@@ -1,24 +1,24 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {HubService} from '../../services/hub.service';
-import {CachedAuthenticationService} from '../../services/cached.authentication.service';
-import {SongMetadata} from '../../types/song.metadata.type';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { HubService } from '../../services/hub.service';
+import { CachedAuthenticationService } from '../../services/cached.authentication.service';
+import { SongMetadata } from '../../types/song.metadata.type';
 import * as _ from 'lodash';
-import {Subscription, timer} from 'rxjs';
-import {ManageStreamService} from '../../services/manage.stream.service';
-import {StreamStatus} from '../../models/enums/Status';
+import { Subscription, timer } from 'rxjs';
+import { ManageStreamService } from '../../services/manage.stream.service';
+import { StreamStatus } from '../../models/enums/Status';
 import * as download from 'downloadjs';
-import {Stream} from '../../models/entities/Stream';
-import {MatPaginator} from '@angular/material/paginator';
-import {MediaType} from '../../types/media.type';
-import {Howl} from 'howler';
-import {FavoriteService} from '../../services/favorite.service';
-import {toAudioUrl} from '../../utilities/file.utility';
-import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
-import {retry} from '../../utilities/monad.utility';
-import {roughSizeOfObject} from '../../utilities/memory.utility';
+import { Stream } from '../../models/entities/Stream';
+import { MatPaginator } from '@angular/material/paginator';
+import { MediaType } from '../../types/media.type';
+import { FavoriteService } from '../../services/favorite.service';
+import { toAudioUrl, toAudioBlob } from '../../utilities/file.utility';
+import { HubConnectionState } from '@microsoft/signalr/dist/esm/HubConnection';
+import { retry } from '../../utilities/monad.utility';
+import { roughSizeOfObject } from '../../utilities/memory.utility';
 import * as moment from 'moment';
 import { setPlaybackEvents, setMetadata, setPlaybackState } from 'src/app/utilities/mediaSession.utility';
 import { MediaSessionPlaybackState } from 'src/app/types/mediaSession.type';
+import * as WaveSurfer from 'wavesurfer.js';
 
 @Component({
   selector: 'app-board',
@@ -29,16 +29,16 @@ export class BoardComponent implements OnInit, OnDestroy {
   private innerWidth = 0;
 
   constructor(private hubService: HubService,
-              private favoriteService: FavoriteService,
-              private manageStreamService: ManageStreamService,
-              private cachedAuthenticationService: CachedAuthenticationService) {
+    private favoriteService: FavoriteService,
+    private manageStreamService: ManageStreamService,
+    private cachedAuthenticationService: CachedAuthenticationService) {
     this.duration = _.throttle(() => {
       switch (this.player) {
         case null:
           return '';
         default:
           return moment().startOf('day')
-            .seconds(this.player.duration())
+            .seconds(this.player.getDuration())
             .format('mm:ss');
       }
     }, 1000, { trailing: true });
@@ -48,7 +48,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public reconnecting = false;
   public pageSize = 5;
   public currentPage = 1;
-  public player: Howl = null;
+  public player: WaveSurfer = null;
   public playing = false;
   public index = -1;
   public log: string[] = [];
@@ -60,7 +60,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   private streamCountSubscription: Subscription = null;
   public dataSource: MediaType[] = [];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   async ngOnDestroy() {
     if (this.initialized) {
@@ -68,7 +68,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.streamCountSubscription.unsubscribe();
 
       if (this.player !== null) {
-        this.player.off();
+        this.player.destroy();
       }
     }
   }
@@ -92,13 +92,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.isAuthenticated) {
       await this.hubService.init();
 
-      const logHandler = _.throttle((...data) => this.appendLog(data), 350, {trailing: true});
+      const logHandler = _.throttle((...data) => this.appendLog(data), 350, { trailing: true });
 
       this.hubService.connection.on('log', logHandler);
 
       this.hubService.connection.on('count', userCount => this.userCount = userCount);
 
-      this.hubService.connection.on('download', (filename: string, {artist, title}: SongMetadata, base64: string, stream: Stream) => {
+      this.hubService.connection.on('download', (filename: string, { artist, title }: SongMetadata, base64: string, stream: Stream) => {
         if (base64 && base64.length) {
           const item = {
             name: `${artist}-${title}`,
@@ -121,7 +121,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.streamCountSubscription = timer(0, 15000)
         .subscribe(async () => {
-          if (await this.cachedAuthenticationService.isAuthenticated()) {
+          if (this.cachedAuthenticationService.isAuthenticated()) {
             const status = await this.manageStreamService.status();
             this.streamsCount = _.chain(status)
               .filter((value) => value === StreamStatus.Started)
@@ -139,7 +139,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize() {
     this.innerWidth = window.innerWidth;
   }
 
@@ -152,32 +152,43 @@ export class BoardComponent implements OnInit, OnDestroy {
     download(toAudioUrl(this.dataSource[i].audio), this.dataSource[i].filename);
   }
 
-  loadPlayer() {
+  async loadPlayer() {
     this.unloadPlayer();
-    setMetadata(this.dataSource[this.index]);
+    const item = this.dataSource[this.index];
 
-    this.player = new Howl({
-      src: [toAudioUrl(this.dataSource[this.index].audio)],
-      onend: () => {
-        this.nextTrack();
-      },
-      onpause: () => setPlaybackState(MediaSessionPlaybackState.Paused),
-      onplay: () => setPlaybackState(MediaSessionPlaybackState.Playing),
-      onload: () => setPlaybackState(MediaSessionPlaybackState.None)
+    setMetadata(item);
+
+    this.player = WaveSurfer.create({
+      container: '#waveform',
+      waveColor: 'violet',
+      progressColor: 'purple',
+      responsive: true,
+      hideScrollbar: this.isMobile
+    });
+
+    this.player.loadBlob(toAudioBlob(item.audio));
+    this.player.on('play', () => setPlaybackState(MediaSessionPlaybackState.Playing));
+    this.player.on('pause', () => setPlaybackState(MediaSessionPlaybackState.Paused));
+    this.player.on('finish', () => this.nextTrack());
+
+    setPlaybackState(MediaSessionPlaybackState.None);
+
+    await new Promise((resolve, reject) => {
+      this.player.on('ready', resolve);
+      this.player.on('error', reject);
     });
   }
 
   unloadPlayer() {
     if (this.player !== null) {
       this.player.stop();
-      this.player.off();
-      this.player.unload();
+      this.player.destroy();
     }
   }
 
-  playTrack() {
+  async playTrack() {
     this.playing = true;
-    this.loadPlayer();
+    await this.loadPlayer();
     this.player.play();
   }
 
@@ -195,48 +206,48 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleTrack() {
+  async toggleTrack() {
     if (this.playing) {
       this.stopTrack();
     } else if (this.player !== null) {
       this.resumeTrack();
     } else {
-      this.playTrack();
+      await this.playTrack();
     }
   }
 
-  nextTrack() {
+  async nextTrack() {
     if (this.index + 1 < this.dataSource.length) {
       this.index++;
 
-      this.loadPlayer();
-      this.playTrackIfWasPlaying();
+      await this.loadPlayer();
+      await this.playTrackIfWasPlaying();
     } else {
       this.stopTrack();
     }
   }
 
-  previousTrack() {
+  async previousTrack() {
     if (this.index - 1 >= 0) {
       this.index--;
 
       this.loadPlayer();
-      this.playTrackIfWasPlaying();
+      await this.playTrackIfWasPlaying();
     }
   }
 
-  playTrackIfWasPlaying() {
+  async playTrackIfWasPlaying() {
     if (this.playing) {
-      this.playTrack();
+      await this.playTrack();
     }
   }
 
-  playTrackAtIndex(i: number) {
+  async playTrackAtIndex(i: number) {
     if (i === this.index && !this.playing && this.player !== null) {
       this.resumeTrack();
     } else {
       this.index = i;
-      this.playTrack();
+      await this.playTrack();
     }
   }
 
@@ -298,7 +309,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       case null:
         return 0;
       default:
-        return ((this.player.seek() as number || 0) / (this.player.duration() || 1)) * 100;
+        return ((this.player.getCurrentTime() || 0) / (this.player.getDuration() || 1)) * 100;
     }
   }
 }
