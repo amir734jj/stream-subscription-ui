@@ -295,7 +295,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     return this.hubService.status();
   }
 
-
   get isMobile(): boolean {
     return this.innerWidth < 768;
   }
