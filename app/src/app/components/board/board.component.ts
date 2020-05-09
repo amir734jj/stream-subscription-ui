@@ -288,7 +288,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get reconnectingMode(): boolean {
-    return this.hubService.connection && this.hubService.connection.state !== HubConnectionState.Connected && !!this.dataSource.length;
+    return this.hubService.connection &&
+      this.hubService.connection.state !== HubConnectionState.Connected &&
+      this.hubService.connection.state !== HubConnectionState.Reconnecting &&
+      !!this.dataSource.length;
   }
 
   get status(): string {
