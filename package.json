@@ -11,6 +11,5 @@
     "express": "4.17.1"
   },
   "devDependencies": {
-    "@types/howler": "^2.1.2"
   }
 }
