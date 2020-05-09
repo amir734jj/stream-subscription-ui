@@ -2,11 +2,10 @@
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
 import {RouteDataStrictType} from '../../types/router.data.type';
 import {Injectable} from '@angular/core';
+import { routeStore } from '../../models/constants/routeStore';
 
 @Injectable()
 export class CustomReuseStrategy implements RouteReuseStrategy {
-
-  handlers: { [key: string]: DetachedRouteHandle } = {};
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     const { shouldReuse = false } = route.data as RouteDataStrictType;
@@ -14,18 +13,18 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   store(route: ActivatedRouteSnapshot, handle: {}): void {
-    if (route.data.shouldReuse) {
-      this.handlers[route.routeConfig.path] = handle;
+    if (route.data.shouldReuse && handle) {
+      routeStore.set(route.routeConfig.path, handle);
     }
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    return !!route.routeConfig && !!this.handlers[route.routeConfig.path];
+    return !!route.routeConfig && !!routeStore.get(route.routeConfig.path);
   }
 
   retrieve(route: ActivatedRouteSnapshot): {} {
     if (!route.routeConfig) { return null; }
-    return this.handlers[route.routeConfig.path];
+    return routeStore.get(route.routeConfig.path);
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {

@@ -8,13 +8,16 @@ import {
 } from '@angular/common/http';
 import {tap} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs';
+import {List} from 'immutable';
+
+type ResponseHandlerT = (response: HttpErrorResponse) => void;
+
+let responseHandlers = List<ResponseHandlerT>();
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-  static ON_ERROR_HANDLERS: Array<(HttpErrorResponse) => void> = [];
-
-  invokeErrorHandlers = (err: HttpErrorResponse) => RequestInterceptor.ON_ERROR_HANDLERS.forEach(x => x(err));
+  invokeErrorHandlers = (err: HttpErrorResponse) => responseHandlers.forEach(x => x(err));
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
@@ -28,7 +31,7 @@ export class RequestInterceptor implements HttpInterceptor {
       );
   }
 
-  addOnErrorHandler(handler: (HttpErrorResponse) => void) {
-    RequestInterceptor.ON_ERROR_HANDLERS.push(handler);
+  addOnErrorHandler(handler: ResponseHandlerT) {
+    responseHandlers = responseHandlers.push(handler);
   }
 }

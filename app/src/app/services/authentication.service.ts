@@ -7,10 +7,15 @@ import * as jwtDecode from 'jwt-decode';
 import {ProfileType} from '../types/profile.type';
 import * as _ from 'lodash';
 import {CachedAuthenticationService} from './cached.authentication.service';
+import {HubService} from './hub.service';
+import {HubConnectionState} from '@microsoft/signalr';
+import {routeStore} from '../models/constants/routeStore';
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private http: HttpClient, private cachedAuthenticationService: CachedAuthenticationService) {
+  constructor(private http: HttpClient,
+              private hubService: HubService,
+              private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
   async isAuthenticated(): Promise<boolean> {
@@ -37,6 +42,11 @@ export class AuthenticationService {
 
   async logout() {
     this.cachedAuthenticationService.clearAuthInfo();
+    if (this.hubService.status() === HubConnectionState.Connected) {
+      await this.hubService.connection.stop();
+    }
+
+    routeStore.clear();
 
     return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }

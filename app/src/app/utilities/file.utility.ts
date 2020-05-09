@@ -1,4 +1,4 @@
-import { mp3MimeType } from '../constants/mimeType';
+import { mp3MimeType } from '../models/constants/mimeType';
 import { base64StringToBlob } from 'blob-util';
 
 export const toAudioUrl = (base64: string) => {

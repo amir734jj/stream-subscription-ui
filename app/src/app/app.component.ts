@@ -13,19 +13,16 @@ import {CachedAuthenticationService} from './services/cached.authentication.serv
 export class AppComponent implements OnInit {
   title = 'Stream-Subscription-UI';
   public navBarCollapsed = true;
-  public authenticated: () => boolean;
   public profile: ProfileType;
 
   constructor(private router: Router, private authenticationService: AuthenticationService,
               private cachedAuthenticationService: CachedAuthenticationService) {
     setTheme('bs3');
-
-    this.authenticated = () => this.cachedAuthenticationService.resolveAuthInfo().authenticated;
   }
 
   ngOnInit() {
     // If session key exist then continue
-    if (this.authenticated()) {
+    if (this.authenticated) {
       this.authenticationService.isAuthenticated()
         .then(async response => {
           if (!response) {
@@ -34,5 +31,9 @@ export class AppComponent implements OnInit {
           }
         });
     }
+  }
+
+  get authenticated(): boolean {
+    return this.cachedAuthenticationService.resolveAuthInfo().authenticated;
   }
 }

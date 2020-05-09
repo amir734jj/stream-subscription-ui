@@ -3,14 +3,18 @@ import * as signalR from '@microsoft/signalr';
 import { HttpTransportType, HubConnection, HubConnectionState, IHttpConnectionOptions } from '@microsoft/signalr';
 import { environment } from '../../environments/environment';
 import * as store from 'store';
-import { authStorageKey } from '../models/constants/BrowserConstants';
+import { authStorageKey } from '../models/constants/store';
 import { ProfileType } from '../types/profile.type';
 import { resolveEnumNameTable, enumToString } from '../utilities/enum.utility';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HubService {
 
   public connection: HubConnection;
+
+  private statusNameTable = resolveEnumNameTable(HubConnectionState);
 
   async init() {
     const BASE_ADDRESS = environment.hubUrl;
@@ -27,8 +31,6 @@ export class HubService {
       .withAutomaticReconnect()
       .build();
   }
-
-  private statusNameTable = resolveEnumNameTable(HubConnectionState);
 
   public status() {
     if (!this.connection) {

@@ -1,5 +1,5 @@
 import * as memoize from 'memoizee';
-import {authStorageKey} from '../models/constants/BrowserConstants';
+import {authStorageKey} from '../models/constants/store';
 import {ProfileType} from '../types/profile.type';
 import * as moment from 'moment';
 import * as store from 'store';
