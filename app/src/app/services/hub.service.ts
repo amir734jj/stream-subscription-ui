@@ -23,6 +23,7 @@ export class HubService {
 
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(`${BASE_ADDRESS}`, options)
+      .withAutomaticReconnect()
       .build();
   }
 
