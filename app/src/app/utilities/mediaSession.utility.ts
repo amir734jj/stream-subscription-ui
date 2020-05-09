@@ -1,11 +1,10 @@
 import * as _ from 'lodash';
+import { MediaPlaybackHandlersT } from '../types/mediaSession.type';
 
-export const isMediaSessionAvailable = 'mediaSession' in navigator;
-
-type actonT = () => any;
+export const isMediaSessionAvailable = () => _.has(navigator, ['mediaSession', 'setActionHandler']);
 
 export const setMetadata = (songMetadata: { artist: string, title: string }) => {
-  if (isMediaSessionAvailable) {
+  if (isMediaSessionAvailable()) {
     // @ts-ignore
     navigator.mediaSession.metadata = new MediaMetadata({
       title: songMetadata.title,
@@ -14,25 +13,18 @@ export const setMetadata = (songMetadata: { artist: string, title: string }) => 
   }
 };
 
-interface MediaPlaybackHandlersT {
-  onPreviousTrack?: actonT;
-  onNextTrack?: actonT;
-  onPlay?: actonT;
-  onPause?: actonT;
-  onSeekBackward?: actonT;
-  onSeekForward?: actonT;
-}
+export const setPlaybackEvents = (options: MediaPlaybackHandlersT) => {
+  const { onPreviousTrack, onNextTrack, onPlay, onPause, onSeekBackward, onSeekForward } = Object.assign({}, {
+    onPreviousTrack: _.noop,
+    onNextTrack: _.noop,
+    onPlay: _.noop,
+    onPause: _.noop,
+    onSeekBackward: _.noop,
+    onSeekForward: _.noop
+  }, options);
 
-export const setPlaybackEvents = ({
-                                    onPreviousTrack = _.noop,
-                                    onNextTrack = _.noop,
-                                    onPlay = _.noop,
-                                    onPause = _.noop,
-                                    onSeekBackward = _.noop,
-                                    onSeekForward = _.noop
-                                  }: MediaPlaybackHandlersT) => {
   // @ts-ignore
-  if ('mediaSession' in navigator && navigator.mediaSession.setActionHandler) {
+  if (isMediaSessionAvailable()) {
     // @ts-ignore
     navigator.mediaSession.setActionHandler('play', onPlay);
     // @ts-ignore
