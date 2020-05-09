@@ -12,7 +12,7 @@ import {List} from 'immutable';
 
 type ResponseHandlerT = (response: HttpErrorResponse) => void;
 
-let responseHandlers = List<ResponseHandlerT>();
+const responseHandlers = List<ResponseHandlerT>().asMutable();
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -32,6 +32,6 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   addOnErrorHandler(handler: ResponseHandlerT) {
-    responseHandlers = responseHandlers.push(handler);
+    responseHandlers.push(handler);
   }
 }
