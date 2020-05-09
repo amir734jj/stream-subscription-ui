@@ -86,7 +86,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       onPlay: () => this.playTrack()
     });
 
-    this.isAuthenticated = await this.cachedAuthenticationService.isAuthenticated();
+    this.isAuthenticated = this.cachedAuthenticationService.isAuthenticated();
 
     if (this.isAuthenticated) {
       await this.hubService.init();
