@@ -33,17 +33,8 @@ export class BoardComponent implements OnInit, OnDestroy {
               private manageStreamService: ManageStreamService,
               private mediaSessionUtility: MediaSessionUtility,
               private cachedAuthenticationService: CachedAuthenticationService) {
-    this.duration = _.throttle(() => {
-      switch (this.player) {
-        case null:
-          return '';
-        default:
-          return formatTimeSpan(this.player.getDuration());
-      }
-    }, 1000, {trailing: true});
   }
 
-  public duration: () => string;
   public reconnecting = false;
   public pageSize = 5;
   public currentPage = 1;
