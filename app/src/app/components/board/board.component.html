@@ -103,7 +103,7 @@
                     <td>
                       <div class="text-center">
                         <div class="hidden-xs">
-                          <a [href]="item.url" *ngIf="item.url else noUrl"> {{item.name}} </a>
+                          <a [href]="item.url" *ngIf="item.url else noUrl" target="_blank"> {{item.name}} </a>
                           <ng-template #noUrl> {{ item.name}} </ng-template>
                         </div>
                         <div class="visible-xm hidden-sm hidden-md hidden-lg"> {{item.name.substring(0, 12)}} .. </div>
