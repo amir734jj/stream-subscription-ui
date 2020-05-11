@@ -104,7 +104,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         }
 
         this.appendLog(`downloaded ${filename}`);
-        this.appendLog(JSON.stringify(_.pick(songMetadata, ['artist', 'title', 'playCount', 'duration'])));
+        this.appendLog(JSON.stringify(_.pick(songMetadata, ['artist', 'title', 'duration'])));
       }
     });
 
