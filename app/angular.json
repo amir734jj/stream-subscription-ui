@@ -68,7 +68,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "contractor-finder-ui:build"
+            "browserTarget": "contractor-finder-ui:build",
+            "aot": true
           },
           "configurations": {
             "production": {

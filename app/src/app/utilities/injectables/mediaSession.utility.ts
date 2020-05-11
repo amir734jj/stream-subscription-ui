@@ -9,18 +9,20 @@ import {
 
 @Injectable()
 export class MediaSessionUtility {
-  isMediaSessionAvailable = () => _.has(navigator, 'mediaSession');
+  // @ts-ignore
+  isMediaSessionAvailable = () => navigator.mediaSession;
 
   resolveMediaSession = () => _.get(navigator, 'mediaSession') as MediaSession;
 
   setMetadata = (songMetadata: { artist: string, title: string }) => {
     if (this.isMediaSessionAvailable()) {
-      this.resolveMediaSession().metadata = {
+      // @ts-ignore
+      this.resolveMediaSession().metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
         album: '',
         artwork: []
-      };
+      });
     }
   }
 
