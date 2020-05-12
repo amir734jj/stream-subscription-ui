@@ -1,19 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {setTheme} from 'ngx-bootstrap/utils';
 import {AuthenticationService} from './services/authentication.service';
 import {Router} from '@angular/router';
 import {ProfileType} from './types/profile.type';
 import {CachedAuthenticationService} from './services/cached.authentication.service';
+import {Subscription, timer} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Stream-Subscription-UI';
   public navBarCollapsed = true;
   public profile: ProfileType;
+  public authenticated = false;
+  private authenticatedSubscription: Subscription;
 
   constructor(private router: Router, private authenticationService: AuthenticationService,
               private cachedAuthenticationService: CachedAuthenticationService) {
@@ -31,9 +34,14 @@ export class AppComponent implements OnInit {
           }
         });
     }
+
+    this.authenticatedSubscription = timer(0, 100)
+      .subscribe(() => {
+        this.authenticated = this.cachedAuthenticationService.resolveAuthInfo().authenticated;
+      });
   }
 
-  get authenticated(): boolean {
-    return this.cachedAuthenticationService.resolveAuthInfo().authenticated;
+  ngOnDestroy() {
+    this.authenticatedSubscription.unsubscribe();
   }
 }

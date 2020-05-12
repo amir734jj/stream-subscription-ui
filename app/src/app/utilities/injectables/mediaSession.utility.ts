@@ -4,15 +4,19 @@ import {
   MediaPlaybackHandlersT,
   MediaSession,
   MediaSessionAction,
-  MediaSessionPlaybackState
+  MediaSessionPlaybackState,
 } from '../../types/mediaSession.type';
 
 @Injectable()
 export class MediaSessionUtility {
   // @ts-ignore
-  isMediaSessionAvailable = () => navigator.mediaSession;
+  isMediaSessionAvailable = () => {
+    return window && window.navigator && 'mediaSession' in window.navigator;
+  }
 
-  resolveMediaSession = () => _.get(navigator, 'mediaSession') as MediaSession;
+  resolveMediaSession = () => {
+    return _.get(navigator, 'mediaSession') as MediaSession;
+  }
 
   setMetadata = (songMetadata: { artist: string, title: string }) => {
     if (this.isMediaSessionAvailable()) {
@@ -20,7 +24,7 @@ export class MediaSessionUtility {
       this.resolveMediaSession().metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
-        album: '',
+        album: 'unknown',
         artwork: []
       });
     }
@@ -46,6 +50,7 @@ export class MediaSessionUtility {
     }
   }
 
-  setPlaybackState = (state: MediaSessionPlaybackState) => this.resolveMediaSession().playbackState = state;
-
+  setPlaybackState = (state: MediaSessionPlaybackState) => {
+    return this.resolveMediaSession().playbackState = state;
+  }
 }

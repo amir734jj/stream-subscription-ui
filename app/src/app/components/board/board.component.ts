@@ -11,7 +11,7 @@ import {Stream} from '../../models/entities/Stream';
 import {MatPaginator} from '@angular/material/paginator';
 import {MediaType} from '../../types/media.type';
 import {FavoriteService} from '../../services/favorite.service';
-import {toAudioUrl, toAudioBlob} from '../../utilities/file.utility';
+import {toAudioBlob, toAudioUrl} from '../../utilities/file.utility';
 import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
 import {retry} from '../../utilities/monad.utility';
 import {roughSizeOfObject} from '../../utilities/memory.utility';
@@ -27,6 +27,7 @@ import {formatTimeSpan} from '../../utilities/timespan.utility';
 })
 export class BoardComponent implements OnInit, OnDestroy {
   private innerWidth = 0;
+  private progressSubscription: Subscription;
 
   constructor(private hubService: HubService,
               private favoriteService: FavoriteService,
@@ -35,6 +36,7 @@ export class BoardComponent implements OnInit, OnDestroy {
               private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
+  public progress = 0;
   public reconnecting = false;
   public pageSize = 5;
   public currentPage = 1;
@@ -52,13 +54,13 @@ export class BoardComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   async ngOnDestroy() {
-    if (this) {
-      await this.hubService.connection.stop();
-      this.streamCountSubscription.unsubscribe();
+    await this.hubService.connection.stop();
+    this.streamCountSubscription.unsubscribe();
+    this.progressSubscription.unsubscribe();
 
-      if (this.player !== null) {
-        this.player.destroy();
-      }
+    if (this.player !== null) {
+      this.player.stop();
+      this.player.destroy();
     }
   }
 
@@ -120,6 +122,18 @@ export class BoardComponent implements OnInit, OnDestroy {
       });
 
     await (this.hubService.connection.start());
+
+    this.progressSubscription = timer(0, 100)
+      .subscribe(() => {
+        switch (this.player) {
+          case null:
+            this.progress = 0;
+            break;
+          default:
+            this.progress = ((this.player.getCurrentTime() || 0) / (this.player.getDuration() || 1)) * 100;
+            break;
+        }
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -153,7 +167,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.player.loadBlob(toAudioBlob(item.audio));
     this.player.on('play', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing));
     this.player.on('pause', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused));
-    this.player.on('finish', () => this.nextTrack());
+    this.player.on('finish', () => {
+      this.nextTrack();
+      this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
+    });
 
     this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
 
@@ -288,14 +305,5 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   get memorySize(): string {
     return `${Math.round(roughSizeOfObject(this.dataSource) / 1000000)}mb`;
-  }
-
-  get progress(): number {
-    switch (this.player) {
-      case null:
-        return 0;
-      default:
-        return ((this.player.getCurrentTime() || 0) / (this.player.getDuration() || 1)) * 100;
-    }
   }
 }

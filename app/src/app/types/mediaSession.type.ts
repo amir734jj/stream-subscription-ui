@@ -73,7 +73,7 @@ export interface MediaMetadataInit {
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-export interface MediaMetadata {
+export class MediaMetadata {
   title: string;
   artist: string;
   album: string;
