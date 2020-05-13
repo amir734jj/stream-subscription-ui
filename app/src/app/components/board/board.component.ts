@@ -163,13 +163,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       hideScrollbar: this.isMobile,
       plugins: [
         MediaSessionPlugin.create({
-          metadata: this.dataSource[this.index],
+          metadata: item,
           mediaSessionUtility: this.mediaSessionUtility
         })
       ]
     });
 
-    this.sourceUrl = toAudioUrl(this.dataSource[this.index].audio);
+    this.sourceUrl = toAudioUrl(item.audio);
 
     this.player.on('audioprocess', () => this.mediaSessionUtility.updatePositionState({
       position: this.player.getCurrentTime(),
