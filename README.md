@@ -16,7 +16,8 @@ This service is free, we do not own the ripped `.mp3` files and we do not store 
   - ngx-bootstrap
   - RxJS
 
-## Running locally
+### Running locally
+
 To to run locally without local back-end use `apiUrl` and `hubUrl` from `environment.prod.ts` in `environment.ts`
 
 #### Screenshot
