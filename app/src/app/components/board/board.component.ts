@@ -154,8 +154,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.unloadPlayer();
     const item = this.dataSource[this.index];
 
-    this.mediaSessionUtility.setMetadata(item);
-
     this.player = WaveSurfer.create({
       container: '#waveform',
       waveColor: 'violet',
@@ -172,12 +170,14 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
     });
 
-    this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
-
     await new Promise((resolve, reject) => {
       this.player.on('ready', resolve);
       this.player.on('error', reject);
     });
+
+    this.mediaSessionUtility.setMetadata(item);
+
+    this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
   }
 
   unloadPlayer() {
