@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
   baseUrl: window.location.origin,
-  apiUrl: 'https://stream-subscription-api.herokuapp.com/api',
-  hubUrl: 'https://stream-subscription-api.herokuapp.com/hub'
+  apiUrl: 'http://localhost:5000/api',
+  hubUrl: 'http://localhost:5000/hub'
 };
