@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HubService } from '../../services/hub.service';
 import { CachedAuthenticationService } from '../../services/cached.authentication.service';
 import { SongMetadata } from '../../types/song.metadata.type';
@@ -54,7 +54,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   public dataSource: MediaType[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild('audioRef') audioRef: HTMLMediaElement;
+  @ViewChild('waveformRef') waveformRef: ElementRef;
+  @ViewChild('audioRef') audioRef: ElementRef<HTMLMediaElement>;
 
   async ngOnDestroy() {
     await this.hubService.connection.stop();
@@ -156,7 +157,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     const item = this.dataSource[this.index];
 
     this.player = WaveSurfer.create({
-      container: '#waveform',
+      container: this.waveformRef.nativeElement,
       waveColor: 'violet',
       progressColor: 'purple',
       responsive: true,
@@ -184,7 +185,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
 
-    this.player.load(this.audioRef);
+    this.player.loadBlob(toAudioBlob(item.audio));
+    // this.player.load(this.audioRef.nativeElement);
 
     await new Promise((resolve, reject) => {
       this.player.on('ready', resolve);
