@@ -10,21 +10,21 @@ export interface MediaPlaybackHandlersT {
 }
 
 export const enum MediaSessionAction {
-  Play = "play",
-  Pause = "pause",
-  Stop = "stop",
-  SeekBackward = "seekbackward",
-  SeekForward = "seekforward",
-  SeekTo = "seekto",
-  PreviousTrack = "previoustrack",
-  NextTrack = "nexttrack",
-  SkipAd = "skipad",
+  Play = 'play',
+  Pause = 'pause',
+  Stop = 'stop',
+  SeekBackward = 'seekbackward',
+  SeekForward = 'seekforward',
+  SeekTo = 'seekto',
+  PreviousTrack = 'previoustrack',
+  NextTrack = 'nexttrack',
+  SkipAd = 'skipad',
 }
 
 export const enum MediaSessionPlaybackState {
-  None = "none",
-  Paused = "paused",
-  Playing = "playing",
+  None = 'none',
+  Paused = 'paused',
+  Playing = 'playing',
 }
 
 export type SeekAction = MediaSessionAction.SeekBackward | MediaSessionAction.SeekForward;
