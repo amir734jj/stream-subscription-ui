@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import {Injectable} from '@angular/core';
 import {
   MediaPlaybackHandlersT,
-  MediaSession,
   MediaSessionAction,
   MediaSessionPlaybackState,
 } from '../../types/mediaSession.type';
@@ -14,14 +13,10 @@ export class MediaSessionUtility {
     return window && window.navigator && 'mediaSession' in window.navigator;
   }
 
-  resolveMediaSession = () => {
-    return _.get(navigator, 'mediaSession') as MediaSession;
-  }
-
   setMetadata = (songMetadata: { artist: string, title: string }) => {
     if (this.isMediaSessionAvailable()) {
       // @ts-ignore
-      this.resolveMediaSession().metadata = new MediaMetadata({
+      navigator.mediaSession.metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
         album: 'unknown',
@@ -41,16 +36,23 @@ export class MediaSessionUtility {
     }, options);
 
     if (this.isMediaSessionAvailable()) {
-      this.resolveMediaSession().setActionHandler(MediaSessionAction.Play, onPlay);
-      this.resolveMediaSession().setActionHandler(MediaSessionAction.Pause, onPause);
-      this.resolveMediaSession().setActionHandler(MediaSessionAction.SeekBackward, onSeekBackward);
-      this.resolveMediaSession().setActionHandler(MediaSessionAction.SeekForward, onSeekForward);
-      this.resolveMediaSession().setActionHandler(MediaSessionAction.PreviousTrack, onPreviousTrack);
-      this.resolveMediaSession().setActionHandler(MediaSessionAction.NextTrack, onNextTrack);
+      // @ts-ignore
+      navigator.mediaSession.setActionHandler(MediaSessionAction.Play, onPlay);
+      // @ts-ignore
+      navigator.mediaSession.setActionHandler(MediaSessionAction.Pause, onPause);
+      // @ts-ignore
+      navigator.mediaSession.setActionHandler(MediaSessionAction.SeekBackward, onSeekBackward);
+      // @ts-ignore
+      navigator.mediaSession.setActionHandler(MediaSessionAction.SeekForward, onSeekForward);
+      // @ts-ignore
+      navigator.mediaSession.setActionHandler(MediaSessionAction.PreviousTrack, onPreviousTrack);
+      // @ts-ignore
+      navigator.mediaSession.setActionHandler(MediaSessionAction.NextTrack, onNextTrack);
     }
   }
 
   setPlaybackState = (state: MediaSessionPlaybackState) => {
-    return this.resolveMediaSession().playbackState = state;
+    // @ts-ignore
+    return navigator.mediaSession.playbackState = state;
   }
 }
