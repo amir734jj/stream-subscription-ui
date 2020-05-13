@@ -78,6 +78,8 @@ export class MediaMetadata {
   artist: string;
   album: string;
   artwork: MediaImage[];
+  constructor(options: MediaMetadataInit) {
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
