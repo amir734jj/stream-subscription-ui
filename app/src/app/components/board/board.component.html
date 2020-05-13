@@ -5,6 +5,8 @@
   *ngIf="index >= 0">
 </mat-progress-bar>
 
+<audio [style]="{ display: 'none' }" [src]="sourceUrl" #audioRef controls></audio>
+
 <div class="container">
   <div class="row bottom-margin" [style.display]="dataSource.length ? '' : 'none'">
     <div class="col-sm-12">

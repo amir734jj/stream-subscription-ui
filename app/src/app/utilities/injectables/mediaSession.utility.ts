@@ -90,7 +90,6 @@ export class MediaSessionUtility {
   }
 
   setPlaybackState = (state: MediaSessionPlaybackState) => {
-    // return this.mediaSession.playbackState = state;
-    _.noop(state);
+    return this.mediaSession.playbackState = state;
   }
 }

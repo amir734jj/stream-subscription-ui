@@ -1,24 +1,24 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {HubService} from '../../services/hub.service';
-import {CachedAuthenticationService} from '../../services/cached.authentication.service';
-import {SongMetadata} from '../../types/song.metadata.type';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { HubService } from '../../services/hub.service';
+import { CachedAuthenticationService } from '../../services/cached.authentication.service';
+import { SongMetadata } from '../../types/song.metadata.type';
 import * as _ from 'lodash';
-import {Subscription, timer} from 'rxjs';
-import {ManageStreamService} from '../../services/manage.stream.service';
-import {StreamStatus} from '../../models/enums/Status';
+import { Subscription, timer } from 'rxjs';
+import { ManageStreamService } from '../../services/manage.stream.service';
+import { StreamStatus } from '../../models/enums/Status';
 import * as download from 'downloadjs';
-import {Stream} from '../../models/entities/Stream';
-import {MatPaginator} from '@angular/material/paginator';
-import {MediaType} from '../../types/media.type';
-import {FavoriteService} from '../../services/favorite.service';
-import {toAudioBlob, toAudioUrl} from '../../utilities/file.utility';
-import {HubConnectionState} from '@microsoft/signalr/dist/esm/HubConnection';
-import {retry} from '../../utilities/monad.utility';
-import {roughSizeOfObject} from '../../utilities/memory.utility';
-import {MediaSessionUtility} from 'src/app/utilities/injectables/mediaSession.utility';
-import {MediaSessionPlaybackState} from 'src/app/types/mediaSession.type';
+import { Stream } from '../../models/entities/Stream';
+import { MatPaginator } from '@angular/material/paginator';
+import { MediaType } from '../../types/media.type';
+import { FavoriteService } from '../../services/favorite.service';
+import { toAudioBlob, toAudioUrl } from '../../utilities/file.utility';
+import { HubConnectionState } from '@microsoft/signalr/dist/esm/HubConnection';
+import { retry } from '../../utilities/monad.utility';
+import { roughSizeOfObject } from '../../utilities/memory.utility';
+import { MediaSessionUtility } from 'src/app/utilities/injectables/mediaSession.utility';
+import { MediaSessionPlaybackState } from 'src/app/types/mediaSession.type';
 import * as WaveSurfer from 'wavesurfer.js';
-import {formatTimeSpan} from '../../utilities/timespan.utility';
+import { formatTimeSpan } from '../../utilities/timespan.utility';
 import MediaSessionPlugin from '../../plugins/mediaSession.waiveform.plugin';
 
 @Component({
@@ -37,6 +37,7 @@ export class BoardComponent implements OnInit, OnDestroy {
               private cachedAuthenticationService: CachedAuthenticationService) {
   }
 
+  public sourceUrl = '';
   public progress = 0;
   public reconnecting = false;
   public pageSize = 5;
@@ -52,7 +53,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   private streamCountSubscription: Subscription = null;
   public dataSource: MediaType[] = [];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('audioRef') audioRef: HTMLMediaElement;
 
   async ngOnDestroy() {
     await this.hubService.connection.stop();
@@ -79,13 +81,13 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     await this.hubService.init();
 
-    const logHandler = _.throttle((...data) => this.appendLog(data), 350, {trailing: true});
+    const logHandler = _.throttle((...data) => this.appendLog(data), 350, { trailing: true });
 
     this.hubService.connection.on('log', logHandler);
     this.hubService.connection.on('count', userCount => this.userCount = userCount);
     this.hubService.connection.on('download', (filename: string, songMetadata: SongMetadata, base64: string, stream: Stream) => {
       if (base64 && base64.length) {
-        const {artist, title} = songMetadata;
+        const { artist, title } = songMetadata;
         const item = {
           ...songMetadata,
           name: `${artist}-${title}`,
@@ -167,7 +169,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       ]
     });
 
-    this.player.loadBlob(toAudioBlob(item.audio));
+    this.sourceUrl = toAudioUrl(this.dataSource[this.index].audio);
 
     this.player.on('audioprocess', () => this.mediaSessionUtility.updatePositionState({
       position: this.player.getCurrentTime(),
@@ -180,12 +182,14 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.nextTrack();
     });
 
+    this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
+
+    this.player.load(this.audioRef);
+
     await new Promise((resolve, reject) => {
       this.player.on('ready', resolve);
       this.player.on('error', reject);
     });
-
-    this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
   }
 
   unloadPlayer() {
