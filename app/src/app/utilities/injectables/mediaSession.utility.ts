@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 
 import {
-  MediaMetadata,
   MediaPlaybackHandlersT,
+  MediaSession,
   MediaSessionAction,
   MediaSessionPlaybackState,
 } from '../../types/mediaSession.type';
@@ -30,6 +30,7 @@ export class MediaSessionUtility {
 
   setMetadata = (songMetadata: { artist: string, title: string }) => {
     if (this.mediaSessionAvailable) {
+      // @ts-ignore
       this.mediaSession.metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
