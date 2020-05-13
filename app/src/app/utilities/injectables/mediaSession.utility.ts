@@ -11,9 +11,21 @@ import {
 export class MediaSessionUtility {
 
   // @ts-ignore
-  private mediaSession = navigator.mediaSession as MediaSession
+  private mediaSession = navigator.mediaSession as MediaSession;
 
-  private mediaSessionAvailable = window && window.navigator && 'mediaSession' in window.navigator
+  private mediaSessionAvailable = window && window.navigator && ('mediaSession' in window.navigator);
+
+  private positionStateAvailable = this.mediaSessionAvailable && ('setPositionState' in this.mediaSession);
+
+  updatePositionState = (state: { duration: number, position: number }) => {
+    if (this.positionStateAvailable) {
+      this.mediaSession.setPositionState({
+        duration: state.duration,
+        playbackRate: 1,
+        position: state.position
+      });
+    }
+  }
 
   setMetadata = (songMetadata: { artist: string, title: string }) => {
     if (this.mediaSessionAvailable) {

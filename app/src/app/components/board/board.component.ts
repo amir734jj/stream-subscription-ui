@@ -81,9 +81,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     const logHandler = _.throttle((...data) => this.appendLog(data), 350, {trailing: true});
 
     this.hubService.connection.on('log', logHandler);
-
     this.hubService.connection.on('count', userCount => this.userCount = userCount);
-
     this.hubService.connection.on('download', (filename: string, songMetadata: SongMetadata, base64: string, stream: Stream) => {
       if (base64 && base64.length) {
         const {artist, title} = songMetadata;
@@ -163,11 +161,16 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
 
     this.player.loadBlob(toAudioBlob(item.audio));
+
+    this.player.on('audioprocess', () => this.mediaSessionUtility.updatePositionState({
+      position: this.player.getCurrentTime(),
+      duration: this.player.getDuration()
+    }));
     this.player.on('play', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing));
     this.player.on('pause', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused));
     this.player.on('finish', () => {
-      this.nextTrack();
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
+      this.nextTrack();
     });
 
     await new Promise((resolve, reject) => {
