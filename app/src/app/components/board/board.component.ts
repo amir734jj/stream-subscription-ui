@@ -19,6 +19,7 @@ import {MediaSessionUtility} from 'src/app/utilities/injectables/mediaSession.ut
 import {MediaSessionPlaybackState} from 'src/app/types/mediaSession.type';
 import * as WaveSurfer from 'wavesurfer.js';
 import {formatTimeSpan} from '../../utilities/timespan.utility';
+import MediaSessionPlugin from '../../plugins/mediaSession.waiveform.plugin';
 
 @Component({
   selector: 'app-board',
@@ -157,7 +158,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       waveColor: 'violet',
       progressColor: 'purple',
       responsive: true,
-      hideScrollbar: this.isMobile
+      hideScrollbar: this.isMobile,
+      plugins: [
+        MediaSessionPlugin.create({
+          metadata: this.dataSource[this.index],
+          mediaSessionUtility: this.mediaSessionUtility
+        })
+      ]
     });
 
     this.player.loadBlob(toAudioBlob(item.audio));
@@ -177,8 +184,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.player.on('ready', resolve);
       this.player.on('error', reject);
     });
-
-    this.mediaSessionUtility.setMetadata(item);
 
     this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
   }
