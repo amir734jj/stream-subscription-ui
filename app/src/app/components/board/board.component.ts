@@ -73,9 +73,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.mediaSessionUtility.setPlaybackEvents({
       onPreviousTrack: () => this.previousTrack(),
-      onNextTrack: () => this.nextTrack(),
-      onPause: () => this.stopTrack(),
-      onPlay: () => this.playTrack()
+      onNextTrack: () => this.nextTrack()
     });
 
     this.isAuthenticated = this.cachedAuthenticationService.isAuthenticated();
