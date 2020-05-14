@@ -322,8 +322,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get isMobile(): boolean {
-    // return this.innerWidth < 768;
-    return true;
+    return this.innerWidth < 768;
   }
 
   get memorySize(): string {

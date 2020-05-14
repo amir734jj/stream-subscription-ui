@@ -27,13 +27,13 @@ export class MediaSessionUtility {
     }
   }
 
-  setMetadata = (songMetadata: { artist: string, title: string }) => {
+  setMetadata = (songMetadata: { artist: string, title: string, album: string; }) => {
     if (this.mediaSessionAvailable) {
       // @ts-ignore
       this.mediaSession.metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
-        album: 'unknown',
+        album: songMetadata.album ? songMetadata.album : 'unknown album',
         artwork: []
       });
     }

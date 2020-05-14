@@ -2,7 +2,7 @@ import * as WaveSurfer from 'wavesurfer.js';
 import {MediaSessionUtility} from '../utilities/injectables/mediaSession.utility';
 import {MediaSessionPlaybackState} from '../types/mediaSession.type';
 
-interface Metadata { artist: string; title: string; }
+interface Metadata { artist: string; title: string; album: string; }
 
 interface PluginParams {
   deferInit?: boolean;
