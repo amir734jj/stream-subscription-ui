@@ -131,6 +131,10 @@ export class BoardComponent implements OnInit, OnDestroy {
             break;
           default:
             this.progress = ((this.player.getCurrentTime() || 0) / (this.player.getDuration() || 1)) * 100;
+            this.mediaSessionUtility.updatePositionState({
+              position: this.player.getCurrentTime(),
+              duration: this.player.getDuration()
+            });
             break;
         }
       });
@@ -171,10 +175,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.sourceUrl = toAudioUrl(item.audio);
 
-    this.player.on('audioprocess', () => this.mediaSessionUtility.updatePositionState({
-      position: this.player.getCurrentTime(),
-      duration: this.player.getDuration()
-    }));
     this.player.on('play', () => {
       this.playing = true;
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing);
