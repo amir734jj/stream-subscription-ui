@@ -39,13 +39,13 @@
     </thead>
     <tbody>
     <tr *ngFor="let stream of streams">
-      <td> {{ stream.name }} </td>
-      <td class="hidden-sm hidden-xs">
+      <td class="pull-left"> {{ stream.name }} </td>
+      <td class="hidden-sm hidden-xs text-center">
         <a [href]="stream.url">
           {{ urlHost(stream.url) }}
         </a>
       </td>
-      <td class="hidden-xs">
+      <td class="hidden-xs text-center">
         <ul *ngIf="stream.streamFtpSinkRelationships.length">
           <li *ngFor="let sink of stream.streamFtpSinkRelationships">
             {{ sink.ftpSink.name }}
@@ -56,12 +56,12 @@
           None
         </ng-template>
       </td>
-      <td>
+      <td class="text-center">
         <label class="label label-{{ resolveBootstrapClass(statusTable[stream.id] === StreamStatus.Started) }}">
           {{ statusToString(statusTable[stream.id]) }}
         </label>
       </td>
-      <td>
+      <td class="pull-right">
         <div class="btn-group">
           <a class="btn btn-default" [routerLink] = "['/stream', stream.id]">
             Manage
