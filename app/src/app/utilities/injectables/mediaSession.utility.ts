@@ -33,7 +33,7 @@ export class MediaSessionUtility {
       this.mediaSession.metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
-        album: songMetadata.album ? songMetadata.album : 'unknown album',
+        album: songMetadata.album ? songMetadata.album : '',
         artwork: []
       });
     }
