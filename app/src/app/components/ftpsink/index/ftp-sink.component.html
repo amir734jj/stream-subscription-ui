@@ -30,20 +30,20 @@
     </thead>
     <tbody>
     <tr *ngFor="let ftpSink of ftpSinks">
-      <td> {{ ftpSink.name }} </td>
-      <td class="hidden-sm hidden-xs"> {{ urlHost(ftpSink.host) }} </td>
-      <td>
+      <td class="pull-left"> {{ ftpSink.name }} </td>
+      <td class="hidden-sm hidden-xs text-center"> {{ urlHost(ftpSink.host) }} </td>
+      <td class="text-center">
         <div class="pre-formatted">
           {{ ftpSink.username }}:{{ ftpSink.password }}
         </div>
       </td>
-      <td class="hidden-sm hidden-xs">
+      <td class="hidden-sm hidden-xs text-center">
         <div class="pre-formatted">
           {{ ftpSink.path }}
         </div>
       </td>
-      <td class="hidden-sm hidden-xs"> {{ ftpSink.port }} </td>
-      <td class="hidden-sm hidden-xs">
+      <td class="hidden-sm hidden-xs text-center"> {{ ftpSink.port }} </td>
+      <td class="hidden-sm hidden-xs text-center">
         <ul *ngIf="ftpSink.streamFtpSinkRelationships.length">
           <li *ngFor="let relationship of ftpSink.streamFtpSinkRelationships">
             {{ relationship.stream.name }}
@@ -57,7 +57,7 @@
       <td class="hidden-sm hidden-xs">
         <i class="{{ this.ftpSink.favorite ? 'icon-check' : 'icon-check-empty' }}"></i>
       </td>
-      <td>
+      <td class="pull-right">
         <div class="btn-group">
           <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id]">
             Manage
