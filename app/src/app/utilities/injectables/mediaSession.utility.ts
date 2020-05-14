@@ -1,5 +1,4 @@
-import * as _ from 'lodash';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {
   MediaPlaybackHandlersT,
@@ -40,23 +39,27 @@ export class MediaSessionUtility {
     }
   }
 
-  setPlaybackEvents = (options: MediaPlaybackHandlersT) => {
-    const { onPreviousTrack, onNextTrack, onPlay, onPause, onSeekBackward, onSeekForward } = Object.assign({}, {
-      onPreviousTrack: _.noop,
-      onNextTrack: _.noop,
-      onPlay: _.noop,
-      onPause: _.noop,
-      onSeekBackward: _.noop,
-      onSeekForward: _.noop
-    }, options);
+  setPlaybackEvents = ({onPreviousTrack, onNextTrack, onPlay, onPause, onSeekBackward, onSeekForward}: MediaPlaybackHandlersT) => {
 
     if (this.mediaSessionAvailable) {
-      this.mediaSession.setActionHandler(MediaSessionAction.Play, onPlay);
-      this.mediaSession.setActionHandler(MediaSessionAction.Pause, onPause);
-      this.mediaSession.setActionHandler(MediaSessionAction.SeekBackward, onSeekBackward);
-      this.mediaSession.setActionHandler(MediaSessionAction.SeekForward, onSeekForward);
-      this.mediaSession.setActionHandler(MediaSessionAction.PreviousTrack, onPreviousTrack);
-      this.mediaSession.setActionHandler(MediaSessionAction.NextTrack, onNextTrack);
+      if (onPlay) {
+        this.mediaSession.setActionHandler(MediaSessionAction.Play, onPlay);
+      }
+      if (onPause) {
+        this.mediaSession.setActionHandler(MediaSessionAction.Pause, onPause);
+      }
+      if (onSeekBackward) {
+        this.mediaSession.setActionHandler(MediaSessionAction.SeekBackward, onSeekBackward);
+      }
+      if (onSeekForward) {
+        this.mediaSession.setActionHandler(MediaSessionAction.SeekForward, onSeekForward);
+      }
+      if (onPreviousTrack) {
+        this.mediaSession.setActionHandler(MediaSessionAction.PreviousTrack, onPreviousTrack);
+      }
+      if (onNextTrack) {
+        this.mediaSession.setActionHandler(MediaSessionAction.NextTrack, onNextTrack);
+      }
     }
   }
 
