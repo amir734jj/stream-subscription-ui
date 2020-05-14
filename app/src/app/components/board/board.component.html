@@ -12,7 +12,7 @@
     <div class="col-sm-12">
       <div class="text-center container-fluid">
         <div class="btn-group normalized-btn-group">
-          <button type="button" class="btn btn-default {{ !isMobile ? 'btn-lg' : '' }}" title="Previous Track"
+          <button type="button" class="btn btn-default {{ !isMobile ? 'btn-lg' : '' }} {{ index <= 0 ? 'disabled' : '' }}" title="Previous Track"
                   [disabled]="index <= 0"
                   (click)="previousTrack()">
             <i class="icon-fast-backward"></i>
@@ -21,7 +21,7 @@
                   (click)="toggleTrack()">
             <i class="{{playing ? 'icon-pause' : 'icon-play'}}"></i>
           </button>
-          <button type="button" class="btn btn-default  {{ !isMobile ? 'btn-lg' : '' }}" title="Next Track"
+          <button type="button" class="btn btn-default  {{ !isMobile ? 'btn-lg' : '' }} {{ index + 1 === dataSource.length ? 'disabled' : '' }}" title="Next Track"
                   [disabled]="index + 1 === dataSource.length"
                   (click)="nextTrack()">
             <i class="icon-fast-forward"></i>

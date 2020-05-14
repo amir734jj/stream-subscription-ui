@@ -260,7 +260,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.index + 1 < this.dataSource.length) {
       this.index++;
 
+      const playing = this.playing;
       await this.loadPlayer();
+      this.playing = playing;
       await this.playTrackIfWasPlaying();
     } else {
       await this.stopTrack();
@@ -271,7 +273,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.index - 1 >= 0) {
       this.index--;
 
+      const playing = this.playing;
       await this.loadPlayer();
+      this.playing = playing;
       await this.playTrackIfWasPlaying();
     }
   }
