@@ -7,4 +7,5 @@ export interface SongMetadata {
   album: string;
   duration: number;
   tags: string[];
+  source: string;
 }

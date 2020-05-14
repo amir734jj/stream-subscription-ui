@@ -6,6 +6,7 @@ import {
   MediaSessionAction,
   MediaSessionPlaybackState,
 } from '../../types/mediaSession.type';
+import {SongMetadata} from '../../types/song.metadata.type';
 
 @Injectable()
 export class MediaSessionUtility {
@@ -31,13 +32,13 @@ export class MediaSessionUtility {
     }
   }
 
-  setMetadata = (songMetadata: { artist: string, title: string, album: string; }) => {
+  setMetadata = (songMetadata: SongMetadata) => {
     if (this.mediaSessionAvailable) {
       // @ts-ignore
       this.mediaSession.metadata = new MediaMetadata({
         title: songMetadata.title,
         artist: songMetadata.artist,
-        album: songMetadata.album ? songMetadata.album : '',
+        album: songMetadata.album ? songMetadata.album : songMetadata.source,
         artwork: []
       });
     }

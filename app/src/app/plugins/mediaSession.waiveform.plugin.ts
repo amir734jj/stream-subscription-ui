@@ -1,20 +1,19 @@
 import * as WaveSurfer from 'wavesurfer.js';
 import {MediaSessionUtility} from '../utilities/injectables/mediaSession.utility';
 import {MediaSessionPlaybackState} from '../types/mediaSession.type';
-
-interface Metadata { artist: string; title: string; album: string; }
+import {SongMetadata} from '../types/song.metadata.type';
 
 interface PluginParams {
   deferInit?: boolean;
   params?: PluginParams;
   mediaSessionUtility: MediaSessionUtility;
-  metadata: Metadata;
+  metadata: SongMetadata;
 }
 
 export default class MediaSessionPlugin {
   private params: PluginParams;
   private waveSurfer: WaveSurfer;
-  private readonly metadata: Metadata;
+  private readonly metadata: SongMetadata;
 
   static create(params: PluginParams) {
     return {
