@@ -175,8 +175,14 @@ export class BoardComponent implements OnInit, OnDestroy {
       position: this.player.getCurrentTime(),
       duration: this.player.getDuration()
     }));
-    this.player.on('play', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing));
-    this.player.on('pause', () => this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused));
+    this.player.on('play', () => {
+      this.playing = true;
+      this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing);
+    });
+    this.player.on('pause', () => {
+      this.playing = false;
+      this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused);
+    });
     this.player.on('finish', () => {
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
       this.nextTrack();
