@@ -128,9 +128,11 @@ export class BoardComponent implements OnInit, OnDestroy {
         switch (this.player) {
           case null:
             this.progress = 0;
+            this.resetPositionState();
             break;
           default:
             this.progress = ((this.player.getCurrentTime() || 0) / (this.player.getDuration() || 1)) * 100;
+            this.updatePositionState();
             break;
         }
       });
