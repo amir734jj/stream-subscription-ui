@@ -19,11 +19,15 @@ export class MediaSessionUtility {
 
   updatePositionState = (state: { duration: number, position: number }) => {
     if (this.positionStateAvailable) {
-      this.mediaSession.setPositionState({
-        duration: state.duration,
-        playbackRate: 1,
-        position: state.position
-      });
+      if (state) {
+        this.mediaSession.setPositionState({
+          duration: state.duration,
+          playbackRate: 1,
+          position: state.position
+        });
+      } else {
+        this.mediaSession.setPositionState(null);
+      }
     }
   }
 

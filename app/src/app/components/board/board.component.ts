@@ -131,10 +131,6 @@ export class BoardComponent implements OnInit, OnDestroy {
             break;
           default:
             this.progress = ((this.player.getCurrentTime() || 0) / (this.player.getDuration() || 1)) * 100;
-            this.mediaSessionUtility.updatePositionState({
-              position: this.player.getCurrentTime(),
-              duration: this.player.getDuration()
-            });
             break;
         }
       });
@@ -187,6 +183,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
       this.nextTrack();
     });
+    this.player.on('destroy', () => {
+      this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
+      this.resetPositionState();
+    });
 
     this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
 
@@ -200,6 +200,21 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.player.on('ready', resolve);
       this.player.on('error', reject);
     });
+
+    this.updatePositionState();
+  }
+
+  private updatePositionState() {
+    if (this.player) {
+      this.mediaSessionUtility.updatePositionState({
+        position: this.player.getCurrentTime(),
+        duration: this.player.getDuration()
+      });
+    }
+  }
+
+  private resetPositionState() {
+    this.mediaSessionUtility.updatePositionState(null);
   }
 
   unloadPlayer() {
