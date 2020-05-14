@@ -157,6 +157,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     const item = this.dataSource[this.index];
 
     this.player = WaveSurfer.create({
+      backend: this.isMobile ? 'WebAudio' : 'MediaElement',
       container: this.waveformRef.nativeElement,
       waveColor: 'violet',
       progressColor: 'purple',
@@ -185,8 +186,11 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.None);
 
-    this.player.loadBlob(toAudioBlob(item.audio));
-    // this.player.load(this.audioRef.nativeElement);
+    if (this.isMobile) {
+      this.player.load(this.audioRef.nativeElement);
+    } else {
+      this.player.loadBlob(toAudioBlob(item.audio));
+    }
 
     await new Promise((resolve, reject) => {
       this.player.on('ready', resolve);
