@@ -8,7 +8,7 @@ import {CommonComponentModule} from './common.module';
 import {FtpSinkService} from '../services/ftp.sink.service';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {DropboxComponent} from '../components/dropbox/dropbox.component'; // this is needed!
+import {DropboxComponent} from '../components/dropbox/integration/dropbox.component'; // this is needed!
 
 @NgModule({
   imports: [
