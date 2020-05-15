@@ -28,6 +28,7 @@ import {CachedAuthenticationService} from './services/cached.authentication.serv
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ErrorHandlerStoreUtility} from './utilities/injectables/store/error.handler.store.utility';
 import {RouteStoreUtility} from './utilities/injectables/store/route.store.utility';
+import {DropboxModule} from './modules/dropbox.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {RouteStoreUtility} from './utilities/injectables/store/route.store.utili
     AccountModule,
     BoardModule,
     FtpSinkModule,
+	  DropboxModule,
     ProfileModule,
     UserModule,
     StreamModule,
