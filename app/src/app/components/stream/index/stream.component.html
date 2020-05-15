@@ -31,7 +31,7 @@
     <thead>
     <tr>
       <th>
-        <div class="pull-left"> Name</div>
+        <div class="text-center"> Name</div>
       </th>
       <th class="hidden-sm hidden-xs">
         <div class="text-center"> Url</div>
@@ -43,14 +43,14 @@
         <div class="text-center"> Status</div>
       </th>
       <th>
-        <div class="pull-right"> Action</div>
+        <div class="text-center"> Action</div>
       </th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let stream of streams">
       <td>
-        <div class="pull-left">
+        <div class="text-center">
           {{ stream.name }}
         </div>
       </td>
@@ -82,7 +82,7 @@
         </div>
       </td>
       <td>
-        <div class="pull-right">
+        <div class="text-center">
           <div class="btn-group">
             <a class="btn btn-default" [routerLink]="['/stream', stream.id]">
               Manage
