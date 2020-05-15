@@ -30,48 +30,70 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th> Name </th>
-      <th class="hidden-sm hidden-xs"> Url</th>
-      <th class="hidden-xs"> Sinks</th>
-      <th> Status </th>
-      <th> Action</th>
+      <th>
+        <div class="pull-left"> Name</div>
+      </th>
+      <th class="hidden-sm hidden-xs">
+        <div class="text-center"> Url</div>
+      </th>
+      <th class="hidden-xs">
+        <div class="text-center"> Sinks</div>
+      </th>
+      <th>
+        <div class="text-center"> Status</div>
+      </th>
+      <th>
+        <div class="pull-right"> Action</div>
+      </th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let stream of streams">
-      <td class="pull-left"> {{ stream.name }} </td>
-      <td class="hidden-sm hidden-xs text-center">
-        <a [href]="stream.url">
-          {{ urlHost(stream.url) }}
-        </a>
+      <td>
+        <div class="pull-left">
+          {{ stream.name }}
+        </div>
       </td>
-      <td class="hidden-xs text-center">
-        <ul *ngIf="stream.streamFtpSinkRelationships.length">
-          <li *ngFor="let sink of stream.streamFtpSinkRelationships">
-            {{ sink.ftpSink.name }}
-          </li>
-        </ul>
+      <td class="hidden-sm hidden-xs">
+        <div class="text-center">
+          <a [href]="stream.url">
+            {{ urlHost(stream.url) }}
+          </a>
+        </div>
+      </td>
+      <td class="hidden-xs">
+        <div class="text-center">
+          <ul *ngIf="stream.streamFtpSinkRelationships.length">
+            <li *ngFor="let sink of stream.streamFtpSinkRelationships">
+              {{ sink.ftpSink.name }}
+            </li>
+          </ul>
 
-        <ng-template [ngIf]="!stream.streamFtpSinkRelationships.length">
-          None
-        </ng-template>
+          <ng-template [ngIf]="!stream.streamFtpSinkRelationships.length">
+            None
+          </ng-template>
+        </div>
       </td>
-      <td class="text-center">
-        <label class="label label-{{ resolveBootstrapClass(statusTable[stream.id] === StreamStatus.Started) }}">
-          {{ statusToString(statusTable[stream.id]) }}
-        </label>
+      <td>
+        <div class="text-center">
+          <label class="label label-{{ resolveBootstrapClass(statusTable[stream.id] === StreamStatus.Started) }}">
+            {{ statusToString(statusTable[stream.id]) }}
+          </label>
+        </div>
       </td>
-      <td class="pull-right">
-        <div class="btn-group">
-          <a class="btn btn-default" [routerLink] = "['/stream', stream.id]">
-            Manage
-          </a>
-          <a class="btn btn-default hidden-xs" [routerLink] = "['/stream', stream.id, 'edit']">
-            Edit
-          </a>
-          <button class="btn btn-danger hidden-xs" (click)="deleteStream(stream.id)">
-            Delete
-          </button>
+      <td>
+        <div class="pull-right">
+          <div class="btn-group">
+            <a class="btn btn-default" [routerLink]="['/stream', stream.id]">
+              Manage
+            </a>
+            <a class="btn btn-default hidden-xs" [routerLink]="['/stream', stream.id, 'edit']">
+              Edit
+            </a>
+            <button class="btn btn-danger hidden-xs" (click)="deleteStream(stream.id)">
+              Delete
+            </button>
+          </div>
         </div>
       </td>
     </tr>

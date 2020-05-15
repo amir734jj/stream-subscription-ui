@@ -18,56 +18,90 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
-      <th> Name</th>
-      <th class="hidden-sm hidden-xs"> Host</th>
-      <th> Authorization</th>
-      <th class="hidden-sm hidden-xs"> Path</th>
-      <th class="hidden-sm hidden-xs"> Port</th>
-      <th class="hidden-sm hidden-xs"> Streams</th>
-      <th class="hidden-sm hidden-xs"> Favorite</th>
-      <th> Action</th>
+      <th>
+        <div class="pull-left"> Name</div>
+      </th>
+      <th class="hidden-sm hidden-xs">
+        <div class="text-center"> Host</div>
+      </th>
+      <th>
+        <div class="text-center"> Authorization</div>
+      </th>
+      <th class="hidden-sm hidden-xs">
+        <div class="text-center"> Path</div>
+      </th>
+      <th class="hidden-sm hidden-xs">
+        <div class="text-center"> Port</div>
+      </th>
+      <th class="hidden-sm hidden-xs">
+        <div class="text-center"> Streams</div>
+      </th>
+      <th class="hidden-sm hidden-xs">
+        <div class="text-center"> Favorite</div>
+      </th>
+      <th>
+        <div class="pull-right">
+          Action
+        </div>
+      </th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let ftpSink of ftpSinks">
-      <td class="pull-left"> {{ ftpSink.name }} </td>
-      <td class="hidden-sm hidden-xs text-center"> {{ urlHost(ftpSink.host) }} </td>
-      <td class="text-center">
-        <div class="pre-formatted">
-          {{ ftpSink.username }}:{{ ftpSink.password }}
-        </div>
-      </td>
-      <td class="hidden-sm hidden-xs text-center">
-        <div class="pre-formatted">
-          {{ ftpSink.path }}
-        </div>
-      </td>
-      <td class="hidden-sm hidden-xs text-center"> {{ ftpSink.port }} </td>
-      <td class="hidden-sm hidden-xs text-center">
-        <ul *ngIf="ftpSink.streamFtpSinkRelationships.length">
-          <li *ngFor="let relationship of ftpSink.streamFtpSinkRelationships">
-            {{ relationship.stream.name }}
-          </li>
-        </ul>
-
-        <ng-template [ngIf]="!ftpSink.streamFtpSinkRelationships.length">
-          None
-        </ng-template>
+      <td>
+        <div class="pull-left"> {{ ftpSink.name }} </div>
       </td>
       <td class="hidden-sm hidden-xs">
-        <i class="{{ this.ftpSink.favorite ? 'icon-check' : 'icon-check-empty' }}"></i>
+        <div class="text-center"> {{ urlHost(ftpSink.host) }} </div>
       </td>
-      <td class="pull-right">
-        <div class="btn-group">
-          <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id]">
-            Manage
-          </a>
-          <a class="btn btn-default hidden-xs" [routerLink]="['/ftpSink', ftpSink.id, 'edit']">
-            Edit
-          </a>
-          <button class="btn btn-danger hidden-xs" (click)="deleteFtpSink($event, ftpSink.id)">
-            Delete
-          </button>
+      <td>
+        <div class="text-center">
+          <div class="pre-formatted">
+            {{ ftpSink.username }}:{{ ftpSink.password }}
+          </div>
+        </div>
+      </td>
+      <td class="hidden-sm hidden-xs">
+        <div class="text-center">
+          <div class="pre-formatted">
+            {{ ftpSink.path }}
+          </div>
+        </div>
+      </td>
+      <td class="hidden-sm hidden-xs">
+        <div class="text-center"> {{ ftpSink.port }} </div>
+      </td>
+      <td class="hidden-sm hidden-xs">
+        <div class="text-center">
+          <ul *ngIf="ftpSink.streamFtpSinkRelationships.length">
+            <li *ngFor="let relationship of ftpSink.streamFtpSinkRelationships">
+              {{ relationship.stream.name }}
+            </li>
+          </ul>
+
+          <ng-template [ngIf]="!ftpSink.streamFtpSinkRelationships.length">
+            None
+          </ng-template>
+        </div>
+      </td>
+      <td class="hidden-sm hidden-xs">
+        <div class="text-center">
+          <i class="{{ this.ftpSink.favorite ? 'icon-check' : 'icon-check-empty' }}"></i>
+        </div>
+      </td>
+      <td>
+        <div class="pull-right">
+          <div class="btn-group">
+            <a class="btn btn-default" [routerLink]="['/ftpSink', ftpSink.id]">
+              Manage
+            </a>
+            <a class="btn btn-default hidden-xs" [routerLink]="['/ftpSink', ftpSink.id, 'edit']">
+              Edit
+            </a>
+            <button class="btn btn-danger hidden-xs" (click)="deleteFtpSink($event, ftpSink.id)">
+              Delete
+            </button>
+          </div>
         </div>
       </td>
     </tr>
