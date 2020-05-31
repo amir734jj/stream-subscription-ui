@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   HostListener,
-  NgZone,
   OnDestroy,
   OnInit,
   ViewChild
@@ -184,7 +183,9 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing);
     });
     this.player.on('pause', () => {
-      this.playing = false;
+      if (this.player.getDuration() - this.player.getCurrentTime() > 0.01 || this.index + 1 >= this.dataSource.length) {
+        this.playing = false;
+      }
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused);
     });
     this.player.on('finish', () => {
