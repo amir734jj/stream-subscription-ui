@@ -1,4 +1,13 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { HubService } from '../../services/hub.service';
 import { CachedAuthenticationService } from '../../services/cached.authentication.service';
 import { SongMetadata } from '../../types/song.metadata.type';
@@ -31,6 +40,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   private progressSubscription: Subscription;
 
   constructor(private hubService: HubService,
+              private cdRef: ChangeDetectorRef,
               private favoriteService: FavoriteService,
               private manageStreamService: ManageStreamService,
               private mediaSessionUtility: MediaSessionUtility,
@@ -167,6 +177,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
 
     this.sourceUrl = toAudioUrl(item.audio);
+    this.cdRef.detectChanges();
 
     this.player.on('play', () => {
       this.playing = true;
