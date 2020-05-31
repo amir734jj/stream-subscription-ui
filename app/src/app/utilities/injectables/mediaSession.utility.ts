@@ -20,7 +20,7 @@ export class MediaSessionUtility {
 
   updatePositionState = (state: { duration: number, position: number }) => {
     if (this.positionStateAvailable) {
-      if (state) {
+      if (state && !isNaN(state.duration) && !isNaN(state.position)) {
         this.mediaSession.setPositionState({
           duration: state.duration,
           playbackRate: 1,
