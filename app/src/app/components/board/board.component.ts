@@ -71,11 +71,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.innerWidth = window.innerWidth;
 
-    this.mediaSessionUtility.setPlaybackEvents({
-      onPreviousTrack: () => this.previousTrack(),
-      onNextTrack: () => this.nextTrack()
-    });
-
     this.isAuthenticated = this.cachedAuthenticationService.isAuthenticated();
 
     await this.hubService.init();
@@ -204,6 +199,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
 
     this.updatePositionState();
+
+    this.mediaSessionUtility.setPlaybackEvents({
+      onPreviousTrack: () => this.previousTrack(),
+      onNextTrack: () => this.nextTrack()
+    });
   }
 
   private updatePositionState() {
