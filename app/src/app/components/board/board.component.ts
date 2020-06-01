@@ -183,7 +183,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Playing);
     });
     this.player.on('pause', () => {
-      if (this.playing && this.player.getDuration() - this.player.getCurrentTime() > 0.01 || this.index + 1 >= this.dataSource.length) {
+      if (this.playing && this.player.getDuration() - this.player.getCurrentTime() > 0.01 || !this.hasNext()) {
         this.playing = false;
       }
       this.mediaSessionUtility.setPlaybackState(MediaSessionPlaybackState.Paused);
@@ -268,8 +268,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
+  hasNext() {
+    return this.index + 1  < this.dataSource.length;
+  }
+
   async nextTrack() {
-    if (this.index + 1 < this.dataSource.length) {
+    if (this.hasNext()) {
       this.index++;
 
       const playing = this.playing;
