@@ -19,7 +19,10 @@ export class AddFtpSinkComponent implements OnInit {
   constructor(private router: Router, private ftpSinkService: FtpSinkService) {
     this.form = new FormGroup({
       name: new FormControl(this.ftpSink.name, Validators.required),
-      host: new FormControl(this.ftpSink.host, Validators.required),
+      host: new FormControl(this.ftpSink.host, [
+        Validators.pattern('(ftp?://)?([\\\\da-z.-]+)\\\\.([a-z.]{2,6})[/\\\\w .-]*/?\''),
+        Validators.required
+      ]),
       username: new FormControl(this.ftpSink.user, Validators.required),
       password: new FormControl(this.ftpSink.password, Validators.required),
       path: new FormControl(this.ftpSink.path),
