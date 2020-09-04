@@ -43,7 +43,7 @@ export class ShoutcastComponent implements OnInit {
 
       const stream = new Stream();
       stream.url = await this.shoutcastService.url(shoutcastStream.ID).toPromise();
-      stream.name = this.name;
+      stream.name = shoutcastStream.name;
 
       const {id} = await this.streamService.save(stream).toPromise();
       await this.manageStreamService.start(id);
