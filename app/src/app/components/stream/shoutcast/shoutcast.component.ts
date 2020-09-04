@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ShoutcastService} from '../../../services/shoutcast.service';
 import {ShoutcastStream} from '../../../models/entities/ShoutcastStream';
 import * as _ from 'lodash';
 import {StreamService} from '../../../services/stream.service';
 import {Stream} from '../../../models/entities/Stream';
 import {Router} from '@angular/router';
+import {ManageStreamService} from "../../../services/manage.stream.service";
 
 @Component({
   selector: 'app-shoutcast',
@@ -15,28 +16,37 @@ export class ShoutcastComponent implements OnInit {
 
   name = '';
   genre = '';
-  streams: { [group: string]: ShoutcastStream[] } = {};
-  allStreams: ShoutcastStream[] = [];
-  allGenres: string[] = [];
+  streams: ShoutcastStream[] = [];
+  streamsTable: { [group: string]: ShoutcastStream[] } = {};
+  genres: string[] = [];
   streamId = '';
 
-  constructor(private shoutcastService: ShoutcastService, private streamService: StreamService, private router: Router) { }
-
-  async ngOnInit() {
-    await this.collect();
+  constructor(private shoutcastService: ShoutcastService, private streamService: StreamService,
+              private manageStreamService: ManageStreamService, private router: Router) {
   }
 
-  async collect() {
-    this.allStreams = await this.shoutcastService.collect({ name: this.name, genre: this.genre }).toPromise();
-    this.streams = _.groupBy(this.allStreams, x => x.genre);
-    this.allGenres = _.map(this.allStreams, x => x.genre);
+  async ngOnInit() {
+    this.genres = await this.shoutcastService.genres().toPromise();
+    this.genre = _.first(this.genres);
+    await this.refresh();
+  }
+
+  async refresh() {
+    this.streams = await this.shoutcastService.collect({ name: this.name, genre: this.genre}).toPromise();
+    this.streamsTable = _.groupBy(this.streams, x => x.genre);
   }
 
   async addStream() {
     if (this.streamId) {
 
-      const stream = this.allStreams.find(x => x.ID === this.streamId);
-      await this.streamService.save({name: stream.name, url: stream.url} as Stream);
+      const shoutcastStream = this.streams.find(x => x.ID === parseInt(this.streamId, 0));
+
+      const stream = new Stream();
+      stream.url = await this.shoutcastService.url(shoutcastStream.ID).toPromise();
+      stream.name = this.name;
+
+      const {id} = await this.streamService.save(stream).toPromise();
+      await this.manageStreamService.start(id);
 
       await this.router.navigate(['./stream']);
     }

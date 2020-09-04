@@ -1,6 +1,7 @@
 export interface ShoutcastStream {
-  ID: string;
+  ID: number;
   name: string;
   genre: string;
-  url: string;
+  bitrate: number;
+  format: string;
 }
