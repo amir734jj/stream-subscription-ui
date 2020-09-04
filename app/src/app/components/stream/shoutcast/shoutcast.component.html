@@ -1,0 +1,24 @@
+<div class="container">
+
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="name" (change)="collect()">
+  </div>
+
+  <div class="form-group">
+    <label for="genre">Genre:</label>
+    <input type="text" class="form-control" id="genre" [(ngModel)]="genre" (change)="collect()">
+  </div>
+
+  <div class="form-group">
+    <label for="streams">Select Stream:</label>
+    <select class="form-control" id="streams" [(ngModel)]="streamId">
+      <optgroup [label]="item.key" *ngFor="let item of streams | keyvalue">
+        <option [value]="stream.ID" *ngFor="let stream of item.value">{{stream.name}}</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <button class="btn btn-primary" type="button" (click)="addStream()" [disabled]="!this.streamId"> Add Shoutcast Stream</button>
+
+</div>

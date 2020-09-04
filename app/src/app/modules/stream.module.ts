@@ -9,7 +9,9 @@ import {AddStreamComponent} from '../components/stream/add/add-stream.component'
 import {EditStreamComponent} from '../components/stream/edit/edit-stream.component';
 import {CommonComponentModule} from './common.module';
 import {ManageStreamComponent} from '../components/stream/manage/manage-stream.component';
-import {ManageStreamService} from '../services/manage.stream.service'; // this is needed!
+import {ManageStreamService} from '../services/manage.stream.service';
+import {ShoutcastComponent} from '../components/stream/shoutcast/shoutcast.component';
+import {ShoutcastService} from '../services/shoutcast.service';
 
 @NgModule({
   imports: [
@@ -20,12 +22,13 @@ import {ManageStreamService} from '../services/manage.stream.service'; // this i
     AppRoutingModule,
     CommonComponentModule
   ],
-  providers: [StreamService, ManageStreamService],
+  providers: [StreamService, ManageStreamService, ShoutcastService],
   declarations: [
     StreamComponent,
     AddStreamComponent,
     EditStreamComponent,
-    ManageStreamComponent
+    ManageStreamComponent,
+    ShoutcastComponent,
   ],
   exports: [StreamComponent]
 })

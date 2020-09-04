@@ -1,4 +1,15 @@
 <div class="container">
+
+  <div class="row">
+    <div class="col-sm-3 col-sm-offset-9">
+      <button class="btn btn-default pull-right" (click)="gotoShoutCastDirectory()" style="margin-bottom: 2rem">
+        <strong>
+          Add Stream From Shoutcast
+        </strong>
+      </button>
+    </div>
+  </div>
+
   <app-form-validation-error [error-table]="errorTable"></app-form-validation-error>
 
   <form (submit)="handleAdd($event)" [formGroup]="form">

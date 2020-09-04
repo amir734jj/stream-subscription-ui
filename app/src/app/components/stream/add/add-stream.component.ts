@@ -28,6 +28,10 @@ export class AddStreamComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  async gotoShoutCastDirectory() {
+    await this.router.navigate(['/stream', 'add', 'shoutcast']);
+  }
+
   async handleAdd($event: Event) {
     $event.preventDefault();
 
