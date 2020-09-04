@@ -17,6 +17,7 @@ export class ShoutcastComponent implements OnInit {
   genre = '';
   streams: { [group: string]: ShoutcastStream[] } = {};
   allStreams: ShoutcastStream[] = [];
+  allGenres: string[] = [];
   streamId = '';
 
   constructor(private shoutcastService: ShoutcastService, private streamService: StreamService, private router: Router) { }
@@ -28,6 +29,7 @@ export class ShoutcastComponent implements OnInit {
   async collect() {
     this.allStreams = await this.shoutcastService.collect({ name: this.name, genre: this.genre }).toPromise();
     this.streams = _.groupBy(this.allStreams, x => x.genre);
+    this.allGenres = _.map(this.allStreams, x => x.genre);
   }
 
   async addStream() {
