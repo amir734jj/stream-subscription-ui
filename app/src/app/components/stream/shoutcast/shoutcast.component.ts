@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import {StreamService} from '../../../services/stream.service';
 import {Stream} from '../../../models/entities/Stream';
 import {Router} from '@angular/router';
-import {ManageStreamService} from "../../../services/manage.stream.service";
+import {ManageStreamService} from '../../../services/manage.stream.service';
 
 @Component({
   selector: 'app-shoutcast',
