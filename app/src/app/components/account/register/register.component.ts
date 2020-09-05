@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
+    const passwordValidationPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       email: new FormControl('', [
@@ -24,7 +25,11 @@ export class RegisterComponent implements OnInit {
       username: new FormControl('', Validators.required),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+        Validators.pattern(passwordValidationPattern)
+      ]),
+      passwordConfirmation: new FormControl('', [
+        Validators.required,
+        Validators.pattern(passwordValidationPattern)
       ])
     });
   }

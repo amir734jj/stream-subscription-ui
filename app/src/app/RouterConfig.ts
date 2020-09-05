@@ -20,7 +20,7 @@ import {FtpSinkComponent} from './components/ftpsink/index/ftp-sink.component';
 import {AddFtpSinkComponent} from './components/ftpsink/add/add-ftp-sink.component';
 import {EditFtpSinkComponent} from './components/ftpsink/edit/edit-ftp-sink.component';
 import {ManageFtpSinkComponent} from './components/ftpsink/manage/manage-ftp-sink.component';
-import {ShoutcastComponent} from "./components/stream/shoutcast/shoutcast.component";
+import {ShoutcastComponent} from './components/stream/shoutcast/shoutcast.component';
 
 let appRoutes: Routes = _.map([
   {path: '', component: WelcomeComponent, data: {allowAnonymous: true, disallowAuthenticated: true}},
