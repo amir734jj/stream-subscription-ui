@@ -12,7 +12,7 @@ import {Subscription, timer} from 'rxjs';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Stream-Subscription-UI';
+  title = 'Stream-Subscription';
   public navBarCollapsed = true;
   public profile: ProfileType;
   public authenticated = false;

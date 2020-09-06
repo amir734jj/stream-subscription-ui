@@ -91,10 +91,7 @@
                   <tr>
                     <th> <div class="text-center"> Name </div> </th>
                     <th class="hidden-xs"> <div class="text-center"> Source </div> </th>
-<!--                    <th class="hidden-xs hidden-sm hidden-md"> <div class="text-center"> Album </div> </th>-->
                     <th class="hidden-xs hidden-sm hidden-md"> <div class="text-center"> Duration </div> </th>
-<!--                    <th class="hidden-xs hidden-sm hidden-md"> <div class="text-center"> Play Count </div> </th>-->
-<!--                    <th class="hidden-xs hidden-sm hidden-md"> <div class="text-center"> Tags </div> </th>-->
                     <th> <div class="text-center"> Actions </div> </th>
                   </tr>
                   </thead>
@@ -114,32 +111,12 @@
                     <td class="hidden-xs">
                       <div class="text-center"> {{item.source}} </div>
                     </td>
-<!--                    <td class="hidden-xs hidden-sm hidden-md">-->
-<!--                      <div class="text-center">-->
-<!--                        <div *ngIf="item.album else noAlbum"> {{item.album}} </div>-->
-<!--                        <ng-template #noAlbum> Unknown </ng-template>-->
-<!--                      </div>-->
-<!--                    </td>-->
                     <td class="hidden-xs hidden-sm hidden-md">
                       <div class="text-center">
                         <div *ngIf="item.duration else noDuration"> {{item.formattedDuration}} </div>
                         <ng-template #noDuration> Unknown </ng-template>
                       </div>
                     </td>
-<!--                    <td class="hidden-xs hidden-sm hidden-md">-->
-<!--                      <div class="text-center">-->
-<!--                        <div *ngIf="item.playCount else noPlayCount"> {{item.playCount}} </div>-->
-<!--                        <ng-template #noPlayCount> Unknown </ng-template>-->
-<!--                      </div>-->
-<!--                    </td>-->
-<!--                    <td class="hidden-xs hidden-sm hidden-md">-->
-<!--                      <div class="text-center">-->
-<!--                        <div *ngIf="item.tags.length else noTag">-->
-<!--                          <span class="label label-default" *ngFor="let tag of item.tags"> {{ tag }} </span>-->
-<!--                        </div>-->
-<!--                        <ng-template #noTag> Unknown </ng-template>-->
-<!--                      </div>-->
-<!--                    </td>-->
                     <td>
                       <div class="text-center">
                         <div class="btn-group">
