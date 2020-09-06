@@ -26,7 +26,7 @@ export class ShoutcastComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.genres = await this.shoutcastService.genres().toPromise();
+    this.genres = (await this.shoutcastService.genres().toPromise()).sort();
     this.genre = _.first(this.genres);
     await this.refresh();
   }
