@@ -28,6 +28,7 @@ import { MediaSessionPlaybackState } from 'src/app/types/mediaSession.type';
 import * as WaveSurfer from 'wavesurfer.js';
 import { formatTimeSpan } from '../../utilities/timespan.utility';
 import MediaSessionPlugin from '../../plugins/mediaSession.waiveform.plugin';
+import * as fileSize from 'filesize';
 
 @Component({
   selector: 'app-board',
@@ -363,6 +364,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   get memorySize(): string {
-    return `${Math.round(roughSizeOfObject(this.dataSource) / 1000000)}mb`;
+    return fileSize(roughSizeOfObject(this.dataSource));
   }
 }

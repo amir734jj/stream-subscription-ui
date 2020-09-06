@@ -34,6 +34,7 @@
     "downloadjs": "^1.4.7",
     "enum-values": "^1.2.1",
     "express": "^4.17.1",
+    "filesize": "^6.1.0",
     "guid-typescript": "latest",
     "immutable": "^4.0.0-rc.12",
     "jwt-decode": "^2.2.0",
