@@ -26,19 +26,22 @@ export class ShoutcastComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.genres = (await this.shoutcastService.genres().toPromise()).sort();
+    this.genres = ['all', ...(await this.shoutcastService.genres().toPromise()).sort()];
     this.genre = _.first(this.genres);
     await this.refresh();
   }
 
   async refresh() {
-    this.streams = await this.shoutcastService.collect({ name: this.name, genre: this.genre}).toPromise();
+    this.streams = await this.shoutcastService.collect({
+      name: this.name.length >= 3 ? this.name : '',
+      genre: this.genre !== 'all' ? this.genre : ''
+    }).toPromise();
+
     this.streamsTable = _.groupBy(this.streams, x => x.genre);
   }
 
   async addStream() {
     if (this.streamId) {
-
       const shoutcastStream = this.streams.find(x => x.ID === parseInt(this.streamId, 0));
 
       const stream = new Stream();
@@ -50,6 +53,10 @@ export class ShoutcastComponent implements OnInit {
 
       await this.router.navigate(['./stream']);
     }
+  }
+
+  get isNameInValidForSearch() {
+    return this.name.length > 0 && this.name.length < 3;
   }
 
 }
