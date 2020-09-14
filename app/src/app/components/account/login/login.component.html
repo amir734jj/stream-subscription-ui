@@ -5,11 +5,16 @@
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control" id="username" formControlName="username" name="username"
-             required="required"/>
+             autocomplete="on"
+             required="required"
+      />
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" formControlName="password" name="password"/>
+      <input type="password" class="form-control" id="password" formControlName="password" name="password"
+             autocomplete="on"
+             required="required"
+      />
     </div>
 
     <button class="btn btn-default" type="submit">Login</button>
