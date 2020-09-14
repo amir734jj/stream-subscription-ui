@@ -15,6 +15,8 @@ This service is free, we do not own the ripped `.mp3` files and we do not store 
   - Angular Material UI
   - ngx-bootstrap
   - RxJS
+  - Wavesurfer.js
+  - Media Session API (android auto/apple car play integration)
 
 ### Running locally
 
