@@ -276,12 +276,17 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async nextTrack() {
     if (this.hasNext()) {
+      const page = this.currentPlayingPage;
       this.index++;
-
       const playing = this.playing;
       await this.loadPlayer();
       this.playing = playing;
       await this.playTrackIfWasPlaying();
+
+      if (page + 1 === this.currentPlayingPage && this.currentPage + 1 < this.pages) {
+        this.currentPage++;
+      }
+
     } else {
       await this.stopTrack();
     }
@@ -289,12 +294,16 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async previousTrack() {
     if (this.index - 1 >= 0) {
+      const page = this.currentPlayingPage;
       this.index--;
-
       const playing = this.playing;
       await this.loadPlayer();
       this.playing = playing;
       await this.playTrackIfWasPlaying();
+
+      if (page - 1 === this.currentPlayingPage && this.currentPage - 1 >= 1) {
+        this.currentPage--;
+      }
     }
   }
 
@@ -366,5 +375,12 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   get memorySize(): string {
     return fileSize(roughSizeOfObject(this.dataSource));
+  }
+
+  /**
+   * Returns the page number that current song is playing in
+   */
+  get currentPlayingPage(): number {
+    return Math.ceil((this.index + 1) / this.pageSize);
   }
 }
