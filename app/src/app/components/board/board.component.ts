@@ -283,7 +283,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.playing = playing;
       await this.playTrackIfWasPlaying();
 
-      if (page + 1 === this.currentPlayingPage && this.currentPage + 1 < this.pages) {
+      if (page + 1 === this.currentPlayingPage && this.currentPage + 1 <= this.pages) {
         this.currentPage++;
       }
 
