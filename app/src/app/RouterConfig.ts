@@ -21,6 +21,7 @@ import {AddFtpSinkComponent} from './components/ftpsink/add/add-ftp-sink.compone
 import {EditFtpSinkComponent} from './components/ftpsink/edit/edit-ftp-sink.component';
 import {ManageFtpSinkComponent} from './components/ftpsink/manage/manage-ftp-sink.component';
 import {ShoutcastComponent} from './components/stream/shoutcast/shoutcast.component';
+import {DemoComponent} from './components/demo/demo.component';
 
 let appRoutes: Routes = _.map([
   {path: '', component: WelcomeComponent, data: {allowAnonymous: true, disallowAuthenticated: true}},
@@ -29,6 +30,7 @@ let appRoutes: Routes = _.map([
   {path: 'login', component: LoginComponent, data: {disallowAuthenticated: true}},
   {path: 'register', component: RegisterComponent, data: {disallowAuthenticated: true}},
   {path: 'logout', component: LogoutComponent, data: {allowAnonymous: false}},
+  {path: 'demo', component: DemoComponent, data: {allowAnonymous: true, disallowAuthenticated: true, shouldReuse: false}},
   {path: 'board', component: BoardComponent, data: {allowAnonymous: false, shouldReuse: true}},
   {path: 'stream', component: StreamComponent, data: {allowAnonymous: false}},
   {path: 'stream/add', component: AddStreamComponent, data: {allowAnonymous: false}},

@@ -28,12 +28,14 @@ import {CachedAuthenticationService} from './services/cached.authentication.serv
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ErrorHandlerStoreUtility} from './utilities/injectables/store/error.handler.store.utility';
 import {RouteStoreUtility} from './utilities/injectables/store/route.store.utility';
+import { DemoComponent } from './components/demo/demo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,
