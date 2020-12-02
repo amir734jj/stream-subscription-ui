@@ -37,6 +37,7 @@
     "filesize": "^6.1.0",
     "guid-typescript": "latest",
     "immutable": "^4.0.0-rc.12",
+    "jszip": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "memoizee": "^0.4.14",

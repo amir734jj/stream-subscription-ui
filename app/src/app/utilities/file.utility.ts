@@ -7,4 +7,4 @@ export const toAudioUrl = (base64: string) => {
 
 export const toAudioBlob = (base64: string) => {
   return base64StringToBlob(base64, mp3MimeType);
-}
+};

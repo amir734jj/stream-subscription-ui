@@ -41,6 +41,10 @@
               {{ memorySize }}
             </sub>
           </button>
+          <button class="btn btn-default {{ !isMobile ? 'btn-lg' : '' }}" title="Zip Download" (click)="downloadZip()"
+                  *ngIf="this.dataSource.length >= 10">
+            <i class="icon-cloud-download"></i>
+          </button>
           <button class="btn btn-danger {{ !isMobile ? 'btn-lg' : '' }} {{ reconnecting ? 'disabled' : '' }}" title="Try Reconnecting"
                   (click)="reconnect()"
                   [disabled]="reconnecting"

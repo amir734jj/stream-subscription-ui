@@ -29,6 +29,7 @@ import * as WaveSurfer from 'wavesurfer.js';
 import { formatTimeSpan } from '../../utilities/timespan.utility';
 import MediaSessionPlugin from '../../plugins/mediaSession.waiveform.plugin';
 import * as fileSize from 'filesize';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-board',
@@ -311,6 +312,22 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.playing) {
       await this.playTrack();
     }
+  }
+
+  async downloadZip() {
+    const zip = new JSZip();
+    this.dataSource.forEach(item => {
+      zip.file(item.filename, item.audio, { base64: true });
+    });
+
+    let zipBase64;
+    if (JSZip.support.uint8array) {
+      zipBase64 = await zip.generateAsync({type : 'uint8array'});
+    } else {
+      zipBase64 = await zip.generateAsync({type : 'string'});
+    }
+
+    download(zipBase64, 'stream-ripper-download.zip');
   }
 
   async playTrackAtIndex(i: number) {
