@@ -348,7 +348,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   async reconnect() {
     this.reconnecting = true;
-    await retry(() => this.hubService.connection.start())(5)
+    await retry(() => this.hubService.connection.start())(3)
       .finally(() => this.reconnecting = false);
   }
 
