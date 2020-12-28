@@ -1,1 +1,7 @@
-export const urlHost = (url: string) => new URL(url).hostname;
+export const urlHost = (url: string) => {
+  try {
+    return new URL(url).hostname;
+  } catch (_) {
+    return url || '';
+  }
+};
