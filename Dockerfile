@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install
+RUN NODE_OPTIONS=--openssl-legacy-provider npm install -f
 
 CMD [ "npm", "start" ]
