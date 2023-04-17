@@ -6,7 +6,7 @@ const PROXY_URL = process.env.PROXY_URL;
 console.log(PROXY_URL);
 
 const app = express();
-const proxy = createProxyMiddleware({ target: PROXY_URL, changeOrigin: true });
+const proxy = createProxyMiddleware({ target: PROXY_URL, changeOrigin: true, ws: true });
 
 app.use('/hub', proxy);
 
