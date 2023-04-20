@@ -20,11 +20,10 @@ export class AddFtpSinkComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl(this.ftpSink.name, Validators.required),
       host: new FormControl(this.ftpSink.host, [
-        Validators.pattern('(ftp?://)?([\\\\da-z.-]+)\\\\.([a-z.]{2,6})[/\\\\w .-]*/?\''),
         Validators.required
       ]),
       username: new FormControl(this.ftpSink.user, Validators.required),
-      password: new FormControl(this.ftpSink.password, Validators.required),
+      password: new FormControl(this.ftpSink.password),
       path: new FormControl(this.ftpSink.path),
       favorite: new FormControl(this.ftpSink.favorite),
       port: new FormControl(this.ftpSink.port, [Validators.required, Validators.min(1)])
