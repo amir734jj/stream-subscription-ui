@@ -37,10 +37,21 @@ export class ManageFtpSinkComponent implements OnInit {
     });
   }
 
+  selectAllStreams() {
+    this.streamsFormControl.setValue(this.streams.map(stream => stream.id));
+  }
+
+  clearSelectedStreams() {
+    this.streamsFormControl.setValue([]);
+  }
+
   async update() {
-    this.ftpSink.streamFtpSinkRelationships = _.chain(this.streamsFormControl.value)
+    const selectedStreamIds = this.streamsFormControl.value || [];
+
+    this.ftpSink.streamFtpSinkRelationships = _.chain(selectedStreamIds)
       .map(x => x as string)
       .map(id => this.streams.find(stream => stream.id === id))
+      .filter(stream => !!stream)
       .map(stream => {
         const streamFtpSinkRelationship = new StreamFtpSinkRelationship();
         streamFtpSinkRelationship.streamId = stream.id;
