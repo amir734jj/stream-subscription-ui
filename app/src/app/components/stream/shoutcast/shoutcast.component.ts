@@ -19,7 +19,7 @@ export class ShoutcastComponent implements OnInit {
   streams: ShoutcastStream[] = [];
   streamsTable: { [group: string]: ShoutcastStream[] } = {};
   genres: string[] = [];
-  streamId = '';
+  streamIds: string[] = [];
   serverError = '';
   bulkResult = '';
   isBulkSaving = false;
@@ -30,7 +30,7 @@ export class ShoutcastComponent implements OnInit {
 
   async ngOnInit() {
     this.genres = ['all', ...(await this.shoutcastService.genres().toPromise()).sort()];
-    this.genre = _.first(this.genres);
+    this.genre = _.first(this.genres) || 'all';
     await this.refresh();
   }
 
@@ -41,27 +41,27 @@ export class ShoutcastComponent implements OnInit {
     }).toPromise();
 
     this.streamsTable = _.groupBy(this.streams, x => x.genre);
+    this.streamIds = [];
   }
 
   async addStream() {
-    if (this.streamId) {
-      const shoutcastStream = this.streams.find(x => x.ID === parseInt(this.streamId, 0));
+    if (!this.streamIds.length || this.isBulkSaving) {
+      return;
+    }
 
-      const stream = new Stream();
-      stream.url = await this.shoutcastService.url(shoutcastStream.ID).toPromise();
-      stream.name = shoutcastStream.name;
+    this.serverError = '';
+    this.bulkResult = '';
+    this.isBulkSaving = true;
 
-      this.serverError = '';
-      this.bulkResult = '';
+    const selectedIds = this.streamIds.map(x => parseInt(x, 0));
+    const selectedStreams = this.streams.filter(x => selectedIds.includes(x.ID));
+    const {added, failed} = await this.addListedStreams(selectedStreams);
 
-      try {
-        const {id} = await this.streamService.save(stream).toPromise();
-        await this.manageStreamService.start(id);
+    this.isBulkSaving = false;
+    this.bulkResult = `Add selected complete. Added ${added} stream(s), failed ${failed}.`;
 
-        await this.router.navigate(['./stream']);
-      } catch (err) {
-        this.serverError = err?.error?.errors?.[0] || 'Failed to add stream';
-      }
+    if (!added && failed) {
+      this.serverError = 'Failed to add selected streams';
     }
   }
 
@@ -74,10 +74,22 @@ export class ShoutcastComponent implements OnInit {
     this.bulkResult = '';
     this.isBulkSaving = true;
 
+    const firstTenStreams = this.streams.slice(0, 10);
+    const {added, failed} = await this.addListedStreams(firstTenStreams);
+
+    this.isBulkSaving = false;
+    this.bulkResult = `Bulk include complete (first 10 listed). Added ${added} stream(s), failed ${failed}.`;
+
+    if (!added && failed) {
+      this.serverError = 'Failed to add listed streams';
+    }
+  }
+
+  private async addListedStreams(listedStreams: ShoutcastStream[]) {
     let added = 0;
     let failed = 0;
 
-    for (const shoutcastStream of this.streams) {
+    for (const shoutcastStream of listedStreams) {
       const stream = new Stream();
       stream.name = shoutcastStream.name;
 
@@ -91,12 +103,7 @@ export class ShoutcastComponent implements OnInit {
       }
     }
 
-    this.isBulkSaving = false;
-    this.bulkResult = `Bulk include complete. Added ${added} stream(s), failed ${failed}.`;
-
-    if (!added && failed) {
-      this.serverError = 'Failed to add listed streams';
-    }
+    return {added, failed};
   }
 
   get isNameInValidForSearch() {

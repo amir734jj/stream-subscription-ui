@@ -13,12 +13,14 @@ import {FtpSink} from '../../../models/entities/FtpSink';
 export class AddFtpSinkComponent implements OnInit {
 
   ftpSink: FtpSink = new FtpSink();
+  protocols = ['ftp', 'sftp'];
   form: FormGroup;
   errorTable: FormErrorTable = [];
 
   constructor(private router: Router, private ftpSinkService: FtpSinkService) {
     this.form = new FormGroup({
       name: new FormControl(this.ftpSink.name, Validators.required),
+      protocol: new FormControl(this.ftpSink.protocol, Validators.required),
       host: new FormControl(this.ftpSink.host, [
         Validators.required
       ]),
@@ -43,10 +45,19 @@ export class AddFtpSinkComponent implements OnInit {
       this.errorTable = [] as FormErrorTable;
     }
 
-    const response = await this.ftpSinkService.save(this.form.value).toPromise();
+    const payload = this.form.value;
+    payload.host = this.normalizeSinkHost(payload.protocol, payload.host);
+    payload.port = payload.port || (payload.protocol === 'sftp' ? 22 : 21);
+
+    const response = await this.ftpSinkService.save(payload).toPromise();
 
     if (!!response) {
       await this.router.navigate(['./ftpSink']);
     }
+  }
+
+  private normalizeSinkHost(protocol: string, host: string) {
+    const cleanHost = (host || '').replace(/^\s+|\s+$/g, '').replace(/^\w+:\/\//, '');
+    return `${protocol}://${cleanHost}`;
   }
 }

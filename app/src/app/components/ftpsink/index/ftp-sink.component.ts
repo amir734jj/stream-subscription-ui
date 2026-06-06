@@ -42,4 +42,9 @@ export class FtpSinkComponent implements OnInit {
     await this.ftpSinkService.delete(id).toPromise();
     await this.fetchFtpSinks();
   }
+
+  sinkProtocol(host: string) {
+    const match = (host || '').trim().match(/^(ftp|sftp):\/\//i);
+    return match ? match[1].toUpperCase() : 'FTP';
+  }
 }

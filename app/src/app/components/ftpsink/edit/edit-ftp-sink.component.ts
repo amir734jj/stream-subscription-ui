@@ -14,6 +14,7 @@ import {FtpSink} from '../../../models/entities/FtpSink';
 export class EditFtpSinkComponent implements OnInit {
 
   public ftpSink: FtpSink;
+  protocols = ['ftp', 'sftp'];
 
   form: FormGroup;
   errorTable: FormErrorTable = [];
@@ -25,9 +26,12 @@ export class EditFtpSinkComponent implements OnInit {
   }
 
   bind() {
+    const hostParts = this.splitHost(this.ftpSink.host);
+
     this.form = new FormGroup({
+      protocol: new FormControl(hostParts.protocol, Validators.required),
       name: new FormControl(this.ftpSink.name, Validators.required),
-      host: new FormControl(this.ftpSink.host, [
+      host: new FormControl(hostParts.host, [
         Validators.required
       ]),
       username: new FormControl(this.ftpSink.username, Validators.required),
@@ -55,11 +59,33 @@ export class EditFtpSinkComponent implements OnInit {
       this.errorTable = [] as FormErrorTable;
     }
 
-    const response = await this.ftpSinkService.update(this.ftpSink.id, _.assign({}, this.ftpSink, this.form.value)).toPromise();
+    const payload = _.assign({}, this.ftpSink, this.form.value);
+    payload.host = this.normalizeSinkHost(payload.protocol, payload.host);
+    payload.port = payload.port || (payload.protocol === 'sftp' ? 22 : 21);
+
+    const response = await this.ftpSinkService.update(this.ftpSink.id, payload).toPromise();
 
     if (!!response) {
       await this.router.navigate(['./ftpSink']);
     }
+  }
+
+  private splitHost(rawHost: string) {
+    const match = (rawHost || '').trim().match(/^(ftp|sftp):\/\/(.+)$/i);
+
+    if (!match) {
+      return {protocol: 'ftp', host: (rawHost || '').trim()};
+    }
+
+    return {
+      protocol: match[1].toLowerCase(),
+      host: match[2]
+    };
+  }
+
+  private normalizeSinkHost(protocol: string, host: string) {
+    const cleanHost = (host || '').replace(/^\s+|\s+$/g, '').replace(/^\w+:\/\//, '');
+    return `${protocol}://${cleanHost}`;
   }
 
 }

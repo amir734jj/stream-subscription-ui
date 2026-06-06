@@ -15,7 +15,7 @@
 
   <div class="form-group">
     <label for="streams">Select Stream:</label>
-    <select class="form-control" id="streams" [(ngModel)]="streamId">
+    <select class="form-control" id="streams" [(ngModel)]="streamIds" multiple size="10">
       <optgroup [label]="item.key" *ngFor="let item of streamsTable | keyvalue">
         <option [value]="stream.ID" *ngFor="let stream of item.value">{{stream.name}} ({{stream.format}}, {{stream.bitrate}})</option>
       </optgroup>
@@ -25,7 +25,7 @@
   <div class="alert alert-danger" *ngIf="serverError">{{ serverError }}</div>
   <div class="alert alert-info" *ngIf="bulkResult">{{ bulkResult }}</div>
 
-  <button class="btn btn-primary" type="button" (click)="addStream()" [disabled]="!this.streamId || isBulkSaving"> Add Shoutcast Stream</button>
-  <button class="btn btn-default" type="button" (click)="addAllStreams()" [disabled]="!streams.length || isBulkSaving"> Add All Listed Streams</button>
+  <button class="btn btn-primary" type="button" (click)="addStream()" [disabled]="!streamIds.length || isBulkSaving"> Add Shoutcast Stream</button>
+  <button class="btn btn-default" type="button" style="margin-left: 10px;" (click)="addAllStreams()" [disabled]="!streams.length || isBulkSaving"> Add All Listed Streams</button>
 
 </div>

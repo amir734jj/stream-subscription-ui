@@ -4,6 +4,7 @@ import {StreamFtpSinkRelationship} from './StreamFtpSinkRelationship';
 export class FtpSink {
   id: string;
   name: string;
+  protocol = 'ftp';
   username: string;
   password: string;
   host: string;
