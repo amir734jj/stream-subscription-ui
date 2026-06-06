@@ -1,10 +1,6 @@
 .bottom-margin
   margin-bottom: 0.5rem
 
-.streams-col
-  width: 300px
-  max-width: 300px
-
 .stream-tags
   max-height: 120px
   overflow-y: auto
@@ -16,11 +12,15 @@
 
 .stream-tag
   display: inline-block
-  font-size: 11px
+  font-size: 0.75em
   font-weight: normal
-  padding: 3px 8px
+  padding: 0.2em 0.5em
   border-radius: 3px
   white-space: nowrap
 
 .clear-streams-btn
-  margin-top: 6px
+  margin-top: 0.4em
+
+@media (max-width: 768px)
+  .stream-tags
+    max-height: 80px
