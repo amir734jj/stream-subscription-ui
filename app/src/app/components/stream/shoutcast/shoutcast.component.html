@@ -23,7 +23,9 @@
   </div>
 
   <div class="alert alert-danger" *ngIf="serverError">{{ serverError }}</div>
+  <div class="alert alert-info" *ngIf="bulkResult">{{ bulkResult }}</div>
 
-  <button class="btn btn-primary" type="button" (click)="addStream()" [disabled]="!this.streamId"> Add Shoutcast Stream</button>
+  <button class="btn btn-primary" type="button" (click)="addStream()" [disabled]="!this.streamId || isBulkSaving"> Add Shoutcast Stream</button>
+  <button class="btn btn-default" type="button" (click)="addAllStreams()" [disabled]="!streams.length || isBulkSaving"> Add All Listed Streams</button>
 
 </div>

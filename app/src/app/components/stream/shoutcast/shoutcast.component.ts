@@ -21,6 +21,8 @@ export class ShoutcastComponent implements OnInit {
   genres: string[] = [];
   streamId = '';
   serverError = '';
+  bulkResult = '';
+  isBulkSaving = false;
 
   constructor(private shoutcastService: ShoutcastService, private streamService: StreamService,
               private manageStreamService: ManageStreamService, private router: Router) {
@@ -50,6 +52,7 @@ export class ShoutcastComponent implements OnInit {
       stream.name = shoutcastStream.name;
 
       this.serverError = '';
+      this.bulkResult = '';
 
       try {
         const {id} = await this.streamService.save(stream).toPromise();
@@ -59,6 +62,40 @@ export class ShoutcastComponent implements OnInit {
       } catch (err) {
         this.serverError = err?.error?.errors?.[0] || 'Failed to add stream';
       }
+    }
+  }
+
+  async addAllStreams() {
+    if (!this.streams.length || this.isBulkSaving) {
+      return;
+    }
+
+    this.serverError = '';
+    this.bulkResult = '';
+    this.isBulkSaving = true;
+
+    let added = 0;
+    let failed = 0;
+
+    for (const shoutcastStream of this.streams) {
+      const stream = new Stream();
+      stream.name = shoutcastStream.name;
+
+      try {
+        stream.url = await this.shoutcastService.url(shoutcastStream.ID).toPromise();
+        const {id} = await this.streamService.save(stream).toPromise();
+        await this.manageStreamService.start(id);
+        added++;
+      } catch (err) {
+        failed++;
+      }
+    }
+
+    this.isBulkSaving = false;
+    this.bulkResult = `Bulk include complete. Added ${added} stream(s), failed ${failed}.`;
+
+    if (!added && failed) {
+      this.serverError = 'Failed to add listed streams';
     }
   }
 
