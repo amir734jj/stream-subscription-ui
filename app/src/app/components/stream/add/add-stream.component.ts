@@ -16,6 +16,7 @@ export class AddStreamComponent implements OnInit {
 
   form: FormGroup;
   errorTable: FormErrorTable = [];
+  serverError = '';
 
   constructor(private router: Router, private streamService: StreamService) {
     this.form = new FormGroup({
@@ -42,10 +43,16 @@ export class AddStreamComponent implements OnInit {
       this.errorTable = [] as FormErrorTable;
     }
 
-    const response = await this.streamService.save(this.form.value).toPromise();
+    this.serverError = '';
 
-    if (!!response) {
-      await this.router.navigate(['./stream']);
+    try {
+      const response = await this.streamService.save(this.form.value).toPromise();
+
+      if (!!response) {
+        await this.router.navigate(['./stream']);
+      }
+    } catch (err) {
+      this.serverError = err?.error?.errors?.[0] || 'Failed to save stream';
     }
   }
 }

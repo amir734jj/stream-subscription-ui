@@ -22,6 +22,8 @@
     </select>
   </div>
 
+  <div class="alert alert-danger" *ngIf="serverError">{{ serverError }}</div>
+
   <button class="btn btn-primary" type="button" (click)="addStream()" [disabled]="!this.streamId"> Add Shoutcast Stream</button>
 
 </div>

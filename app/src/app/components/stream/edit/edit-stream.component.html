@@ -1,6 +1,8 @@
 <div class="container">
   <app-form-validation-error [error-table]="errorTable"></app-form-validation-error>
 
+  <div class="alert alert-danger" *ngIf="serverError">{{ serverError }}</div>
+
   <form (submit)="handleEdit($event)" [formGroup]="form">
     <div class="form-group">
       <label for="name">Name</label>

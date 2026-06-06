@@ -17,6 +17,7 @@ export class EditStreamComponent implements OnInit {
 
   form: FormGroup;
   errorTable: FormErrorTable = [];
+  serverError = '';
 
   constructor(private route: ActivatedRoute, private router: Router,
               private streamService: StreamService) {
@@ -49,10 +50,16 @@ export class EditStreamComponent implements OnInit {
       this.errorTable = [] as FormErrorTable;
     }
 
-    const response = await this.streamService.update(this.stream.id, _.assign({}, this.stream, this.form.value)).toPromise();
+    this.serverError = '';
 
-    if (!!response) {
-      await this.router.navigate(['./stream']);
+    try {
+      const response = await this.streamService.update(this.stream.id, _.assign({}, this.stream, this.form.value)).toPromise();
+
+      if (!!response) {
+        await this.router.navigate(['./stream']);
+      }
+    } catch (err) {
+      this.serverError = err?.error?.errors?.[0] || 'Failed to update stream';
     }
   }
 

@@ -20,6 +20,7 @@ export class ShoutcastComponent implements OnInit {
   streamsTable: { [group: string]: ShoutcastStream[] } = {};
   genres: string[] = [];
   streamId = '';
+  serverError = '';
 
   constructor(private shoutcastService: ShoutcastService, private streamService: StreamService,
               private manageStreamService: ManageStreamService, private router: Router) {
@@ -48,10 +49,16 @@ export class ShoutcastComponent implements OnInit {
       stream.url = await this.shoutcastService.url(shoutcastStream.ID).toPromise();
       stream.name = shoutcastStream.name;
 
-      const {id} = await this.streamService.save(stream).toPromise();
-      await this.manageStreamService.start(id);
+      this.serverError = '';
 
-      await this.router.navigate(['./stream']);
+      try {
+        const {id} = await this.streamService.save(stream).toPromise();
+        await this.manageStreamService.start(id);
+
+        await this.router.navigate(['./stream']);
+      } catch (err) {
+        this.serverError = err?.error?.errors?.[0] || 'Failed to add stream';
+      }
     }
   }
 
