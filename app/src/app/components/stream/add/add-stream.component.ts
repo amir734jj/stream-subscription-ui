@@ -17,6 +17,7 @@ export class AddStreamComponent implements OnInit {
   form: FormGroup;
   errorTable: FormErrorTable = [];
   serverError = '';
+  private existingUrls: string[] = [];
 
   constructor(private router: Router, private streamService: StreamService) {
     this.form = new FormGroup({
@@ -26,7 +27,9 @@ export class AddStreamComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    const streams = await this.streamService.getAll().toPromise();
+    this.existingUrls = streams.map(s => s.url?.toLowerCase().trim()).filter(Boolean);
   }
 
   async gotoShoutCastDirectory() {
@@ -44,6 +47,12 @@ export class AddStreamComponent implements OnInit {
     }
 
     this.serverError = '';
+
+    const newUrl = this.form.value.url?.toLowerCase().trim();
+    if (this.existingUrls.includes(newUrl)) {
+      this.serverError = 'A stream with this URL already exists';
+      return;
+    }
 
     try {
       const response = await this.streamService.save(this.form.value).toPromise();

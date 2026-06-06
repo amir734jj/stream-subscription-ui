@@ -55,10 +55,10 @@ export class ShoutcastComponent implements OnInit {
 
     const selectedIds = this.streamIds.map(x => parseInt(x, 0));
     const selectedStreams = this.streams.filter(x => selectedIds.includes(x.ID));
-    const {added, failed} = await this.addListedStreams(selectedStreams);
+    const {added, failed, skipped} = await this.addListedStreams(selectedStreams);
 
     this.isBulkSaving = false;
-    this.bulkResult = `Add selected complete. Added ${added} stream(s), failed ${failed}.`;
+    this.bulkResult = `Add selected complete. Added ${added}, failed ${failed}, skipped ${skipped} duplicate(s).`;
 
     if (!added && failed) {
       this.serverError = 'Failed to add selected streams';
@@ -75,10 +75,10 @@ export class ShoutcastComponent implements OnInit {
     this.isBulkSaving = true;
 
     const firstTenStreams = this.streams.slice(0, 10);
-    const {added, failed} = await this.addListedStreams(firstTenStreams);
+    const {added, failed, skipped} = await this.addListedStreams(firstTenStreams);
 
     this.isBulkSaving = false;
-    this.bulkResult = `Bulk include complete (first 10 listed). Added ${added} stream(s), failed ${failed}.`;
+    this.bulkResult = `Bulk include complete (first 10 listed). Added ${added}, failed ${failed}, skipped ${skipped} duplicate(s).`;
 
     if (!added && failed) {
       this.serverError = 'Failed to add listed streams';
@@ -88,6 +88,10 @@ export class ShoutcastComponent implements OnInit {
   private async addListedStreams(listedStreams: ShoutcastStream[]) {
     let added = 0;
     let failed = 0;
+    let skipped = 0;
+
+    const existing = await this.streamService.getAll().toPromise();
+    const existingUrls = new Set(existing.map(s => s.url?.toLowerCase().trim()).filter(Boolean));
 
     for (const shoutcastStream of listedStreams) {
       const stream = new Stream();
@@ -95,15 +99,22 @@ export class ShoutcastComponent implements OnInit {
 
       try {
         stream.url = await this.shoutcastService.url(shoutcastStream.ID).toPromise();
+
+        if (existingUrls.has(stream.url?.toLowerCase().trim())) {
+          skipped++;
+          continue;
+        }
+
         const {id} = await this.streamService.save(stream).toPromise();
         await this.manageStreamService.start(id);
+        existingUrls.add(stream.url?.toLowerCase().trim());
         added++;
       } catch (err) {
         failed++;
       }
     }
 
-    return {added, failed};
+    return {added, failed, skipped};
   }
 
   get isNameInValidForSearch() {
