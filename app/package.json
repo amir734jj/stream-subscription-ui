@@ -60,7 +60,7 @@
     "@types/jwt-decode": "2.2.1",
     "@types/lodash": "4.17.16",
     "@types/memoizee": "0.4.3",
-    "@types/node": "16.18.119",
+    "@types/node": "12.20.55",
     "@types/store": "2.0.2",
     "@types/wavesurfer.js": "^3.3.0",
     "codelyzer": "5.2.1",
