@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "NODE_OPTIONS='--openssl-legacy-provider' ng serve",
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' ng build",
+    "start": "ng serve",
+    "build": "ng build",
     "lint": "ng lint",
-    "postinstall": "NODE_OPTIONS='--openssl-legacy-provider' ng build --prod --source-map=false"
+    "postinstall": "ng build --prod --source-map=false"
   },
   "private": true,
   "dependencies": {
