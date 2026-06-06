@@ -6,7 +6,7 @@
     "start": "NODE_OPTIONS='--openssl-legacy-provider' ng serve",
     "build": "NODE_OPTIONS='--openssl-legacy-provider' ng build",
     "lint": "ng lint",
-    "postinstall": "NODE_OPTIONS='--openssl-legacy-provider' ng build --aot --prod --source-map=false"
+    "postinstall": "NODE_OPTIONS='--openssl-legacy-provider' ng build --prod --source-map=false"
   },
   "private": true,
   "dependencies": {
