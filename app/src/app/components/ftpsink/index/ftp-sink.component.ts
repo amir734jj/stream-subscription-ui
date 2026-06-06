@@ -43,6 +43,13 @@ export class FtpSinkComponent implements OnInit {
     await this.fetchFtpSinks();
   }
 
+  async clearAllStreams($event: MouseEvent, ftpSink: FtpSink) {
+    $event.preventDefault();
+    ftpSink.streamFtpSinkRelationships = [];
+    await this.ftpSinkService.update(ftpSink.id, ftpSink).toPromise();
+    await this.fetchFtpSinks();
+  }
+
   sinkProtocol(host: string) {
     const match = (host || '').trim().match(/^(ftp|sftp):\/\//i);
     return match ? match[1].toUpperCase() : 'FTP';

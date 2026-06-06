@@ -75,6 +75,12 @@
             </span>
           </div>
 
+          <button *ngIf="ftpSink.streamFtpSinkRelationships.length >= 3"
+                  class="btn btn-xs btn-danger clear-streams-btn"
+                  (click)="clearAllStreams($event, ftpSink)">
+            Clear All
+          </button>
+
           <ng-template [ngIf]="!ftpSink.streamFtpSinkRelationships.length">
             <span class="text-muted">None</span>
           </ng-template>
