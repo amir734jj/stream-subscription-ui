@@ -69,14 +69,14 @@
       </td>
       <td class="hidden-sm hidden-xs">
         <div class="text-center">
-          <ul *ngIf="ftpSink.streamFtpSinkRelationships.length">
-            <li *ngFor="let relationship of ftpSink.streamFtpSinkRelationships">
+          <div class="stream-tags" *ngIf="ftpSink.streamFtpSinkRelationships.length">
+            <span class="label label-default stream-tag" *ngFor="let relationship of ftpSink.streamFtpSinkRelationships">
               {{ relationship.stream.name }}
-            </li>
-          </ul>
+            </span>
+          </div>
 
           <ng-template [ngIf]="!ftpSink.streamFtpSinkRelationships.length">
-            None
+            <span class="text-muted">None</span>
           </ng-template>
         </div>
       </td>
