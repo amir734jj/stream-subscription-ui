@@ -46,6 +46,11 @@ export class StreamComponent implements OnInit {
     await this.fetchStreams();
   }
 
+  async deleteAll() {
+    await Promise.all(this.streams.map(stream => this.streamService.delete(stream.id).toPromise()));
+    await this.fetchStreams();
+  }
+
   async startAll() {
     await Promise.all(_.chain(this.statusTable)
       .map((status, id) => ({id, status}))

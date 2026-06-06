@@ -18,6 +18,11 @@
             Stop All
           </strong>
         </button>
+        <button class="btn btn-danger" (click)="deleteAll()" *ngIf="streams.length >= 3">
+          <strong>
+            Delete All
+          </strong>
+        </button>
         <button class="btn btn-default" (click)="addStream()">
           <strong>
             Add Stream
