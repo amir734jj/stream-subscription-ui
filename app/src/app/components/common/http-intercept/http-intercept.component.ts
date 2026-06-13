@@ -50,8 +50,9 @@ export class HttpInterceptComponent implements OnInit {
     // If error has a message
     if (_.get(errorResponse.error, ['errors'])) {
       errorMessage = _.get(errorResponse.error, ['errors']).join('\n');
-    } else if (errorResponse.error instanceof Event) {
-      errorMessage = `Event type: ${(typeof errorResponse.error).toString()}`;
+    } else if (errorResponse.status === 0 || errorResponse.error instanceof Event) {
+      const eventType = errorResponse.error instanceof Event ? errorResponse.error.type : 'unknown';
+      errorMessage = `Unable to reach the server (event: ${eventType}). This may be caused by a sporadic connection failure. Please check your network connection and try again.`;
     } else {
       errorMessage = _.toString(errorResponse.error);
     }
