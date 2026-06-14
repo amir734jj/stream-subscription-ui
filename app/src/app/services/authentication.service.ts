@@ -47,7 +47,7 @@ export class AuthenticationService {
       await this.hubService.connection.stop();
     }
 
-    this.routeStoreUtility.store = this.routeStoreUtility.store.clear();
+    this.routeStoreUtility.destroyAll();
 
     return await this.http.post(route('account', 'logout'), null, {responseType: 'text'}).toPromise();
   }
